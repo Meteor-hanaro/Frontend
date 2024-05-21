@@ -7,7 +7,7 @@ function Card({
   cardInDe,
   icon,
 }) {
-  let perColor = "text-success";
+  // let perColor = "text-success";
   return (
     <div className="col-xxl-4 col-md-6">
       <div className={`card info-card ${type}`}>
