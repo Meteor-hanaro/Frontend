@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 function Card({
   type,
   cardTitle,
@@ -7,7 +8,13 @@ function Card({
   cardInDe,
   icon,
 }) {
-  // let perColor = "text-success";
+
+  const [perColor, setPerColor] = useState("text-success");
+  useEffect(() => {
+    if (cardInDe === "decrease") setPerColor("text-danger");
+  });
+  
+
   return (
     <div className="col-xxl-4 col-md-6">
       <div className={`card info-card ${type}`}>
@@ -46,7 +53,7 @@ function Card({
             </div>
             <div className="ps-3">
               <h6>{cardContent}</h6>
-              <span className="text-success small pt-1 fw-bold">
+              <span className={`${perColor} small pt-1 fw-bold`}>
                 {cardPercentage}
               </span>
               <span className="text-muted small pt-2 ps-1">{cardInDe}</span>

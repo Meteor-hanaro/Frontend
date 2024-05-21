@@ -33,7 +33,6 @@ function Main() {
                   cardInDe={"increase"}
                   icon={"bi-cart"}
                 />
-                {/* End Sales Card */}
                 {/* Revenue Card */}
                 <Card
                   type={"revenue-card"}
@@ -44,13 +43,18 @@ function Main() {
                   cardInDe={"increase"}
                   icon={"bi-currency-dollar"}
                 />
-                {/* End Revenue Card */}
                 {/* Customers Card */}
-
-                {/* End Customers Card */}
+                <Card
+                  type={"customers-card"}
+                  cardTitle={"Customers"}
+                  cardDrop={"This Year"}
+                  cardContent={"1244"}
+                  cardPercentage={"12%"}
+                  cardInDe={"decrease"}
+                  icon={"bi-people"}
+                />
                 {/* Reports */}
                 <ReportChart />
-                {/* End Reports */}
                 {/* Recent Sales */}
                 <div className="col-12">
                   <div className="card recent-sales overflow-auto">
@@ -425,83 +429,9 @@ function Main() {
               </div>
               {/* End Recent Activity */}
               {/* Budget Report */}
-              <div className="card">
-                <div className="filter">
-                  <a
-                    className="icon"
-                    href="index.html"
-                    data-bs-toggle="dropdown"
-                  >
-                    <i className="bi bi-three-dots" />
-                  </a>
-                  <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li className="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="index.html">
-                        Today
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="index.html">
-                        This Month
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="index.html">
-                        This Year
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="card-body pb-0">
-                  <h5 className="card-title">
-                    Budget Report <span>| This Month</span>
-                  </h5>
-                  <EChart />
-                </div>
-              </div>
-              {/* End Budget Report */}
+              <EChart />
               {/* Website Traffic */}
-              <div className="card">
-                <div className="filter">
-                  <a
-                    className="icon"
-                    href="index.html"
-                    data-bs-toggle="dropdown"
-                  >
-                    <i className="bi bi-three-dots" />
-                  </a>
-                  <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li className="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="index.html">
-                        Today
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="index.html">
-                        This Month
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="index.html">
-                        This Year
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="card-body pb-0">
-                  <h5 className="card-title">
-                    Website Traffic <span>| Today</span>
-                  </h5>
-                  <TrafficChart />
-                </div>
-              </div>
-              {/* End Website Traffic */}
+              <TrafficChart />
               {/* News & Updates Traffic */}
               <div className="card">
                 <div className="filter">

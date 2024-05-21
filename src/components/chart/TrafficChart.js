@@ -42,7 +42,39 @@ const TrafficChart = () => {
   };
 
   return (
-    <ReactECharts option={option} style={{ height: 400, width: "100%" }} />
+    <div className="card">
+      <div className="filter">
+        <a className="icon" href="index.html" data-bs-toggle="dropdown">
+          <i className="bi bi-three-dots" />
+        </a>
+        <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+          <li className="dropdown-header text-start">
+            <h6>Filter</h6>
+          </li>
+          <li>
+            <a className="dropdown-item" href="index.html">
+              Today
+            </a>
+          </li>
+          <li>
+            <a className="dropdown-item" href="index.html">
+              This Month
+            </a>
+          </li>
+          <li>
+            <a className="dropdown-item" href="index.html">
+              This Year
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div className="card-body pb-0">
+        <h5 className="card-title">
+          Website Traffic <span>| Today</span>
+        </h5>
+        <ReactECharts option={option} style={{ height: 400, width: "100%" }} />
+      </div>
+    </div>
   );
 };
 
