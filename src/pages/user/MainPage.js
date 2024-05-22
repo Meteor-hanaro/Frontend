@@ -1,15 +1,11 @@
-import Header from './../../components/sidebar/Header';
-import Sidebar from './../../components/sidebar/Sidebar';
-import Footer from './../../components/sidebar/Footer';
-import Main from './../../components/Main';
+import Header from './../../components/user/sidebar/Header';
+import Main from './../../components/user/Main';
 
 function MainPage() {
   return (
     <>
       <Header />
-      <Sidebar />
       <Main />
-      <Footer />
     </>
   );
 }
