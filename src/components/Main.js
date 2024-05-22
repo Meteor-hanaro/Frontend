@@ -1,8 +1,20 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
 import ReportChart from "./chart/ReportChart";
 import EChart from "./chart/EChart";
 import TrafficChart from "./chart/TrafficChart";
 import Card from "./Card";
+
 function Main() {
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/api").then((res) => {
+      setData(res.data);
+      console.log(data);
+    });
+  });
+
   return (
     <>
       <main id="main" className="main">
