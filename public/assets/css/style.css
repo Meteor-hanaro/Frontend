@@ -14,7 +14,7 @@
 }
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   background: #f6f9ff;
   color: #444444;
 }
@@ -35,7 +35,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 /*--------------------------------------------------------------
@@ -153,7 +153,7 @@ h6 {
 
 @media (min-width: 768px) {
   .dropdown-menu-arrow::before {
-    content: "";
+    content: '';
     width: 13px;
     height: 13px;
     background: #fff;
@@ -237,7 +237,7 @@ h6 {
   font-size: 18px;
   font-weight: 500;
   color: #012970;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .card-title span {
@@ -257,7 +257,7 @@ h6 {
 /* Alerts */
 .alert-heading {
   font-weight: 500;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 20px;
 }
 
@@ -306,7 +306,7 @@ h6 {
 /* Breadcrumbs */
 .breadcrumb {
   font-size: 14px;
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
   color: #899bbd;
   font-weight: 600;
 }
@@ -373,7 +373,7 @@ h6 {
   font-size: 26px;
   font-weight: 700;
   color: #012970;
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 .header {
@@ -461,7 +461,7 @@ h6 {
   list-style: none;
 }
 
-.header-nav>ul {
+.header-nav > ul {
   margin: 0;
   padding: 0;
 }
@@ -630,7 +630,6 @@ h6 {
 }
 
 @media (min-width: 1200px) {
-
   #main,
   #footer {
     margin-left: 300px;
@@ -644,7 +643,6 @@ h6 {
 }
 
 @media (min-width: 1200px) {
-
   .toggle-sidebar #main,
   .toggle-sidebar #footer {
     margin-left: 0;
@@ -849,7 +847,7 @@ h6 {
 }
 
 .dashboard .activity .activity-item .activite-label::before {
-  content: "";
+  content: '';
   position: absolute;
   right: -11px;
   width: 4px;
@@ -883,7 +881,7 @@ h6 {
 }
 
 /* News & Updates */
-.dashboard .news .post-item+.post-item {
+.dashboard .news .post-item + .post-item {
   margin-top: 15px;
 }
 
@@ -1117,7 +1115,7 @@ h6 {
 }
 
 .contact .php-email-form .loading:before {
-  content: "";
+  content: '';
   display: inline-block;
   border-radius: 50%;
   width: 24px;
@@ -1149,7 +1147,7 @@ h6 {
   padding: 12px 15px;
 }
 
-.contact .php-email-form button[type=submit] {
+.contact .php-email-form button[type='submit'] {
   background: #4154f1;
   border: 0;
   padding: 10px 30px;
@@ -1158,7 +1156,7 @@ h6 {
   border-radius: 4px;
 }
 
-.contact .php-email-form button[type=submit]:hover {
+.contact .php-email-form button[type='submit']:hover {
   background: #5969f3;
 }
 
@@ -1229,5 +1227,94 @@ h6 {
   padding-top: 5px;
   text-align: center;
   font-size: 13px;
+  color: #012970;
+}
+
+/*--------------------------------------------------------------
+# User
+--------------------------------------------------------------*/
+.alignHorizontal {
+  display: flex;
+  justify-content: space-between;
+}
+
+.alignVertical {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.enterButton {
+  width: 100%;
+  height: 45px;
+  margin: auto;
+  font-weight: 600;
+  color: white;
+  background: #d7b863;
+  border: none;
+  border-radius: 18px;
+  filter: drop-shadow(-9px -8px 20px rgba(218, 229, 251, 0.5))
+    drop-shadow(8px 8px 13px rgba(174, 174, 192, 0.5));
+}
+
+/*--------------------------------------------------------------
+# Pb
+--------------------------------------------------------------*/
+.search-bar {
+  min-width: 360px;
+}
+
+@media (max-width: 1199px) {
+  .search-bar {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    box-shadow: 0px 0px 15px 0px rgba(1, 41, 112, 0.1);
+    background: white;
+    z-index: 9999;
+    transition: 0.3s;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .search-bar-show {
+    top: 60px;
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.search-form {
+  width: 100%;
+}
+
+.search-form input {
+  border: 0;
+  font-size: 14px;
+  color: #012970;
+  border: 1px solid rgba(1, 41, 112, 0.2);
+  padding: 7px 38px 7px 8px;
+  border-radius: 3px;
+  transition: 0.3s;
+  width: 100%;
+}
+
+.search-form input:focus,
+.search-form input:hover {
+  outline: none;
+  box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15);
+  border: 1px solid rgba(1, 41, 112, 0.3);
+}
+
+.search-form button {
+  border: 0;
+  padding: 0;
+  margin-left: -30px;
+  background: none;
+}
+
+.search-form button i {
   color: #012970;
 }

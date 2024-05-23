@@ -1,19 +1,21 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MainPage from "./pages/MainPage";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import PbLoginPage from './pages/pb/LoginPage';
 import VideoPage from "./pages/VideoPage";
-import LoginPage from "./pages/LoginPage";
-import ProfilePage from "./pages/ProfilePage";
-import FormPage from "./pages/FormPage";
-
+import PbMainPage from './pages/pb/MainPage';
+import UserLoginPage from './pages/user/LoginPage';
+import UserMainPage from './pages/user/MainPage';
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/main" element={<MainPage />} />
+        // pb
+        <Route path="/pb" element={<PbLoginPage />} />
+        <Route path="/pb/main" element={<PbMainPage />} />
+        // user
+        <Route path="/user" element={<UserLoginPage />} />
+        <Route path="/user/main" element={<UserMainPage />} />
+        // WebRTC
         <Route path="/videoPage" element={<VideoPage />} />
-        <Route path="/formPage" element={<FormPage />} />
-        <Route path="/pb/profile" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );
