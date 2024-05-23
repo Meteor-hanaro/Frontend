@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import PbLoginPage from './pages/pb/LoginPage';
+import VideoPage from "./pages/VideoPage";
 import PbMainPage from './pages/pb/MainPage';
 import UserLoginPage from './pages/user/LoginPage';
 import UserMainPage from './pages/user/MainPage';
@@ -13,6 +14,8 @@ function Router() {
         // user
         <Route path="/user" element={<UserLoginPage />} />
         <Route path="/user/main" element={<UserMainPage />} />
+        // WebRTC
+        <Route path="/videoPage" element={<VideoPage />} />
       </Routes>
     </BrowserRouter>
   );
