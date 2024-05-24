@@ -1,0 +1,139 @@
+.videoPage {
+    display: flex;
+    margin: 0;
+    pad: 0;
+    height: 100%;
+}
+
+#videoContainer {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+#divVideos,
+#divInteraction {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+video {
+    width: 80%;
+    margin-bottom: 10px;
+}
+
+#divVideos {
+    flex: 3;
+    padding: 20px;
+}
+
+#localVideo {
+    background-color: black;
+    width: 500px;
+    height: 375px;
+    transform: scaleX(-1);
+}
+
+#remoteVideo {
+    background-color: black;
+    width: 500px;
+    height: 375px;
+    transform: scaleX(-1);
+}
+
+#divInteraction {
+    flex: 7;
+    background-color: rgb(34, 34, 34);
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#divProgressBar {
+    width: 100%;
+    height: 200px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    padding: 20px;
+}
+
+#progressContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+#progressContainer::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 15px;
+    background-color: #d3d3d3;
+    z-index: 0;
+    transform: translateY(-50%);
+}
+
+#progress {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 15px;
+    background-color: #316df4;
+    z-index: 1;
+    transform: translateY(-50%);
+    transition: width 0.4s ease;
+}
+
+.progressCircle {
+    width: 80px;
+    height: 80px;
+    background-color: #ffffff;
+    border: 3px solid #316df4;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: #ebf1fe;
+    z-index: 2;
+    position: relative;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    cursor: pointer;
+}
+
+#progressButtons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+#divRebalancing {
+    background-color: #316df4;
+    width: 100%;
+    height: 200px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    padding: 20px;
+}
