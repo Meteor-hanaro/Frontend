@@ -1,6 +1,6 @@
-// src/WebRTC.js
-
 import React, { useRef, useEffect, useState } from 'react';
+import ProgressBarPage from './pages/video/ProgressBarPage';
+import RebalancingPage from './pages/video/RebalancingPage';
 
 const WebRTC = ({ signaling }) => {
     const localVideoRef = useRef(null);
@@ -36,7 +36,6 @@ const WebRTC = ({ signaling }) => {
             remoteVideo.srcObject = event.streams[0];
         };
 
-        
         // 데이터 채널 설정
         const channel = peerConnection.createDataChannel('chat');
         channel.onopen = () => console.log('Data channel is open');
@@ -114,29 +113,48 @@ const WebRTC = ({ signaling }) => {
     };
 
     const sendMessage = () => {
+        let txt = document.getElementById('txt');
         if (dataChannel && dataChannel.readyState === 'open') {
-            dataChannel.send('안녕 ㅋㅋ');
+            dataChannel.send(txt.value);
         }
+        txt.value = '';
     };
 
     return (
-        <div>
-            <video
-                ref={localVideoRef}
-                autoPlay
-                playsInline
-                muted
-                style={{ width: '300px', transform: 'scaleX(-1)' }}
-            />
-            <video
-                ref={remoteVideoRef}
-                autoPlay
-                playsInline
-                style={{ width: '300px', transform: 'scaleX(-1)' }}
-            />{' '}
+        <div id="videoContainer">
+            <div id="divVideos">
+                <h2>PB</h2>
+                <video
+                    id="localVideo"
+                    ref={localVideoRef}
+                    autoPlay
+                    playsInline
+                    // muted
+                />
+                <br />
+                <h2>User</h2>
+                <video
+                    id="remoteVideo"
+                    ref={remoteVideoRef}
+                    autoPlay
+                    playsInline
+                />
+                <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    onClick={createOffer}>Create Offer</button>
+            </div>
+
+            <div id="divInteraction">
+                <ProgressBarPage />
+                <RebalancingPage />
+                <input id="txt" type="text" /> <br />
+                <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    onClick={sendMessage}>Send Message</button>
+            </div>
             <br />
-            <button onClick={createOffer}>Create Offer</button>
-            <button onClick={sendMessage}>Send Message</button>
         </div>
     );
 };
