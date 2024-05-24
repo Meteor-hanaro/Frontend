@@ -313,6 +313,13 @@ function Sidebar() {
               </a>
             </li>
             {/* End Blank Page Nav */}
+            <li className="nav-item">
+              <a className="nav-link collapsed" href="/videoPage">
+                <i className="bi bi-file-earmark" />
+                <span>Video</span>
+              </a>
+            </li>
+            {/* End Blank Page Nav */}
           </ul>
         </aside>
       </>
