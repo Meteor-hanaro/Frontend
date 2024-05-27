@@ -3,11 +3,16 @@ import ReactDOM from "react-dom/client";
 // import App from "./App";
 import "@fortawesome/fontawesome-free/css/all.min.css"; // i tag
 import Router from "./Router";
+import WebRTCProvider from "./pages/video/WebRTCContext";
+
+const signaling = new WebSocket('ws://localhost:8888');
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Router />
+    <WebRTCProvider signaling={signaling}>
+      <Router />
+    </WebRTCProvider>
   </React.StrictMode>
 );
 

@@ -3,7 +3,17 @@ const RebalancingPage = () => {
 
     return (
         <div id="divRebalancing">
-            <h1>This is Rebalancing Page</h1>
+            <div id="comparisonContainer">
+                <div id="portfolioContainer">
+                    portfolio
+                </div>
+                <div id="suggestionContainer">
+                    suggestion
+                </div>
+            </div>
+            <div id="suggestionsListContainer">
+                list
+            </div>
         </div>
     );
 }
