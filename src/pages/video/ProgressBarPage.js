@@ -26,11 +26,11 @@ const ProgressBarPage = () => {
   }, []);
 
   const updateProgress = (step) => {
-    console.log("click")
-      setCurrentStep(step);
-      if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+    console.log("click");
+    setCurrentStep(step);
+    if (ws.current && ws.current.readyState === WebSocket.OPEN) {
         ws.current.send(JSON.stringify({ type: 'updateStep', step }));
-      }
+    }
   };
 
     return (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import WebRTC from '../../WebRTC';
+import WebRTC from './WebRTC';
 
 const VideoPage = () => {
     const [signaling, setSignaling] = useState(null);
