@@ -11,6 +11,7 @@ function Router() {
         // pb
         <Route path="/pb" element={<PbLoginPage />} />
         <Route path="/pb/main" element={<PbMainPage />} />
+        <Route path="/pb/fund" element={<PbFundPage />} />
         // user
         <Route path="/user" element={<UserLoginPage />} />
         <Route path="/user/main" element={<UserMainPage />} />
