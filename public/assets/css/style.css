@@ -1338,6 +1338,9 @@ h6 {
   background-color: #ECF0F1;
   padding: 20px;
   width: 30%;
+  max-height: 100vh; /* Adjust the height as needed */
+  overflow-y: auto;
+
 }
 
 .fund-item {
@@ -1359,6 +1362,8 @@ h6 {
   background-color: #ECF0F1;
   padding: 20px;
   width: 70%;
+  max-height: 100vh; /* Adjust the height as needed */
+  overflow-y: auto;
 }
 
 .fund-table {
