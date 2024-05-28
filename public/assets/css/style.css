@@ -1381,10 +1381,12 @@ h6 {
 .fund-chart {
   width: 50%;
   height: 300px;
+  padding: 20px;
 }
 
 .portfolio-status {
-  width: 50%;
+  width: 100%;
+
 }
 
 table, th, td {
@@ -1394,4 +1396,7 @@ table, th, td {
 .stock-bond-table {
   padding-left: 20%;
   float: right;
+  text-align: center;
+  height: 90%;
+  width: 90%;
 }
