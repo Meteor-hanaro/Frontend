@@ -42,8 +42,8 @@ h6 {
 # Main
 --------------------------------------------------------------*/
 #main {
-  margin-top: 60px;
-  padding: 20px 30px;
+  /* margin-top: 60px;
+  padding: 20px 30px; */
   transition: all 0.3s;
 }
 
@@ -599,7 +599,7 @@ h6 {
 --------------------------------------------------------------*/
 .sidebar {
   position: fixed;
-  top: 60px;
+  top: 0;
   left: 0;
   bottom: 0;
   width: 100px;
@@ -1349,4 +1349,26 @@ h6 {
 
 .fund-item:hover {
   background-color: #BDC3C7;
+}
+
+/*--------------------------------------------------------------
+# Pb Fund Detail
+--------------------------------------------------------------*/
+
+.fund-detail {
+  background-color: #ECF0F1;
+  padding: 20px;
+  width: 70%;
+}
+
+.fund-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.fund-table th, .fund-table td {
+  border: 1px solid #BDC3C7;
+  padding: 10px;
+  text-align: left;
 }
