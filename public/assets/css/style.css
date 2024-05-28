@@ -1372,3 +1372,12 @@ h6 {
   padding: 10px;
   text-align: left;
 }
+
+.fund-chart {
+  width: 50%;
+  height: 300px;
+}
+
+.portfolio-status {
+  width: 50%;
+}
