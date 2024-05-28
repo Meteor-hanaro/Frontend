@@ -602,7 +602,7 @@ h6 {
   top: 60px;
   left: 0;
   bottom: 0;
-  width: 300px;
+  width: 100px;
   z-index: 996;
   transition: all 0.3s;
   padding: 20px;
@@ -632,7 +632,7 @@ h6 {
 @media (min-width: 1200px) {
   #main,
   #footer {
-    margin-left: 300px;
+    margin-left: 100px;
   }
 }
 
@@ -1317,4 +1317,36 @@ h6 {
 
 .search-form button i {
   color: #012970;
+}
+
+.fund-page {
+  display: flex;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/*--------------------------------------------------------------
+# Pb Fund List
+--------------------------------------------------------------*/
+
+.fund-list {
+  background-color: #ECF0F1;
+  padding: 20px;
+  width: 30%;
+}
+
+.fund-item {
+  background-color: white;
+  margin: 10px 0;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.fund-item:hover {
+  background-color: #BDC3C7;
 }
