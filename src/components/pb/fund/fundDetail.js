@@ -8,6 +8,9 @@ Chart.register(ArcElement);
 function FundDetail({ selectedFund }) {
   const [selectedFundDetail, setSelectedFundDetail] = useState([]);
   const [chartData, setChartData] = useState(null);
+  const [stockPercentage, setStockPercentage] = useState(0);
+  const [bondPercentage, setBondPercentage] = useState(0);
+
   useEffect(() => {
     if (!selectedFund) {
       return;
@@ -21,6 +24,8 @@ function FundDetail({ selectedFund }) {
             },
           })
           .then((res) => {
+            let stockPercentage = 0;
+            let bondPercentage = 0;
             console.log(res.data);
             setSelectedFundDetail(res.data);
             const labels = [];
@@ -32,6 +37,11 @@ function FundDetail({ selectedFund }) {
               // labels에는 security.name을 추가
               labels.push(item.security.name);
               // datasets의 data에는 fundSecurityPercentage를 추가
+              if (item.security.id.includes("KR")) {
+                bondPercentage += item.fundSecurityPercentage;
+              } else {
+                stockPercentage += item.fundSecurityPercentage;
+              }
               data.push(item.fundSecurityPercentage);
               // 무작위 색상 생성
               const randomColor = `rgba(${Math.floor(
@@ -42,21 +52,23 @@ function FundDetail({ selectedFund }) {
               backgroundColor.push(randomColor);
               borderColor.push(randomColor.replace("0.5", "1")); // 투명도 조절
             });
-
+            setStockPercentage(stockPercentage);
+            setBondPercentage(bondPercentage);
             // 데이터 객체 구성
             setChartData({
-              labels: labels,
+              labels: ["채권", "주식"],
               datasets: [
                 {
                   label: "My First Dataset",
-                  data: data,
-                  backgroundColor: backgroundColor,
+                  data: [bondPercentage, stockPercentage],
+                  backgroundColor: ["rgb(255, 192, 103, 1)", "rgb(80, 188, 223, 1)"],
                   borderColor: borderColor,
                   borderWidth: 1,
                   hoverOffset: 4,
                 },
               ],
             });
+
           });
       } catch (error) {
         console.log(error);
@@ -93,19 +105,29 @@ function FundDetail({ selectedFund }) {
     <div className="fund-detail">
       <h2>{selectedFund.name}</h2>
       <h3>포트폴리오 현황</h3>
-      <div className="fund-chart">
-        {chartData && (
-          <Pie data={chartData} id="fundPieChart" options={options} />
-        )}
-        {/* 차트 컴포넌트를 여기에 포함할 수 있습니다 */}
-        <table>
+      <div className="portfolio-status alignHorizontal">
+        <div className="fund-chart">
+          {chartData && (
+            <Pie data={chartData} id="fundPieChart" options={options} />
+          )}
+          {/* 차트 컴포넌트를 여기에 포함할 수 있습니다 */}
+        </div>
+        <table className="table stock-bond-table">
           <thead>
             <tr>
               <th>자산구분</th>
-              <th>금액</th>
               <th>비중(%)</th>
             </tr>
           </thead>
+          <tr>
+            <td>주식</td>
+            <td>{stockPercentage}</td>
+          </tr>
+          <tr>
+            <td>채권</td>
+            <td>{bondPercentage}</td>
+          </tr>
+          <tbody></tbody>
         </table>
       </div>
       <h3>펀드 상세정보</h3>
