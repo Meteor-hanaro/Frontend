@@ -1325,7 +1325,7 @@ h6 {
 
 .main-content {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-grow: 1;
   padding: 20px;
 }
