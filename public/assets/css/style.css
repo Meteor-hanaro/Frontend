@@ -1381,3 +1381,12 @@ h6 {
 .portfolio-status {
   width: 50%;
 }
+
+table, th, td {
+  border: 1px solid black;
+}
+
+.stock-bond-table {
+  padding-left: 20%;
+  float: right;
+}
