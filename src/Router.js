@@ -18,7 +18,7 @@ function Router() {
         <Route path="/user" element={<UserLoginPage />} />
         <Route path="/user/main" element={<UserMainPage />} />
         // WebRTC
-          <Route path="/videoPage" element={<VideoPage />} />
+        <Route path="/videoPage" element={<VideoPage />} />
       </Routes>
     </BrowserRouter>
   );
