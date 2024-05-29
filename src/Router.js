@@ -5,6 +5,7 @@ import VideoPage from "./pages/video/VideoPage";
 import PbMainPage from './pages/pb/MainPage';
 import UserLoginPage from './pages/user/LoginPage';
 import UserMainPage from './pages/user/MainPage';
+import AuthPage from './pages/AuthPage';
 
 function Router() {
   return (
@@ -19,6 +20,8 @@ function Router() {
         <Route path="/user/main" element={<UserMainPage />} />
         // WebRTC
         <Route path="/videoPage" element={<VideoPage />} />
+        // Auth
+        <Route path="/auth" element={<AuthPage />} />
       </Routes>
     </BrowserRouter>
   );
