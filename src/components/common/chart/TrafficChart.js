@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ReactECharts from "echarts-for-react";
 
-const TrafficChart = () => {
-  const option = {
+const TrafficChart = ({ data, name }) => {
+  const [chartOption, setChartOption] = useState({
     tooltip: {
       trigger: "item",
     },
@@ -12,7 +12,7 @@ const TrafficChart = () => {
     },
     series: [
       {
-        name: "Access From",
+        // name: "Access From",
         type: "pie",
         radius: ["40%", "70%"],
         avoidLabelOverlap: false,
@@ -30,49 +30,32 @@ const TrafficChart = () => {
         labelLine: {
           show: false,
         },
-        data: [
-          { value: 1048, name: "Search Engine" },
-          { value: 735, name: "Direct" },
-          { value: 580, name: "Email" },
-          { value: 484, name: "Union Ads" },
-          { value: 300, name: "Video Ads" },
-        ],
+        data: [],
       },
     ],
-  };
+  });
+
+  // 데이터 올때마다 option 값 수정해주는 코드
+  useEffect(() => {
+    setChartOption((prevOption) => ({
+      ...prevOption,
+      series: [
+        {
+          ...prevOption.series[0],
+          data: data,
+        },
+      ],
+    }));
+  }, [data]);
 
   return (
-    <div className="card">
-      <div className="filter">
-        <a className="icon" href="index.html" data-bs-toggle="dropdown">
-          <i className="bi bi-three-dots" />
-        </a>
-        <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-          <li className="dropdown-header text-start">
-            <h6>Filter</h6>
-          </li>
-          <li>
-            <a className="dropdown-item" href="index.html">
-              Today
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="index.html">
-              This Month
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="index.html">
-              This Year
-            </a>
-          </li>
-        </ul>
-      </div>
+    <div className="container">
       <div className="card-body pb-0">
-        <h5 className="card-title">
-          Website Traffic <span>| Today</span>
-        </h5>
-        <ReactECharts option={option} style={{ height: 400, width: "100%" }} />
+        <h5 className="card-title">{name}</h5>
+        <ReactECharts
+          option={chartOption}
+          style={{ height: 400, width: "100%" }}
+        />
       </div>
     </div>
   );

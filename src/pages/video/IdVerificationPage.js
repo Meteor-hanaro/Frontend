@@ -2,7 +2,7 @@ const IdVerificationPage = () => {
 
     return (
         <div id="divIdVerification">
-            <button id="captureButton" class="btn btn-primary">
+            <button id="captureButton" className="btn btn-primary">
                 Capture
             </button> <br/><br/>
             <div id="capturedScreen">
