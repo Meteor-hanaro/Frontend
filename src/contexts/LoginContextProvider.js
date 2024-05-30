@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useState } from 'react';
 
 // context 생성
 const LoginContext = createContext();
@@ -6,9 +6,6 @@ const LoginContext = createContext();
 // context 내용 설정
 const LoginContextProvider = ({ children }) => {
   // 변수
-  const [type, setType] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(false);
 
   // 함수
@@ -18,7 +15,7 @@ const LoginContextProvider = ({ children }) => {
 
   // 반환값
   return (
-    <LoginContext.Provider value={{ type, login, email, password, isLogin }}>
+    <LoginContext.Provider value={{ login, isLogin }}>
       {children}
     </LoginContext.Provider>
   );
