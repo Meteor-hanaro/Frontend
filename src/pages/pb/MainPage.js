@@ -8,10 +8,10 @@ import { LoginContext } from '../../contexts/LoginContextProvider';
 function MainPage() {
   const { isLogin } = useContext(LoginContext);
 
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     if (!isLogin) {
-      naviagte('/pb');
+      navigate('/pb');
     }
   }, []);
 
