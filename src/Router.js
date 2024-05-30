@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { LoginContextProvider } from './contexts/LoginContextProvider';
 import PbLoginPage from './pages/pb/LoginPage';
 import PbFundPage from './pages/pb/FundPage';
 import VideoPage from "./pages/video/VideoPage";
@@ -10,19 +11,21 @@ import AuthPage from './pages/AuthPage';
 function Router() {
   return (
     <BrowserRouter>
-      <Routes>
-        // pb
-        <Route path="/pb" element={<PbLoginPage />} />
-        <Route path="/pb/main" element={<PbMainPage />} />
-        <Route path="/pb/fund" element={<PbFundPage />} />
-        // user
-        <Route path="/user" element={<UserLoginPage />} />
-        <Route path="/user/main" element={<UserMainPage />} />
-        // WebRTC
-        <Route path="/videoPage" element={<VideoPage />} />
-        // Auth
-        <Route path="/auth" element={<AuthPage />} />
-      </Routes>
+      <LoginContextProvider>
+        <Routes>
+          // pb
+          <Route path="/pb" element={<PbLoginPage />} />
+          <Route path="/pb/main" element={<PbMainPage />} />
+          <Route path="/pb/fund" element={<PbFundPage />} />
+          // user
+          <Route path="/user" element={<UserLoginPage />} />
+          <Route path="/user/main" element={<UserMainPage />} />
+          // WebRTC
+          <Route path="/videoPage" element={<VideoPage />} />
+          // Auth
+          <Route path="/auth" element={<AuthPage />} />
+        </Routes>
+      </LoginContextProvider>
     </BrowserRouter>
   );
 }
