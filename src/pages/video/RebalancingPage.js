@@ -1,35 +1,38 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import SuggestionList from "../../components/common/SuggestionList";
 import TrafficChart from "../../components/common/chart/TrafficChart";
 
 const RebalancingPage = () => {
   const [suggestionData, setSuggestionData] = useState([]);
-  const [transferData, setTransferData] = useState([]);
+  const [transferSGData, setTransferSGData] = useState([]);
   const [portfolioData, setPortfolioData] = useState([]);
   const [transferPFData, setTransferPFData] = useState([]);
+  const [suggestionName, setSuggestionName] = useState("");
 
   const [suggestionNumber, setSuggestionNumber] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  const ws = useRef(null);
+
   const portfolioDetailData = () =>
     portfolioData &&
-    portfolioData.portfolio_item.map((item) => ({
+    portfolioData.portfolioItems.map((item) => ({
       value: item.evaluationAmount,
-      name: item.fund.name,
+      name: item.fundName,
     }));
 
-  const suggestionDetailData = (idx) =>
-    suggestionData &&
-    suggestionData.suggestion_list[idx].map((item) => ({
-      value: item.fundValue,
-      name: item.fund.name,
+  const suggestionDetailData = (data) =>
+    data &&
+    data.map((item) => ({
+      value: item.suggestionValue,
+      name: item.suggestionItemName,
     }));
 
   useEffect(() => {
     // 현재 포트폴리오 불러오기
     axios
-      .get("http://localhost:8080/api/portfolio/extract?userId=3")
+      .get("http://localhost:8080/api/portfolio/extract?vipId=1")
       .then((res) => {
         setPortfolioData(res.data);
       })
@@ -37,7 +40,7 @@ const RebalancingPage = () => {
 
     // 수정안 데이터 불러오기
     axios
-      .get("http://localhost:8080/api/suggestion/extract?userId=0")
+      .get("http://localhost:8080/api/suggestion/extract?userId=1")
       .then((res) => {
         setSuggestionData(res.data);
         setLoading(true);
@@ -46,17 +49,19 @@ const RebalancingPage = () => {
   }, []);
 
   useEffect(() => {
-    // suggestionData가 로드되었고, suggestionNumber가 유효한 값인 경우에만 차트 데이터 업데이트
-    if (loading && portfolioData.portfolio_item) {
-      setTransferPFData(portfolioDetailData(portfolioData.portfolio_item));
+    //suggestionData가 로드되었고, suggestionNumber가 유효한 값인 경우에만 차트 데이터 업데이트
+    if (loading && portfolioData.portfolioItems) {
+      setTransferPFData(portfolioDetailData());
     }
-
-    if (
-      loading &&
-      suggestionData.suggestion_list &&
-      suggestionData.suggestion_list[suggestionNumber]
-    ) {
-      setTransferData(suggestionDetailData(suggestionNumber));
+    if (loading && suggestionData.suggestionItems[suggestionNumber]) {
+      setTransferSGData(
+        suggestionDetailData(
+          suggestionData.suggestionItems[suggestionNumber].suggestionItems
+        )
+      );
+      setSuggestionName(
+        suggestionData.suggestionItems[suggestionNumber].suggestionName
+      );
     }
   }, [loading, suggestionNumber]);
 
@@ -70,17 +75,11 @@ const RebalancingPage = () => {
         <div id="portfolioContainer">
           <TrafficChart
             data={transferPFData}
-            name={portfolioData.portfolio.user.name + "님의 포트폴리오"}
+            name={portfolioData.userName + "님의 포트폴리오"}
           />
         </div>
         <div id="suggestionContainer">
-          <TrafficChart
-            data={transferData}
-            name={
-              suggestionData.suggestion_name_list[suggestionNumber]
-                .suggestion_name
-            }
-          />
+          <TrafficChart data={transferSGData} name={suggestionName} />
         </div>
       </div>
       <div id="suggestionsListContainer">
