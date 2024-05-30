@@ -20,7 +20,7 @@ const WebRTC = () => {
             <div id="divVideos">
                 <button
                     type="button"
-                    class="btn btn-outline-primary"
+                    className="btn btn-outline-primary"
                     onClick={createOffer}>Create Offer</button> <br/>
 
                 <h2>PB</h2>
@@ -42,7 +42,7 @@ const WebRTC = () => {
                 <input id="txt" type="text" /> <br />
                 <button
                     type="button"
-                    class="btn btn-outline-primary"
+                    className="btn btn-outline-primary"
                     onClick={handleSendMessage}>Send Message</button>
             </div>
 
