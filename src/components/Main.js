@@ -20,6 +20,11 @@ function Main() {
       <main id="main" className="main">
         <div className="pagetitle">
           <h1>Dashboard</h1>
+      <div>
+        <button type="button" class="btn btn-outline-primary"
+                onClick={() => {window.open('./videoPage', '_blank', 'noopener,noreferrer')}}>
+                  VideoChat </button>
+      </div>
           <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">
