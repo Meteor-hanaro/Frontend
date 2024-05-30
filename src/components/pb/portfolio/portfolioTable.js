@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function PortfolioTable() {
-  const [portfolio, setPortfolio] = useState(null);
+  const [portfolioItems, setPortfolioItems] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,8 +14,8 @@ function PortfolioTable() {
             },
           })
           .then((res) => {
-            console.log(res.data);
-            setPortfolio(res.data);
+            setPortfolioItems(res.data.portfolioItems);
+            console.log(res.data.portfolioItems);
           });
       } catch (error) {
         console.log(error);
@@ -24,7 +24,15 @@ function PortfolioTable() {
     fetchData();
   }, []);
 
-  return <div className="fund-list">HI</div>;
+  return (
+    <div className="portfolio-items-list">
+      {portfolioItems.map((item, index) => (
+        <div key={index} className="portfolio-item">
+          {item.fundId}
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export default PortfolioTable;
