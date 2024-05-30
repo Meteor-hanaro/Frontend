@@ -6,6 +6,7 @@ import PbMainPage from './pages/pb/MainPage';
 import UserLoginPage from './pages/user/LoginPage';
 import UserMainPage from './pages/user/MainPage';
 import AuthPage from './pages/AuthPage';
+import Sign from './pages/Sign';
 
 function Router() {
   return (
@@ -22,6 +23,7 @@ function Router() {
           <Route path="/videoPage" element={<VideoPage />} />
         // Auth
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/sign" element={<Sign />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,7 +1,8 @@
+import IdVerificationPage from './IdVerificationPage';
 import ProgressBarPage from './ProgressBarPage';
 import SharingPage from './SharingPage';
 import { useWebRTC } from './WebRTCContext';
-
+import React from 'react';
 
 const WebRTC = () => {
     const { localVideoRef, remoteVideoRef } = useWebRTC();
@@ -14,7 +15,6 @@ const WebRTC = () => {
             txt.value = '';
         }
     };
-
     return (
         <div id="videoContainer">
             <div id="divVideos">
@@ -48,7 +48,8 @@ const WebRTC = () => {
 
             <div id="divInteraction">
                 <ProgressBarPage />
-                <SharingPage />
+                <IdVerificationPage localVideoRef={localVideoRef} />
+                {/* <SharingPage /> */}
             </div>
         </div>
     );
