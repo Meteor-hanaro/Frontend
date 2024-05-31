@@ -3,30 +3,48 @@ import axios from "axios";
 
 function PortfolioTable() {
   const [portfolioItems, setPortfolioItems] = useState([]);
+  const [vipName, setVipName] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         axios
-          .get("http://localhost:8080/api/portfolio/extract/view", {
+          .get("http://localhost:8080/api/portfolio/itemValue", {
             params: {
               vipId: 1,
             },
           })
           .then((res) => {
-            console.log(res.data.portfolioItemResponseDtos);
-            setPortfolioItems(res.data.portfolioItemResponseDtos);
+            setPortfolioItems(res.data);
+            console.log(res.data);
             // 2중 axios 가능?
           });
       } catch (error) {
         console.log(error);
       }
+
+      try {
+        axios
+          .get("http://localhost:8080/api/user/name", {
+            params: {
+              vipId: 1,
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            setVipName(res.data);
+            // 2중 axios 가능?
+          });
+      } catch (error) {
+        console.log(error);
+      }      
     };
     fetchData();
   }, []);
 
   return (
     <div className="portfolio-items-list">
+      <h2>{vipName}님의 포트폴리오</h2>
       <table className="table port">
         <thead>
           <tr>
@@ -44,7 +62,7 @@ function PortfolioTable() {
                 {item.startDate[0]}.{item.startDate[1]}.{item.startDate[2]}
               </td>
               <td>{item.startAmount.toLocaleString("ko-KR")}</td>
-              <td>{item.evalAmount}</td>
+              <td>{item.evaluationAmount.toLocaleString("ko-KR")}</td>
             </tr>
           ))}
         </tbody>
