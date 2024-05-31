@@ -24,9 +24,8 @@ const IdVerificationPage = ({localVideoRef}) => {
                     headers:{
                          "Content-Type":"multipart/form-data",
                     },
-                 }).then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
+                 }).then(response => {
+                    console.log('Success:', response.data);
                 }).catch(error => {
                    console.error('Error:', error);
                 });
@@ -40,7 +39,7 @@ const IdVerificationPage = ({localVideoRef}) => {
 
     return (
         <div id="divIdVerification">
-            <button onClick={captureNow} id="captureButton" class="btn btn-primary">
+            <button onClick={captureNow} id="captureButton" className="btn btn-primary">
                 Capture
             </button> <br/><br/>
             <div id="capturedScreen">

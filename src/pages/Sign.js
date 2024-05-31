@@ -49,7 +49,7 @@ function Sign() {
       const context = canvas.getContext('2d');
       context.lineJoin = 'round';
       context.lineWidth = 3;
-      context.strokeStyle = 'blue';
+      context.strokeStyle = 'black';
       ctxRef.current = context;
     }
 

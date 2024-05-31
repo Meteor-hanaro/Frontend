@@ -51,7 +51,7 @@ const WebRTC = () => {
 
       <div id="divInteraction">
         <ProgressBarPage setPageNumber={setPageNumber} />
-        <SharingPage number={pageNumber} />
+        <SharingPage number={pageNumber} localVideoRef={localVideoRef}/>
       </div>
     </div>
   );
