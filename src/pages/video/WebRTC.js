@@ -1,6 +1,9 @@
+import Sign from '../Sign';
+import ContractPage from './ContractPage';
 import IdVerificationPage from './IdVerificationPage';
 import ProgressBarPage from './ProgressBarPage';
 import SharingPage from './SharingPage';
+import SignPage from './SignPage';
 import { useWebRTC } from './WebRTCContext';
 import React from 'react';
 
@@ -48,7 +51,8 @@ const WebRTC = () => {
 
             <div id="divInteraction">
                 <ProgressBarPage />
-                <IdVerificationPage localVideoRef={localVideoRef} />
+                {/* <IdVerificationPage localVideoRef={localVideoRef} /> */}
+                <SignPage />
                 {/* <SharingPage /> */}
             </div>
         </div>

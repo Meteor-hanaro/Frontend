@@ -7,7 +7,7 @@ import PbMainPage from './pages/pb/MainPage';
 import UserLoginPage from './pages/user/LoginPage';
 import UserMainPage from './pages/user/MainPage';
 import AuthPage from './pages/AuthPage';
-import Sign from './pages/Sign';
+  import Sign from './pages/Sign';
 
 function Router() {
   return (
