@@ -1443,6 +1443,7 @@ td {
   overflow-y: auto;
 }
 
+/* pdf css */
 .react-pdf__Page {
   display: flex;
   justify-content: center;

@@ -9,4 +9,11 @@ module.exports = function (app) {
       changeOrigin: true,
     })
   );
+  // app.use(
+  //   "/ws",
+  //   createProxyMiddleware({
+  //     target: "http://54.180.102.224",
+  //     changeOrigin: true,
+  //   })
+  // );
 };
