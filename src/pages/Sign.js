@@ -149,7 +149,7 @@ function Sign() {
   };
 
   return (
-    <div className='container'>
+    <div id="signDiv">
       <Modal show={showModal} handleClose={() => setShowModal(false)}>
         <canvas
           ref={canvasRef}
