@@ -32,7 +32,7 @@ const RebalancingPage = () => {
   useEffect(() => {
     // 현재 포트폴리오 불러오기
     axios
-      .get("http://localhost:8080/api/portfolio/extract?vipId=1")
+      .get("http://172.16.21.45:8080/api/portfolio/extract?vipId=1")
       .then((res) => {
         setPortfolioData(res.data);
       })
@@ -40,7 +40,7 @@ const RebalancingPage = () => {
 
     // 수정안 데이터 불러오기
     axios
-      .get("http://localhost:8080/api/suggestion/extract?userId=1")
+      .get("http://172.16.21.45:8080/api/suggestion/extract?userId=1")
       .then((res) => {
         setSuggestionData(res.data);
         setLoading(true);
@@ -71,22 +71,24 @@ const RebalancingPage = () => {
 
   return (
     <div id="divRebalancing">
-      <div id="comparisonContainer">
-        <div id="portfolioContainer">
-          <TrafficChart
-            data={transferPFData}
-            name={portfolioData.userName + "님의 포트폴리오"}
-          />
+      <SuggestionList
+        setSuggestionNumber={setSuggestionNumber}
+        data={suggestionData}
+      />
+      <div className="d-flex mt-2">
+        <div id="comparisonContainer">
+          <div id="portfolioContainer">
+            <TrafficChart
+              data={transferPFData}
+              name={portfolioData.userName + "님의 포트폴리오"}
+            />
+          </div>
         </div>
-        <div id="suggestionContainer">
-          <TrafficChart data={transferSGData} name={suggestionName} />
+        <div id="comparisonContainer">
+          <div id="portfolioContainer">
+            <TrafficChart data={transferSGData} name={suggestionName} />
+          </div>
         </div>
-      </div>
-      <div id="suggestionsListContainer">
-        <SuggestionList
-          setSuggestionNumber={setSuggestionNumber}
-          data={suggestionData}
-        />
       </div>
     </div>
   );

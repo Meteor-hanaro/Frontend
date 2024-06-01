@@ -26,7 +26,7 @@ const WebRTC = () => {
           onClick={createOffer}
         >
           Create Offer
-        </button>{" "}
+        </button>
         <br />
         <h2>PB</h2>
         <video id="localVideo" ref={localVideoRef} autoPlay playsInline />

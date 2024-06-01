@@ -36,16 +36,22 @@ function SuggestionList({ setSuggestionNumber, data }) {
   };
 
   return (
-    <div>
-      {data &&
-        data.suggestionItems.map((item, index) => (
-          <div key={item.suggestionName} onClick={() => updateProgress(index)}>
-            <NameContainer
-              contents={item.suggestionName}
-              // onClick={updateProgress(index)}
-            />
-          </div>
-        ))}
+    <div className="dropdown">
+      <button
+        type="button"
+        className="btn btn-primary dropdown-toggle"
+        data-bs-toggle="dropdown"
+      >
+        Suggestion List
+      </button>
+      <ul className="dropdown-menu">
+        {data &&
+          data.suggestionItems.map((item, index) => (
+            <li key={item.suggestionName} onClick={() => updateProgress(index)}>
+              {item.suggestionName}
+            </li>
+          ))}
+      </ul>
     </div>
   );
 }

@@ -1,210 +1,211 @@
 .videoPage {
-    display: flex;
-    margin: 0;
-    pad: 0;
-    height: 100%;
+  display: flex;
+  margin: 0;
+  pad: 0;
+  height: 100%;
 }
 
 #videoContainer {
-    display: flex;
-    width: 100%;
-    height: 100vh;
+  display: flex;
+  width: 100%;
+  height: 100vh;
 }
 
 #divVideos,
 #divInteraction {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 video {
-    width: 80%;
-    margin-bottom: 10px;
+  width: 80%;
+  margin-bottom: 10px;
 }
 
 #divVideos {
-    flex: 2;
-    padding: 20px;
+  flex: 2;
+  padding: 20px;
 }
 
 #localVideo {
-    background-color: black;
-    /* width: 500px;
+  background-color: black;
+  /* width: 500px;
     height: 375px; */
-    width: 400px;
-    height: 300px;
-    transform: scaleX(-1);
+  width: 400px;
+  height: 300px;
+  transform: scaleX(-1);
 }
 
 #remoteVideo {
-    background-color: black;
-    width: 500px;
-    height: 375px;
+  background-color: black;
+  width: 500px;
+  height: 375px;
 
-    width: 400px;
-    height: 300px;
-    transform: scaleX(-1);
+  width: 400px;
+  height: 300px;
+  transform: scaleX(-1);
 }
 
 #divInteraction {
-    flex: 8;
-    background-color: rgb(34, 34, 34);
-    padding: 20px;
-    box-sizing: border-box;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+  flex: 8;
+  background-color: rgb(34, 34, 34);
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 #divProgressBar {
-    width: 100%;
-    height: 200px;
-    box-sizing: border-box;
+  width: 100%;
+  height: 200px;
+  box-sizing: border-box;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 30px;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+  padding: 20px;
 }
 
 #progressContainer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1200px;
-    position: relative;
-    margin-top: 50px;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+  margin-top: 50px;
+  margin-bottom: 20px;
 }
 
 #progressContainer::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    right: 10px;
-    height: 10px;
-    background-color: #d3d3d3;
-    z-index: 0;
-    transform: translateY(-50%);
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  right: 10px;
+  height: 10px;
+  background-color: #d3d3d3;
+  z-index: 0;
+  transform: translateY(-50%);
 }
 
 #progress {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    height: 10px;
-    background-color: #316df4;
-    z-index: 1;
-    transform: translateY(-50%);
-    transition: width 0.4s ease;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 10px;
+  background-color: #316df4;
+  z-index: 1;
+  transform: translateY(-50%);
+  transition: width 0.4s ease;
 }
 
 .progressCircle {
-    width: 60px;
-    height: 60px;
-    background-color: #ffffff;
-    border: 3px solid #316df4;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 30px;
-    color: #ebf1fe;
-    z-index: 2;
-    position: relative;
-    transition: background-color 0.4s ease, color 0.4s ease;
-    cursor: pointer;
+  width: 60px;
+  height: 60px;
+  background-color: #ffffff;
+  border: 3px solid #316df4;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: #ebf1fe;
+  z-index: 2;
+  position: relative;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  cursor: pointer;
 }
 
 #progressButtons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
 #divSharing {
-    background-color: rgb(34, 34, 34);
-    width: 100%;
-    height: 1000px;
-    box-sizing: border-box;
+  background-color: rgb(34, 34, 34);
+  width: 100%;
+  height: 1000px;
+  box-sizing: border-box;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  padding: 20px;
 }
 
 #divRebalancing {
-    width: 100%;
-    height: 100%;
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  padding: 0;
 }
 
 #comparisonContainer {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 48%;
+  height: 100%;
 }
 
-#portfolioContainer, #suggestionContainer {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
+#portfolioContainer,
+#suggestionContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
 }
 
 #portfolioContainer {
-    margin-right: 10px;
-    margin-bottom: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 #suggestionContainer {
-    margin-right: 10px;
-    margin-top: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
 }
 
 #suggestionsListContainer {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    background-color: white;
-    margin-left: 10px;
+  flex: 1;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: white;
+  margin-left: 10px;
 }
 
 #divIdVerification {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    height: 100%;
-    aspect-ratio: 4/3;
-    text-align: center;
-    align-items: center;
+  height: 100%;
+  aspect-ratio: 4/3;
+  text-align: center;
+  align-items: center;
 }
 
 #captureButton {
-    width: fit-content;
+  width: fit-content;
 }
 
 #capturedScreen {
-    background-color: white;
-    width: 100%;
-    height: 100%;
+  background-color: white;
+  width: 100%;
+  height: 100%;
 }
 
 #divContract {
@@ -214,12 +215,12 @@ video {
 }
 
 #canvasContainer {
-    border: 1px solid black;
-    overflow: auto;
-    height: 600px; 
-    scrollbar-width: 100px;
+  border: 1px solid black;
+  overflow: auto;
+  height: 600px;
+  scrollbar-width: 100px;
 }
 
 #contractCanvas {
-    display: block;
+  display: block;
 }
