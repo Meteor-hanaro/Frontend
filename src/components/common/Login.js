@@ -6,7 +6,7 @@ import axios from 'axios';
 function Login({ type }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useContext(LoginContext);
+  const { setIsLogin, setUserName } = useContext(LoginContext);
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
@@ -30,7 +30,14 @@ function Login({ type }) {
       })
       .then((res) => {
         console.log(res);
-        login();
+        // LoginContextProvider
+        setIsLogin(true);
+        setUserName(res.data.userName);
+
+        // localStorage에 jwt token 저장
+        localStorage.setItem('accessToken', res.data.accessToken);
+        localStorage.setItem('refreshToken', res.data.refreshToken);
+
         setTimeout(() => {
           navigate('/' + type + '/main');
         }, 1000);

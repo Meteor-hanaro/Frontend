@@ -6,7 +6,7 @@ const ProgressBarPage = ({ setPageNumber }) => {
   const ws = useRef(null);
 
   useEffect(() => {
-    ws.current = new WebSocket("ws://localhost:8888");
+    ws.current = new WebSocket("ws://localhost:8890");
 
     ws.current.onopen = () => {
       console.log("WebSocket connection opened");
