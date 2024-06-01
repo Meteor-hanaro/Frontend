@@ -1,5 +1,4 @@
-import NameContainer from "./NameContainer";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 function SuggestionList({ setSuggestionNumber, data }) {
   const ws = useRef(null);

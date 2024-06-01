@@ -32,7 +32,7 @@ const RebalancingPage = () => {
   useEffect(() => {
     // 현재 포트폴리오 불러오기
     axios
-      .get("http://172.16.21.45:8080/api/portfolio/extract?vipId=1")
+      .get("http://localhost:8080/api/portfolio/extract?vipId=1")
       .then((res) => {
         setPortfolioData(res.data);
       })
@@ -40,7 +40,7 @@ const RebalancingPage = () => {
 
     // 수정안 데이터 불러오기
     axios
-      .get("http://172.16.21.45:8080/api/suggestion/extract?userId=1")
+      .get("http://localhost:8080/api/suggestion/extract?userId=1")
       .then((res) => {
         setSuggestionData(res.data);
         setLoading(true);

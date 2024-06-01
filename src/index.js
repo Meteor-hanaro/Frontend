@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-// import App from "./App";
 import "@fortawesome/fontawesome-free/css/all.min.css"; // i tag
 import Router from "./Router";
-import WebRTCProvider from "./pages/video/WebRTCContext";
+import WebRTCProvider from "./contexts/WebRTCContext";
 
 const signaling = new WebSocket("ws://localhost:8888");
 
