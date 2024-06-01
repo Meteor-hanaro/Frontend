@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import Login from './../../components/common/Login';
 
 function LoginPage() {
-  return <Login />;
+  const [type, setType] = useState('vip');
+
+  return <Login type={type} />;
 }
 
 export default LoginPage;

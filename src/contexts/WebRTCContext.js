@@ -94,7 +94,7 @@ const WebRTCProvider = ({ signaling, children }) => {
       if (pc) {
         const offer = await pc.createOffer();
         await pc.setLocalDescription(offer);
-        signaling.send(JSON.stringify({ offer }));
+        signaling.send(JSON.stringify({ offer: pc.localDescription }));
       } else {
         console.error("PeerConnection not initialized.");
       }
@@ -141,11 +141,10 @@ const WebRTCProvider = ({ signaling, children }) => {
 
   useEffect(() => {
     signaling.onmessage = (message) => {
-      //   message.data.text().then((text) => {
-      //     handleSignalingData(JSON.parse(text));
-      //   });
-      handleSignalingData(message.data);
-      console.log(message.data);
+      message &&
+        message.data.text().then((text) => {
+          handleSignalingData(JSON.parse(text));
+        });
     };
   }, [handleSignalingData, signaling, pc]);
 
