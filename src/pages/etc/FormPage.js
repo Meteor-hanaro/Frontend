@@ -1,7 +1,7 @@
 import TextEditor from "../components/form/TextEditor";
 import Header from "../components/sidebar/Header";
 import Footer from "../components/sidebar/Footer";
-import Sidebar from "../components/sidebar/Sidebar";
+import Sidebar from "../../components/sidebar/Sidebar";
 
 function FormPage() {
   return (

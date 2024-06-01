@@ -1,13 +1,13 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { LoginContextProvider } from './contexts/LoginContextProvider';
-import PbLoginPage from './pages/pb/LoginPage';
-import PbFundPage from './pages/pb/FundPage';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { LoginContextProvider } from "./contexts/LoginContextProvider";
+import PbLoginPage from "./pages/pb/LoginPage";
+import PbFundPage from "./pages/pb/FundPage";
 import VideoPage from "./pages/video/VideoPage";
-import PbMainPage from './pages/pb/MainPage';
-import UserLoginPage from './pages/user/LoginPage';
-import UserMainPage from './pages/user/MainPage';
-import AuthPage from './pages/AuthPage';
-  import Sign from './pages/Sign';
+import PbMainPage from "./pages/pb/MainPage";
+import UserLoginPage from "./pages/user/LoginPage";
+import UserMainPage from "./pages/user/MainPage";
+import AuthPage from "./pages/AuthPage";
+import Sign from "./pages/Sign";
 
 function Router() {
   return (
@@ -26,7 +26,7 @@ function Router() {
           // Auth
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/sign" element={<Sign />} />
-      </Routes>
+        </Routes>
       </LoginContextProvider>
     </BrowserRouter>
   );

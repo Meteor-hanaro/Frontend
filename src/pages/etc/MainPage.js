@@ -1,7 +1,7 @@
-import Header from '../components/sidebar/Header';
-import Sidebar from '../components/sidebar/Sidebar';
-import Footer from '../components/sidebar/Footer';
-import Main from '../components/Main';
+import Header from "../components/sidebar/Header";
+import Sidebar from "../../components/sidebar/Sidebar";
+import Footer from "../components/sidebar/Footer";
+import Main from "../../components/Main";
 // import React, { useEffect, useState } from 'react';
 // import WebRTC from '../WebRTC';
 
