@@ -3,7 +3,7 @@ function ProfileCard() {
     <div className="card">
       <div className="card-body profile-card pt-4 d-flex flex-column align-items-center">
         <img
-          src={process.env.PUBLIC_URL + "/assets/img/profile-img.jpg"}
+          src={process.env.PUBLIC_URL + '/assets/img/profile-img.jpg'}
           alt="Profile"
           className="rounded-circle"
         />

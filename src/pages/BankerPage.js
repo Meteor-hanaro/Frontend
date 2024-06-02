@@ -1,5 +1,5 @@
-import Sidebar from "../components/pb/sidebar/Sidebar";
-import BankerManagement from "../components/pb/management/management";
+import Sidebar from '../components/pb/sidebar/Sidebar';
+import BankerManagement from '../components/pb/management/management';
 
 function BankerPage() {
   return (

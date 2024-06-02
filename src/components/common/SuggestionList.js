@@ -1,21 +1,21 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 function SuggestionList({ setSuggestionNumber, data }) {
   const ws = useRef(null);
 
   useEffect(() => {
-    ws.current = new WebSocket("ws://localhost:8889");
+    ws.current = new WebSocket('ws://localhost:8889');
 
     ws.current.onopen = () => {
-      console.log("WebSocket connection opened");
-      ws.current.send(JSON.stringify({ type: "getCurrentStep" }));
+      console.log('WebSocket connection opened');
+      ws.current.send(JSON.stringify({ type: 'getCurrentStep' }));
     };
 
     // 페이지 번호 데이터 수신
     ws.current.onmessage = (event) => {
       const receivedData = event.data;
       receivedData.text().then((text) => {
-        if (JSON.parse(text).type === "updateSuggestion") {
+        if (JSON.parse(text).type === 'updateSuggestion') {
           setSuggestionNumber(JSON.parse(text).step);
         }
       });
@@ -26,11 +26,11 @@ function SuggestionList({ setSuggestionNumber, data }) {
   }, []);
 
   const updateProgress = (step) => {
-    console.log("click");
+    console.log('click');
     setSuggestionNumber(step);
     // 페이지 번호 변경할 때마다 데이터 전송
     if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-      ws.current.send(JSON.stringify({ type: "updateSuggestion", step }));
+      ws.current.send(JSON.stringify({ type: 'updateSuggestion', step }));
     }
   };
 

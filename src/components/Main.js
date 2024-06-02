@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import ReportChart from "./chart/ReportChart";
-import EChart from "./chart/EChart";
-import TrafficChart from "./chart/TrafficChart";
-import Card from "./Card";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import ReportChart from './chart/ReportChart';
+import EChart from './chart/EChart';
+import TrafficChart from './chart/TrafficChart';
+import Card from './Card';
 
 function Main() {
-  const [data, setData] = useState("");
+  const [data, setData] = useState('');
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api").then((res) => {
+    axios.get('http://localhost:8080/api').then((res) => {
       setData(res.data);
       console.log(data);
     });
@@ -20,11 +20,17 @@ function Main() {
       <main id="main" className="main">
         <div className="pagetitle">
           <h1>Dashboard</h1>
-      <div>
-        <button type="button" class="btn btn-outline-primary"
-                onClick={() => {window.open('./videoPage', '_blank', 'noopener,noreferrer')}}>
-                  VideoChat </button>
-      </div>
+          <div>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              onClick={() => {
+                window.open('./videoPage', '_blank', 'noopener,noreferrer');
+              }}
+            >
+              VideoChat{' '}
+            </button>
+          </div>
           <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">
@@ -42,33 +48,33 @@ function Main() {
               <div className="row">
                 {/* Sales Card */}
                 <Card
-                  type={"sales-card"}
-                  cardTitle={"Sales"}
-                  cardDrop={"Today"}
-                  cardContent={"145"}
-                  cardPercentage={"12%"}
-                  cardInDe={"increase"}
-                  icon={"bi-cart"}
+                  type={'sales-card'}
+                  cardTitle={'Sales'}
+                  cardDrop={'Today'}
+                  cardContent={'145'}
+                  cardPercentage={'12%'}
+                  cardInDe={'increase'}
+                  icon={'bi-cart'}
                 />
                 {/* Revenue Card */}
                 <Card
-                  type={"revenue-card"}
-                  cardTitle={"Revenue"}
-                  cardDrop={"This Month"}
-                  cardContent={"$3,264"}
-                  cardPercentage={"8%"}
-                  cardInDe={"increase"}
-                  icon={"bi-currency-dollar"}
+                  type={'revenue-card'}
+                  cardTitle={'Revenue'}
+                  cardDrop={'This Month'}
+                  cardContent={'$3,264'}
+                  cardPercentage={'8%'}
+                  cardInDe={'increase'}
+                  icon={'bi-currency-dollar'}
                 />
                 {/* Customers Card */}
                 <Card
-                  type={"customers-card"}
-                  cardTitle={"Customers"}
-                  cardDrop={"This Year"}
-                  cardContent={"1244"}
-                  cardPercentage={"12%"}
-                  cardInDe={"decrease"}
-                  icon={"bi-people"}
+                  type={'customers-card'}
+                  cardTitle={'Customers'}
+                  cardDrop={'This Year'}
+                  cardContent={'1244'}
+                  cardPercentage={'12%'}
+                  cardInDe={'decrease'}
+                  icon={'bi-people'}
                 />
                 {/* Reports */}
                 <ReportChart />
@@ -388,10 +394,10 @@ function Main() {
                       <div className="activite-label">32 min</div>
                       <i className="bi bi-circle-fill activity-badge text-success align-self-start" />
                       <div className="activity-content">
-                        Quia quae rerum{" "}
+                        Quia quae rerum{' '}
                         <a href="index.html" className="fw-bold text-dark">
                           explicabo officiis
-                        </a>{" "}
+                        </a>{' '}
                         beatae
                       </div>
                     </div>
@@ -416,10 +422,10 @@ function Main() {
                       <div className="activite-label">1 day</div>
                       <i className="bi bi-circle-fill activity-badge text-info align-self-start" />
                       <div className="activity-content">
-                        Tempore autem saepe{" "}
+                        Tempore autem saepe{' '}
                         <a href="index.html" className="fw-bold text-dark">
                           occaecati voluptatem
-                        </a>{" "}
+                        </a>{' '}
                         tempore
                       </div>
                     </div>

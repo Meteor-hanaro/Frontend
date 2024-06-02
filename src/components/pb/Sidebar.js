@@ -18,7 +18,10 @@ function Sidebar() {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link alignVertical" href="components-alerts.html">
+              <a
+                className="nav-link alignVertical"
+                href="components-alerts.html"
+              >
                 <i className="bi bi-bell" />
                 <span>Notifications</span>
               </a>
