@@ -1256,7 +1256,7 @@ h6 {
   border: none;
   border-radius: 18px;
   filter: drop-shadow(-9px -8px 20px rgba(218, 229, 251, 0.5))
-  drop-shadow(8px 8px 13px rgba(174, 174, 192, 0.5));
+    drop-shadow(8px 8px 13px rgba(174, 174, 192, 0.5));
 }
 
 .card-content {
@@ -1469,9 +1469,6 @@ h6 {
 .fund-table th,
 .fund-table td {
   border: 1px solid #bdc3c7;
-.fund-table th,
-.fund-table td {
-  border: 1px solid #bdc3c7;
   padding: 10px;
   text-align: left;
 }
@@ -1528,26 +1525,26 @@ h6 {
 }
 
 /* sign css */
-#signDiv{
+#signDiv {
   height: 100%;
 }
 
-#signDiv>div{
+#signDiv > div {
   height: 100%;
 }
 
 /* 스크롤바의 폭 너비 */
 .react-pdf__Document::-webkit-scrollbar {
-    width: 1rem;  
+  width: 1rem;
 }
 
 .react-pdf__Document::-webkit-scrollbar-thumb {
-    background: #717ff5; /* 스크롤바 색상 */
-    border-radius: 1rem; /* 스크롤바 둥근 테두리 */
+  background: #717ff5; /* 스크롤바 색상 */
+  border-radius: 1rem; /* 스크롤바 둥근 테두리 */
 }
 
 .react-pdf__Document::-webkit-scrollbar-track {
-    background: #f6f6fe;  /*스크롤바 뒷 배경 색상*/
+  background: #f6f6fe; /*스크롤바 뒷 배경 색상*/
 }
 
 /*--------------------------------------------------------------
@@ -1651,6 +1648,7 @@ h6 {
 
 .agree-container input[type='checkbox'] {
   margin-right: 10px;
+}
 
 .graph-table-button {
   float: right;
