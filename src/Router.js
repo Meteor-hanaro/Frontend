@@ -10,7 +10,7 @@ import AuthPage from './pages/AuthPage';
 import Sign from './pages/Sign';
 
 function Router() {
-  return (
+    return (
     <BrowserRouter>
       <LoginContextProvider>
         <Routes>
@@ -30,6 +30,7 @@ function Router() {
       </LoginContextProvider>
     </BrowserRouter>
   );
+
 }
 
 export default Router;
