@@ -40,7 +40,7 @@ const IdVerificationPage = ({localVideoRef}) => {
     return (
         <div id="divIdVerification">
             <button onClick={captureNow} id="captureButton" className="btn btn-primary">
-                Capture
+                신분증촬영
             </button> <br/><br/>
             <div id="capturedScreen">
 

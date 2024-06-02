@@ -4,10 +4,9 @@ import PbLoginPage from './pages/pb/LoginPage';
 import PbFundPage from './pages/pb/FundPage';
 import VideoPage from './pages/video/VideoPage';
 import PbMainPage from './pages/pb/MainPage';
+import PbPortfolioPage from './pages/pb/PortfolioPage';
 import UserLoginPage from './pages/user/LoginPage';
 import UserMainPage from './pages/user/MainPage';
-import AuthPage from './pages/AuthPage';
-import Sign from './pages/Sign';
 
 function Router() {
   return (
@@ -23,9 +22,6 @@ function Router() {
           <Route path="/vip/main" element={<UserMainPage />} />
           // WebRTC
           <Route path="/videoPage" element={<VideoPage />} />
-          // Auth
-          <Route path="/auth" element={<AuthPage />} />
-          <Route path="/sign" element={<Sign />} />
         </Routes>
       </LoginContextProvider>
     </BrowserRouter>
