@@ -4,11 +4,12 @@ import PbLoginPage from './pages/pb/LoginPage';
 import PbFundPage from './pages/pb/FundPage';
 import VideoPage from './pages/video/VideoPage';
 import PbMainPage from './pages/pb/MainPage';
+import PbPortfolioPage from './pages/pb/PortfolioPage';
 import UserLoginPage from './pages/user/LoginPage';
 import UserMainPage from './pages/user/MainPage';
 
 function Router() {
-    return (
+  return (
     <BrowserRouter>
       <LoginContextProvider>
         <Routes>
@@ -25,7 +26,6 @@ function Router() {
       </LoginContextProvider>
     </BrowserRouter>
   );
-
 }
 
 export default Router;
