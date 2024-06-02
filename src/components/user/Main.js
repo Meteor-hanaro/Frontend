@@ -133,8 +133,7 @@ function Main() {
                     fontWeight: "550",
                     color: "#5F5F5F",
                     marginLeft: "auto",
-                    marginRight: "auto",
-                    marginRight: "0px",
+                    marginRight: "auto 0px",
                   }}
                 >
                   <div>
