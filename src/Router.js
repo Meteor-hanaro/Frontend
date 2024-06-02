@@ -21,7 +21,7 @@ function Router() {
           <Route path="/vip" element={<UserLoginPage />} />
           <Route path="/vip/main" element={<UserMainPage />} />
           // WebRTC
-          <Route path="/videoPage" element={<VideoPage />} />
+          <Route path="/vip/videoPage/:params" element={<VideoPage />} />
         </Routes>
       </LoginContextProvider>
     </BrowserRouter>
