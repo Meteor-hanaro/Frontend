@@ -8,7 +8,7 @@ import UserLoginPage from './pages/user/LoginPage';
 import UserMainPage from './pages/user/MainPage';
 
 function Router() {
-  return (
+    return (
     <BrowserRouter>
       <LoginContextProvider>
         <Routes>
@@ -25,6 +25,7 @@ function Router() {
       </LoginContextProvider>
     </BrowserRouter>
   );
+
 }
 
 export default Router;
