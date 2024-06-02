@@ -2,19 +2,22 @@ import { useState, useEffect } from 'react';
 import auth from '../../auth';
 import ConsultCard from '../../components/user/ConsultCard';
 import Modal from 'react-modal';
+import axios from 'axios';
 
 function Main() {
+
   const [pb, setPb] = useState([]);
   const [vip, setVip] = useState([]);
   const [consult, setConsult] = useState([]);
 
   const [data, setData] = useState('');
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [vipId, setVipId] = useState('');
+  const [vipPwd, setVipPwd] = useState('');
+  const [pbId, setPbId] = useState('');
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const pbId = 1;
-  const userId = 1;
 
   useEffect(() => {
     auth
@@ -23,6 +26,11 @@ function Main() {
         setPb(res.data.pbInfo);
         setVip(res.data.vipInfo);
         setConsult(res.data.consultList);
+
+        console.log(res);
+        setVipId(res.data.vipInfo.vipId);
+        setVipPwd(res.data.vipInfo.password);
+        setPbId(res.data.pbInfo.pbId);
       })
       .catch((error) => {
         console.log(error);
@@ -43,19 +51,28 @@ function Main() {
   };
 
   const handlePasswordSubmit = (e) => {
-    if (password === '1111') {
-      setIsAuthenticated(true);
-      closeModal();
-      alert('확인되었습니다. 상담실로 입장합니다.');
-      window.open(
-        `./videoPage/pbId=${pbId}&userId=${userId}`,
-        '_blank',
-        'noopener,noreferrer'
-      );
-    } else {
-      alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
-      setPassword('');
-    }
+    axios.post('http://127.0.0.1:8080/api/vip/main/pwdcheck', {
+      pwd: vipPwd,
+      writtenPwd: password
+    })
+    .then(response => {
+      if (response.data) {
+        setIsAuthenticated(true);
+        closeModal();
+        alert('확인되었습니다. 상담실로 입장합니다.');
+        window.open(
+          `./videoPage/pbId=${pbId}&vipId=${vipId}`,
+          '_blank',
+          'noopener,noreferrer'
+        );
+      } else {
+        alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
+        setPassword('');
+      }
+    })
+    .catch(error => {
+      console.error();
+    });
   };
   return (
     <>
