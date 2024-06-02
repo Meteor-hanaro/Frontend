@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from 'react-modal';
+import { LoginContext } from "../../contexts/LoginContextProvider";
 
 function Main() {
   const [data, setData] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // const { userId, userPwd } = LoginContext();
 
   const pbId = 1; 
   const userId = 1;

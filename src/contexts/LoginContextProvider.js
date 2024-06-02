@@ -7,12 +7,23 @@ const LoginContext = createContext();
 const LoginContextProvider = ({ children }) => {
   // 변수
   const [isLogin, setIsLogin] = useState(false);
+  const [userId, setUserId] = useState('');
+  const [userPwd, setUserPwd] = useState('');
   const [userName, setUserName] = useState('');
 
   // 반환값
   return (
     <LoginContext.Provider
-      value={{ isLogin, setIsLogin, userName, setUserName }}
+      value={{
+        isLogin,
+        setIsLogin,
+        userId,
+        setUserId,
+        userPwd,
+        setUserPwd,
+        userName,
+        setUserName,
+      }}
     >
       {children}
     </LoginContext.Provider>
