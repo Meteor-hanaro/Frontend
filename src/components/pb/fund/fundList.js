@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function FundList({ onSelectFund }) {
   const [funds, setFunds] = useState([]);
@@ -7,7 +7,7 @@ function FundList({ onSelectFund }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        axios.get("http://localhost:8080/api/fund/get").then((res) => {
+        axios.get('http://localhost:8080/api/fund/get').then((res) => {
           setFunds(res.data);
         });
       } catch (error) {
@@ -18,11 +18,11 @@ function FundList({ onSelectFund }) {
   }, []);
 
   return (
-    <div className="fund-list">
+    <div className='fund-list'>
       {funds.map((fund, index) => (
         <div
           key={index}
-          className="fund-item"
+          className='fund-item'
           onClick={() => onSelectFund(fund)}
         >
           {fund.name}

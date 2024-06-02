@@ -1273,8 +1273,8 @@ h6 {
   position: relative;
   background: white;
   padding: 2rem;
-  border-radius: 0.625rem; 
-  max-width: 35rem; 
+  border-radius: 0.625rem;
+  max-width: 35rem;
   width: 100%;
   box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.3);
   text-align: center;
@@ -1285,10 +1285,10 @@ h6 {
   border: solid 0.01rem rgb(120, 120, 120);
   height: 2.5rem;
 }
-#buttonCheck, #buttonCancel {
+#buttonCheck,
+#buttonCancel {
   margin: 0 0.5rem;
 }
-
 
 /*--------------------------------------------------------------
 # Pb
@@ -1421,13 +1421,8 @@ h6 {
   width: 100%;
 }
 
-table,
-th,
-td {
-  border: 1px solid black;
-}
-
 .stock-bond-table {
+  border: 1px solid black;
   padding-left: 20%;
   float: right;
   text-align: center;
@@ -1590,4 +1585,7 @@ td {
 
 .agree-container input[type='checkbox'] {
   margin-right: 10px;
+
+.graph-table-button {
+  float: right;
 }
