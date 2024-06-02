@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Line } from "react-chartjs-2";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,7 +10,7 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
+} from 'chart.js';
 
 ChartJS.register(
   CategoryScale,
@@ -31,7 +31,7 @@ function PortfolioGraph() {
     const fetchData = async () => {
       try {
         axios
-          .get("http://localhost:8080/api/portfolio/graphData", {
+          .get('http://localhost:8080/api/portfolio/graphData', {
             params: {
               vipId: 1,
             },
@@ -52,9 +52,9 @@ function PortfolioGraph() {
               values.push(res.data[k].serialValue);
               ds.push(d);
             }
-              
-            let timeline_length = values[0].length
-            
+
+            let timeline_length = values[0].length;
+
             let total_values = [];
             for (let i = 0; i < timeline_length; i++) {
               let sum = 0;
@@ -63,7 +63,7 @@ function PortfolioGraph() {
               }
               total_values.push(sum);
             }
-            
+
             // let sum_values = [];
             // values.forEach((v) => {
             //   for (let i = 0; i < v.length; i++) {
@@ -76,7 +76,7 @@ function PortfolioGraph() {
             // });
 
             ds.push({
-              label: "Total",
+              label: 'Total',
               data: total_values,
             });
 
@@ -100,11 +100,11 @@ function PortfolioGraph() {
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        position: 'top',
       },
       title: {
         display: true,
-        text: "Multi-Line Chart Example",
+        text: 'Multi-Line Chart Example',
       },
     },
   };

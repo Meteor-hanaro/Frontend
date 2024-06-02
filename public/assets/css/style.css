@@ -1397,3 +1397,7 @@ h6 {
   height: 90%;
   width: 90%;
 }
+
+.graph-table-button {
+  float: right;
+}

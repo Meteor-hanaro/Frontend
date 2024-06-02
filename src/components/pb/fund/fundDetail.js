@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Pie } from "react-chartjs-2";
-import { Chart, ArcElement } from "chart.js";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Pie } from 'react-chartjs-2';
+import { Chart, ArcElement } from 'chart.js';
 
 Chart.register(ArcElement);
 
@@ -18,7 +18,7 @@ function FundDetail({ selectedFund }) {
     const fetchData = async () => {
       try {
         axios
-          .get("http://localhost:8080/api/fund/securities/get", {
+          .get('http://localhost:8080/api/fund/securities/get', {
             params: {
               id: selectedFund.id,
             },
@@ -37,7 +37,7 @@ function FundDetail({ selectedFund }) {
               // labels에는 security.name을 추가
               labels.push(item.security.name);
               // datasets의 data에는 fundSecurityPercentage를 추가
-              if (item.security.id.includes("KR")) {
+              if (item.security.id.includes('KR')) {
                 bondPercentage += item.fundSecurityPercentage;
               } else {
                 stockPercentage += item.fundSecurityPercentage;
@@ -50,25 +50,27 @@ function FundDetail({ selectedFund }) {
                 Math.random() * 256
               )}, 0.5)`;
               backgroundColor.push(randomColor);
-              borderColor.push(randomColor.replace("0.5", "1")); // 투명도 조절
+              borderColor.push(randomColor.replace('0.5', '1')); // 투명도 조절
             });
             setStockPercentage(stockPercentage);
             setBondPercentage(bondPercentage);
             // 데이터 객체 구성
             setChartData({
-              labels: ["채권", "주식"],
+              labels: ['채권', '주식'],
               datasets: [
                 {
-                  label: "My First Dataset",
+                  label: 'My First Dataset',
                   data: [bondPercentage, stockPercentage],
-                  backgroundColor: ["rgb(255, 192, 103, 1)", "rgb(80, 188, 223, 1)"],
+                  backgroundColor: [
+                    'rgb(255, 192, 103, 1)',
+                    'rgb(80, 188, 223, 1)',
+                  ],
                   borderColor: borderColor,
                   borderWidth: 1,
                   hoverOffset: 4,
                 },
               ],
             });
-
           });
       } catch (error) {
         console.log(error);
@@ -78,7 +80,7 @@ function FundDetail({ selectedFund }) {
   }, [selectedFund]);
 
   if (!selectedFund) {
-    return <div className="fund-detail">펀드를 선택하세요</div>;
+    return <div className='fund-detail'>펀드를 선택하세요</div>;
   }
 
   const options = {
@@ -88,7 +90,7 @@ function FundDetail({ selectedFund }) {
       tooltip: {
         callbacks: {
           label: function (context) {
-            const label = context.dataset.labels[context.dataIndex] || "";
+            const label = context.dataset.labels[context.dataIndex] || '';
             const value = context.formattedValue;
             return `${label}: ${value}%`;
           },
@@ -102,17 +104,17 @@ function FundDetail({ selectedFund }) {
   // 차트 컴포넌트에서 options를 설정하여 Pie Chart의 크기를 조절
 
   return (
-    <div className="fund-detail">
+    <div className='fund-detail'>
       <h2>{selectedFund.name}</h2>
       <h3>포트폴리오 현황</h3>
-      <div className="portfolio-status alignHorizontal">
-        <div className="fund-chart">
+      <div className='portfolio-status alignHorizontal'>
+        <div className='fund-chart'>
           {chartData && (
-            <Pie data={chartData} id="fundPieChart" options={options} />
+            <Pie data={chartData} id='fundPieChart' options={options} />
           )}
           {/* 차트 컴포넌트를 여기에 포함할 수 있습니다 */}
         </div>
-        <table className="table stock-bond-table">
+        <table className='table stock-bond-table'>
           <thead>
             <tr>
               <th>자산구분</th>
@@ -131,7 +133,7 @@ function FundDetail({ selectedFund }) {
         </table>
       </div>
       <h3>펀드 상세정보</h3>
-      <table className="fund-table">
+      <table className='fund-table'>
         <thead>
           <tr>
             <th>순위</th>

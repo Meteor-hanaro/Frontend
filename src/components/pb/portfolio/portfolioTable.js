@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function PortfolioTable() {
   const [portfolioItems, setPortfolioItems] = useState([]);
-  const [vipName, setVipName] = useState("");
+  const [vipName, setVipName] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         axios
-          .get("http://localhost:8080/api/portfolio/itemValue", {
+          .get('http://localhost:8080/api/portfolio/itemValue', {
             params: {
               vipId: 1,
             },
@@ -25,7 +25,7 @@ function PortfolioTable() {
 
       try {
         axios
-          .get("http://localhost:8080/api/user/name", {
+          .get('http://localhost:8080/api/user/name', {
             params: {
               vipId: 1,
             },
@@ -37,15 +37,15 @@ function PortfolioTable() {
           });
       } catch (error) {
         console.log(error);
-      }      
+      }
     };
     fetchData();
   }, []);
 
   return (
-    <div className="portfolio-items-list">
+    <div className='portfolio-status'>
       <h2>{vipName}님의 포트폴리오</h2>
-      <table className="table port">
+      <table className='table port fund-table'>
         <thead>
           <tr>
             <th>펀드명</th>
@@ -61,8 +61,8 @@ function PortfolioTable() {
               <td>
                 {item.startDate[0]}.{item.startDate[1]}.{item.startDate[2]}
               </td>
-              <td>{item.startAmount.toLocaleString("ko-KR")}</td>
-              <td>{item.evaluationAmount.toLocaleString("ko-KR")}</td>
+              <td>{item.startAmount.toLocaleString('ko-KR')}</td>
+              <td>{item.evaluationAmount.toLocaleString('ko-KR')}</td>
             </tr>
           ))}
         </tbody>
