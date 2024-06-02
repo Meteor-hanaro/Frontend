@@ -6,18 +6,20 @@ import { LoginContext } from "../../contexts/LoginContextProvider";
 function Main() {
   const [data, setData] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [vipId, setVipId] = useState('');
+  const [vipPwd, setVipPwd] = useState('');
+  const [pbId, setPbId] = useState('');
+
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  // const { userId, userPwd } = LoginContext();
-
-  const pbId = 1; 
-  const userId = 1;
 
   useEffect(() => {
     axios.get("http://localhost:8080/api").then((res) => {
       setData(res.data);
       console.log(data);
+      setVipId(res.data.vipInfo.vipId);
+      setVipPwd(res.data.vipInfo.vipPwd);
+      setPbId(res.data.pbInfo.pbId);
     });
   });
 
@@ -35,11 +37,16 @@ function Main() {
   };
 
   const handlePasswordSubmit = (e) => {
+    axios.post('http://localhost:8080/api/main/pwdcheck', {
+      password: vipPwd,
+      writtenPwd: e.target.value
+    })
+    
     if (password === '1111') {
       setIsAuthenticated(true);
       closeModal();
       alert('확인되었습니다. 상담실로 입장합니다.');
-      window.open(`./videoPage/pbId=${pbId}&userId=${userId}`, '_blank', 'noopener,noreferrer');
+      window.open(`./videoPage/pbId=${pbId}&vipId=${vipId}`, '_blank', 'noopener,noreferrer');
     } else {
       alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
       setPassword('');
