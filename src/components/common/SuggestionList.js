@@ -1,11 +1,10 @@
-import NameContainer from "./NameContainer";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 function SuggestionList({ setSuggestionNumber, data }) {
   const ws = useRef(null);
 
   useEffect(() => {
-    ws.current = new WebSocket("ws://localhost:8888");
+    ws.current = new WebSocket("ws://localhost:8889");
 
     ws.current.onopen = () => {
       console.log("WebSocket connection opened");
@@ -36,16 +35,22 @@ function SuggestionList({ setSuggestionNumber, data }) {
   };
 
   return (
-    <div>
-      {data &&
-        data.suggestionItems.map((item, index) => (
-          <div key={item.suggestionName} onClick={() => updateProgress(index)}>
-            <NameContainer
-              contents={item.suggestionName}
-              // onClick={updateProgress(index)}
-            />
-          </div>
-        ))}
+    <div className="dropdown">
+      <button
+        type="button"
+        className="btn btn-primary dropdown-toggle"
+        data-bs-toggle="dropdown"
+      >
+        Suggestion List
+      </button>
+      <ul className="dropdown-menu">
+        {data &&
+          data.suggestionItems.map((item, index) => (
+            <li key={item.suggestionName} onClick={() => updateProgress(index)}>
+              {item.suggestionName}
+            </li>
+          ))}
+      </ul>
     </div>
   );
 }

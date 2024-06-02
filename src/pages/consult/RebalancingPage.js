@@ -71,22 +71,24 @@ const RebalancingPage = () => {
 
   return (
     <div id="divRebalancing">
-      <div id="comparisonContainer">
-        <div id="portfolioContainer">
-          <TrafficChart
-            data={transferPFData}
-            name={portfolioData.userName + "님의 포트폴리오"}
-          />
+      <SuggestionList
+        setSuggestionNumber={setSuggestionNumber}
+        data={suggestionData}
+      />
+      <div className="d-flex mt-2">
+        <div id="comparisonContainer">
+          <div id="portfolioContainer">
+            <TrafficChart
+              data={transferPFData}
+              name={portfolioData.userName + "님의 포트폴리오"}
+            />
+          </div>
         </div>
-        <div id="suggestionContainer">
-          <TrafficChart data={transferSGData} name={suggestionName} />
+        <div id="comparisonContainer">
+          <div id="portfolioContainer">
+            <TrafficChart data={transferSGData} name={suggestionName} />
+          </div>
         </div>
-      </div>
-      <div id="suggestionsListContainer">
-        <SuggestionList
-          setSuggestionNumber={setSuggestionNumber}
-          data={suggestionData}
-        />
       </div>
     </div>
   );

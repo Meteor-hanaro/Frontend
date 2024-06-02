@@ -1,7 +1,7 @@
 import ProgressBarPage from "./ProgressBarPage";
 import SharingPage from "./SharingPage";
 import { useState } from "react";
-import { useWebRTC } from "./WebRTCContext";
+import { useWebRTC } from "../../contexts/WebRTCContext";
 
 const WebRTC = () => {
   const { localVideoRef, remoteVideoRef } = useWebRTC();
@@ -26,7 +26,7 @@ const WebRTC = () => {
           onClick={createOffer}
         >
           Create Offer
-        </button>{" "}
+        </button>
         <br />
         <h2>PB</h2>
         <video id="localVideo" ref={localVideoRef} autoPlay playsInline />
@@ -51,7 +51,7 @@ const WebRTC = () => {
 
       <div id="divInteraction">
         <ProgressBarPage setPageNumber={setPageNumber} />
-        <SharingPage number={pageNumber} localVideoRef={localVideoRef}/>
+        <SharingPage number={pageNumber} localVideoRef={localVideoRef} />
       </div>
     </div>
   );

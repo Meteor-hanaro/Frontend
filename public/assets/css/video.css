@@ -1,22 +1,22 @@
 .videoPage {
-    display: flex;
-    margin: 0;
-    pad: 0;
-    height: 100%;
+  display: flex;
+  margin: 0;
+  pad: 0;
+  height: 100%;
 }
 
 #videoContainer {
-    display: flex;
-    width: 100%;
-    height: 100vh;
+  display: flex;
+  width: 100%;
+  height: 100vh;
 }
 
 #divVideos,
 #divInteraction {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 video {
@@ -30,8 +30,8 @@ video {
 }
 
 #localVideo {
-    background-color: black;
-    /* width: 500px;
+  background-color: black;
+  /* width: 500px;
     height: 375px; */
     width: 25rem;
     height: 18.75rem;
@@ -140,28 +140,29 @@ video {
 }
 
 #divRebalancing {
-    width: 100%;
-    height: 100%;
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  padding: 0;
 }
 
 #comparisonContainer {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 48%;
+  height: 100%;
 }
 
-#portfolioContainer, #suggestionContainer {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
+#portfolioContainer,
+#suggestionContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
 }
 
 #portfolioContainer {
@@ -185,23 +186,23 @@ video {
 }
 
 #divIdVerification {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    height: 100%;
-    aspect-ratio: 4/3;
-    text-align: center;
-    align-items: center;
+  height: 100%;
+  /* aspect-ratio: 4/3; */
+  text-align: center;
+  align-items: center;
 }
 
 #captureButton {
-    width: fit-content;
+  /* width: fit-content; */
 }
 
 #capturedScreen {
-    background-color: white;
-    width: 100%;
-    height: 100%;
+  background-color: white;
+  width: 100%;
+  height: 100%;
 }
 
 #divContract {

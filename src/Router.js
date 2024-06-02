@@ -11,28 +11,26 @@ import Sign from './pages/Sign';
 
 function Router() {
     return (
-        <BrowserRouter>
-            <LoginContextProvider>
-                <Routes>
-                    // pb
-                    <Route path="/pb" element={<PbLoginPage />} />
-                    <Route path="/pb/main" element={<PbMainPage />} />
-                    <Route path="/pb/fund" element={<PbFundPage />} />
-                    // user
-                    <Route path="/user" element={<UserLoginPage />} />
-                    <Route path="/user/main" element={<UserMainPage />} />
-                    // WebRTC
-                    <Route
-                        path="/user/videoPage/:params"
-                        element={<VideoPage />}
-                    />
-                    // Auth
-                    <Route path="/auth" element={<AuthPage />} />
-                    <Route path="/sign" element={<Sign />} />
-                </Routes>
-            </LoginContextProvider>
-        </BrowserRouter>
-    );
+    <BrowserRouter>
+      <LoginContextProvider>
+        <Routes>
+          // pb
+          <Route path="/pb" element={<PbLoginPage />} />
+          <Route path="/pb/main" element={<PbMainPage />} />
+          <Route path="/pb/fund" element={<PbFundPage />} />
+          // vip
+          <Route path="/vip" element={<UserLoginPage />} />
+          <Route path="/vip/main" element={<UserMainPage />} />
+          // WebRTC
+          <Route path="/videoPage" element={<VideoPage />} />
+          // Auth
+          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/sign" element={<Sign />} />
+        </Routes>
+      </LoginContextProvider>
+    </BrowserRouter>
+  );
+
 }
 
 export default Router;
