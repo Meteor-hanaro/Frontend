@@ -42,8 +42,8 @@ h6 {
 # Main
 --------------------------------------------------------------*/
 #main {
-  /* margin-top: 60px;
-  padding: 20px 30px; */
+  margin-top: 60px;
+  padding: 20px 30px;
   transition: all 0.3s;
 }
 
@@ -461,7 +461,7 @@ h6 {
   list-style: none;
 }
 
-.header-nav > ul {
+.header-nav>ul {
   margin: 0;
   padding: 0;
 }
@@ -599,13 +599,12 @@ h6 {
 --------------------------------------------------------------*/
 .sidebar {
   position: fixed;
-  top: 0;
+  top: 60px;
   left: 0;
   bottom: 0;
   width: 100px;
   z-index: 996;
   transition: all 0.3s;
-  padding: 20px;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
@@ -630,6 +629,7 @@ h6 {
 }
 
 @media (min-width: 1200px) {
+
   #main,
   #footer {
     margin-left: 100px;
@@ -643,6 +643,7 @@ h6 {
 }
 
 @media (min-width: 1200px) {
+
   .toggle-sidebar #main,
   .toggle-sidebar #footer {
     margin-left: 0;
@@ -680,6 +681,7 @@ h6 {
 .sidebar-nav .nav-link {
   display: flex;
   align-items: center;
+  width: 5.5em;
   font-size: 15px;
   font-weight: 600;
   color: #4154f1;
@@ -687,11 +689,13 @@ h6 {
   background: #f6f9ff;
   padding: 10px 15px;
   border-radius: 4px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
 }
 
 .sidebar-nav .nav-link i {
   font-size: 16px;
-  margin-right: 10px;
   color: #4154f1;
 }
 
@@ -881,7 +885,7 @@ h6 {
 }
 
 /* News & Updates */
-.dashboard .news .post-item + .post-item {
+.dashboard .news .post-item+.post-item {
   margin-top: 15px;
 }
 
@@ -1253,8 +1257,7 @@ h6 {
   background: #d7b863;
   border: none;
   border-radius: 18px;
-  filter: drop-shadow(-9px -8px 20px rgba(218, 229, 251, 0.5))
-    drop-shadow(8px 8px 13px rgba(174, 174, 192, 0.5));
+  filter: drop-shadow(-9px -8px 20px rgba(218, 229, 251, 0.5)) drop-shadow(8px 8px 13px rgba(174, 174, 192, 0.5));
 }
 
 /*--------------------------------------------------------------
@@ -1319,6 +1322,23 @@ h6 {
   color: #012970;
 }
 
+.pbBtn {
+  background: #f6f9ff;
+  border: 0;
+  padding: 5px 10px;
+  font-weight: 550;
+  color: #4154f1;
+  border-radius: 15px;
+}
+
+.pbBtn:hover {
+  background: #dfe8ff;
+}
+
+/*--------------------------------------------------------------
+# Pb Fund
+--------------------------------------------------------------*/
+
 .fund-page {
   display: flex;
 }
@@ -1335,12 +1355,12 @@ h6 {
 --------------------------------------------------------------*/
 
 .fund-list {
-  background-color: #ECF0F1;
+  background-color: #ecf0f1;
   padding: 20px;
   width: 30%;
-  max-height: 100vh; /* Adjust the height as needed */
+  max-height: 100vh;
+  /* Adjust the height as needed */
   overflow-y: auto;
-
 }
 
 .fund-item {
@@ -1351,7 +1371,7 @@ h6 {
 }
 
 .fund-item:hover {
-  background-color: #BDC3C7;
+  background-color: #bdc3c7;
 }
 
 /*--------------------------------------------------------------
@@ -1359,10 +1379,11 @@ h6 {
 --------------------------------------------------------------*/
 
 .fund-detail {
-  background-color: #ECF0F1;
+  background-color: #ecf0f1;
   padding: 20px;
   width: 70%;
-  max-height: 100vh; /* Adjust the height as needed */
+  max-height: 100vh;
+  /* Adjust the height as needed */
   overflow-y: auto;
 }
 
@@ -1372,8 +1393,9 @@ h6 {
   border-collapse: collapse;
 }
 
-.fund-table th, .fund-table td {
-  border: 1px solid #BDC3C7;
+.fund-table th,
+.fund-table td {
+  border: 1px solid #bdc3c7;
   padding: 10px;
   text-align: left;
 }
@@ -1386,7 +1408,6 @@ h6 {
 
 .portfolio-status {
   width: 100%;
-
 }
 
 .stock-bond-table {
@@ -1396,8 +1417,33 @@ h6 {
   text-align: center;
   height: 90%;
   width: 90%;
+  border: 1px solid black;
 }
 
 .graph-table-button {
   float: right;
+}
+
+/* pdf css */
+
+.react-pdf__Page {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.react-pdf__Document {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.react-pdf__Page__canvas {
+  border: 1px solid #ccc;
+}
+
+.react-pdf__Page__textContent,
+.react-pdf__Page__annotations {
+  display: none;
 }

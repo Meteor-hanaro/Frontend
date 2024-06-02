@@ -1,4 +1,9 @@
+import { useContext } from 'react';
+import { LoginContext } from '../../contexts/LoginContextProvider';
+
 function Header() {
+  const { userName } = useContext(LoginContext);
+
   return (
     <>
       {/* ======= Header ======= */}
@@ -17,7 +22,7 @@ function Header() {
           <ul className="d-flex align-items-center">
             <li className="nav-item dropdown pe-3">
               <div className="nav-link nav-profile d-flex align-items-center pe-0">
-                <span className="d-none d-md-block ps-2">K. Anderson</span>
+                <span className="d-none d-md-block ps-2">{userName}</span>
               </div>
               {/* End Profile Iamge Icon */}
             </li>

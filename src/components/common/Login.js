@@ -1,4 +1,55 @@
-function Login() {
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { LoginContext } from '../../contexts/LoginContextProvider';
+import axios from 'axios';
+
+function Login({ type }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { setIsLogin, setUserName } = useContext(LoginContext);
+  const navigate = useNavigate();
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleLogin = () => {
+    const url = 'http://127.0.0.1:8080/api/' + type + '/login';
+    const data = {
+      email: email,
+      password: password,
+    };
+
+    axios
+      .post(url, null, {
+        params: data,
+      })
+      .then((res) => {
+        console.log(res);
+        // LoginContextProvider
+        setIsLogin(true);
+        setUserName(res.data.userName);
+
+        // localStorage에 jwt token 저장
+        localStorage.setItem('accessToken', res.data.accessToken);
+        localStorage.setItem('refreshToken', res.data.refreshToken);
+
+        setTimeout(() => {
+          navigate('/' + type + '/main');
+        }, 1000);
+      })
+      .catch((error) => {
+        const code = error.response.data.code;
+        if (code == 4400) {
+          alert('존재하지 않은 사용자입니다.');
+        }
+      });
+  };
+
   return (
     <div className="container">
       <section className="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
@@ -26,14 +77,14 @@ function Login() {
                         </div>
                       </div>
                       <p className="text-center small">
-                        Enter your ID &amp; PW to login
+                        Enter your E-MAIL &amp; PW to login
                       </p>
                     </div>
                   </div>
                   <form className="row g-3 needs-validation" noValidate="">
                     <div className="col-12">
                       <label htmlFor="yourUsername" className="form-label">
-                        ID
+                        E-MAIL
                       </label>
                       <div className="input-group has-validation">
                         <input
@@ -42,6 +93,7 @@ function Login() {
                           className="form-control"
                           id="yourUsername"
                           required=""
+                          onChange={handleEmailChange}
                         />
                         <div className="invalid-feedback">
                           Please enter your username.
@@ -58,13 +110,18 @@ function Login() {
                         className="form-control"
                         id="yourPassword"
                         required=""
+                        onChange={handlePasswordChange}
                       />
                       <div className="invalid-feedback">
                         Please enter your password!
                       </div>
                     </div>
                     <div className="col-12">
-                      <button className="btn btn-primary w-100" type="submit">
+                      <button
+                        className="btn btn-primary w-100"
+                        type="button"
+                        onClick={handleLogin}
+                      >
                         Login
                       </button>
                     </div>

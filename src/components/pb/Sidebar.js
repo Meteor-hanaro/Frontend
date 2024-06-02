@@ -17,15 +17,6 @@ function Sidebar() {
                 <span>Products</span>
               </a>
             </li>
-            <li className='nav-item'>
-              <a
-                className='nav-link alignVertical'
-                href='components-alerts.html'
-              >
-                <i className='bi bi-bell' />
-                <span>Notifications</span>
-              </a>
-            </li>
             {/* End Dashboard Nav */}
           </ul>
         </aside>
