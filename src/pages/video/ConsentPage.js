@@ -45,26 +45,27 @@ const ConsentPage = () => {
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '10px',
-        backgroundColor: 'white', // 배경을 흰색으로 설정
-      }}
-    >
-      {data &&
-        data.map((item, index) => {
-          return (
-            <FundCheckItem
-              key={index}
-              isCheck={item.isChecked}
-              title={item.title}
-              onClick={() => handleItemClick(item)}
-            />
-          );
-        })}
+    <div className="consent-page">
+      <h1 className="card-title">{'희망 미래 펀드'}</h1>
+      <h3 className="card-body">
+        {
+          '이 펀드는 어쩌구 저쩌구 펀드입니다. 이건 이렇구요 저건 저렇구요 이래되고요 저래되고 이런사람들한테 추천하는 펀드입니다요'
+        }
+      </h3>
+      <h5 className="fund-header-left">{'필수 서류 확인'}</h5>
+      <div className="fund-check-list">
+        {data &&
+          data.map((item, index) => {
+            return (
+              <FundCheckItem
+                key={index}
+                isCheck={item.isChecked}
+                title={item.title}
+                onClick={() => handleItemClick(item)}
+              />
+            );
+          })}
+      </div>
 
       {modalVisible && selectedItem && (
         <div className="modal">
@@ -78,7 +79,7 @@ const ConsentPage = () => {
               <div className="pdf-container">
                 <Pdf pdfFile={selectedItem.pdfUrl} />
               </div>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div className="agree-container">
                 <input
                   type="checkbox"
                   checked={selectedItem.isChecked}
