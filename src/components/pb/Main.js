@@ -81,7 +81,7 @@ function Main() {
                       <td>{item.consultDate}</td>
                       <td>
                         <button type="button" className="pbBtn">
-                          <i class="bi bi-clipboard2-data"></i>
+                          <i className="bi bi-clipboard2-data"></i>
                           &nbsp;포트폴리오
                         </button>
                         <button
@@ -89,15 +89,15 @@ function Main() {
                           className="pbBtn"
                           style={{ marginLeft: '20px' }}
                         >
-                          <i class="bi bi-clipboard2-check"></i>
+                          <i className="bi bi-clipboard2-check"></i>
                           &nbsp; 제안서
                         </button>
                         <button
                           type="button"
-                          class="pbBtn"
+                          className="pbBtn"
                           style={{ marginLeft: '20px' }}
                         >
-                          <i class="bi bi-person-rolodex"></i>
+                          <i className="bi bi-person-rolodex"></i>
                           &nbsp; 상담 신청
                         </button>
                       </td>
