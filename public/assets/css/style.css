@@ -1547,6 +1547,13 @@ h6 {
 }
 
 .react-pdf__Document::-webkit-scrollbar-thumb {
+  background: #717ff5; /* 스크롤바 색상 */
+  border-radius: 1rem; /* 스크롤바 둥근 테두리 */
+}
+
+.react-pdf__Document::-webkit-scrollbar-track {
+  background: #f6f6fe; /*스크롤바 뒷 배경 색상*/
+
   background: #717ff5;
   /* 스크롤바 색상 */
   border-radius: 1rem;
@@ -1556,6 +1563,7 @@ h6 {
 .react-pdf__Document::-webkit-scrollbar-track {
   background: #f6f6fe;
   /*스크롤바 뒷 배경 색상*/
+
 }
 
 /*--------------------------------------------------------------
@@ -1698,3 +1706,4 @@ h6 {
 .pdf-container {
   margin: 20px 0;
 }
+

@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from "react";
-import ReactECharts from "echarts-for-react";
+import React, { useState, useEffect } from 'react';
+import ReactECharts from 'echarts-for-react';
 
 const TrafficChart = ({ data, name }) => {
   const [chartOption, setChartOption] = useState({
     tooltip: {
-      trigger: "item",
+      trigger: 'item',
     },
     legend: {
-      top: "5%",
-      left: "center",
+      bottom: '0',
+      left: '0',
     },
     series: [
       {
         // name: "Access From",
-        type: "pie",
-        radius: ["40%", "70%"],
+        type: 'pie',
+        radius: ['30%', '50%'],
         avoidLabelOverlap: false,
         label: {
           show: false,
-          position: "center",
+          position: 'center',
         },
         emphasis: {
           label: {
             show: true,
-            fontSize: "18",
-            fontWeight: "bold",
+            fontSize: '15',
+            fontWeight: 'bold',
           },
         },
         labelLine: {
@@ -50,11 +50,11 @@ const TrafficChart = ({ data, name }) => {
 
   return (
     <div className="container">
-      <div className="card-body pb-0">
-        <h5 className="card-title">{name}</h5>
+      <div className="card-body pb-0 d-flex">
+        <h5 className="card-title z-1 position-absolute">{name}</h5>
         <ReactECharts
           option={chartOption}
-          style={{ height: 400, width: "100%" }}
+          style={{ height: 300, width: '100%' }}
         />
       </div>
     </div>

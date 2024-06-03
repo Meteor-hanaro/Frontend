@@ -4,13 +4,14 @@ import FundCheckItem from '../../components/common/FundCheckItem';
 import Pdf from '../../components/common/Pdf';
 import FundContract from '../../components/common/FundContract';
 
-const ConsentPage = () => {
+const ConsentPage = ({ suggestionItemData }) => {
   const [data, setData] = useState();
   const [selectedItem, setSelectedItem] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     getData();
+    console.log(suggestionItemData);
   }, []);
 
   const getData = async () => {
