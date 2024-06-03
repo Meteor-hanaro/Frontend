@@ -1,7 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import auth from '../../auth';
+import Modal from 'react-modal';
 
 function Main() {
+  const [data, setData] = useState("");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [password, setPassword] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const pbId = 1; 
+  const userId = 1;
+
   useEffect(() => {
     auth
       .get('http://127.0.0.1:8080/api/vip/main')
@@ -13,6 +22,30 @@ function Main() {
       });
   }, []);
 
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setPassword('');
+    setModalIsOpen(false);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handlePasswordSubmit = (e) => {
+    if (password === '1111') {
+      setIsAuthenticated(true);
+      closeModal();
+      alert('확인되었습니다. 상담실로 입장합니다.');
+      window.open(`./videoPage/pbId=${pbId}&userId=${userId}`, '_blank', 'noopener,noreferrer');
+    } else {
+      alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
+      setPassword('');
+    }
+  };
   return (
     <>
       <main
@@ -91,10 +124,29 @@ function Main() {
               <button
                 type="button"
                 className="enterButton"
-                style={{ marginBottom: '0px' }}
+                style={{ marginBottom: "0px" }}
+                onClick={openModal}
               >
                 상담 바로 입장하기
               </button>
+
+              <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                contentLabel="Password Modal"
+                className="consultingModal"  
+                overlayClassName="consultingModalOverlay"  
+              >
+                <h4>상담실 입장을 위해 비밀번호 확인이 필요합니다.</h4> <br/>
+                <input 
+                  id="inputPwd"
+                  type="password" 
+                  value={password} 
+                  onChange={handlePasswordChange} 
+                /> <br/> <br/>
+                <button id="buttonCheck" className="btn btn-primary" onClick={handlePasswordSubmit}>확인</button>
+                <button id="buttonCancel" className="btn btn-primary" onClick={closeModal}>취소</button>
+              </Modal>
             </div>
             <div
               className="card info-card alignVertical"
