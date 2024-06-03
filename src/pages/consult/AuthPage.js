@@ -29,9 +29,28 @@ function AuthPage() {
   };
 
   return (
-    <div className="AuthPage">
-      <div>
-        <button onClick={certify}>간편인증</button>
+    <div className="AuthPage justify-content-center">
+      <div id="auth-box" className="d-flex align-items-center">
+        <div id="icons-box">   
+          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_KB.png?v=20240122" /></div>
+          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_NAVER.png?v=20240122" /></div>
+          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_KAKAOBANK.png?v=20240122" /></div>
+          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_KAKAO.png?v=20240122" /></div>
+        </div>
+        <div id="icons-box">   
+          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_PASS.png?v=20240122" /></div>
+          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_HANA.png?v=20240122" /></div>
+          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_SAMSUNG.png?v=20240122" /></div>
+          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_SHINHAN.png?v=20240122" /></div>
+        </div>
+        <div id="icons-box">   
+          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_TOSS.png?v=20240122" /></div>
+          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_PAYCO.png?v=20240122" /></div>
+          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_KFTC.png?v=20240122" /></div>
+        </div>
+        <div id="middle-box">
+          <button className="btn btn-auth" onClick={certify}>간편인증</button>
+        </div>
       </div>
     </div>
   );

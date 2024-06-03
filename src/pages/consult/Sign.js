@@ -186,10 +186,16 @@ function Sign() {
           확인
         </button>
       </Modal>
-      <Pdf pdfFile={pdfUrl} />
-      <button onClick={signNow} className="btn btn-primary">
-        서명
-      </button>
+
+      <div id="finalContract">
+        <div>
+          <h3 className="final-title">최종계약서</h3>
+        </div>
+          <Pdf pdfFile={pdfUrl} />
+          <button onClick={signNow} className="btn-sign btn btn-primary">
+          서명
+        </button>
+      </div>
     </div>
   );
 }

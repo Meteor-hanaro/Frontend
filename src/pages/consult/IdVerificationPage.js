@@ -49,7 +49,7 @@ const IdVerificationPage = ({localVideoRef}) => {
                 신분증촬영
             </button> <br/><br/>
             <div id="capturedScreen">
-
+                신분증을 카메라에 가져다 대주세요.
             </div>
         </div>
     );
