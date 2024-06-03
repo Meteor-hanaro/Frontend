@@ -1,19 +1,18 @@
-import ProgressBarPage from "./ProgressBarPage";
-import SharingPage from "./SharingPage";
-import { useState } from "react";
-import { useWebRTC } from "../../contexts/WebRTCContext";
+import ProgressBarPage from './ProgressBarPage';
+import SharingPage from './SharingPage';
+import { useState } from 'react';
+import { useWebRTC } from '../../contexts/WebRTCContext';
 
 const WebRTC = () => {
   const { localVideoRef, remoteVideoRef } = useWebRTC();
   const { createOffer, sendMessage } = useWebRTC();
-
   const [pageNumber, setPageNumber] = useState(1);
 
   const handleSendMessage = () => {
-    const txt = document.getElementById("txt");
+    const txt = document.getElementById('txt');
     if (txt) {
       sendMessage(txt.value);
-      txt.value = "";
+      txt.value = '';
     }
   };
 
@@ -37,7 +36,7 @@ const WebRTC = () => {
           ref={remoteVideoRef}
           autoPlay
           playsInline
-        />{" "}
+        />{' '}
         <br />
         <input id="txt" type="text" /> <br />
         <button

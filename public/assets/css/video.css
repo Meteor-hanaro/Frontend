@@ -47,13 +47,15 @@ video {
 
 #divInteraction {
   flex: 8;
-  background-color: rgb(34, 34, 34);
+  background-color: #f6f9ff;
   padding: 1.25rem;
   box-sizing: border-box;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  overflow-y: scroll;
+  border-left: 3px solid #ccc;
 }
 
 #divProgressBar {
