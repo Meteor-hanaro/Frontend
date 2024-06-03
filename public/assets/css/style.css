@@ -461,7 +461,7 @@ h6 {
   list-style: none;
 }
 
-.header-nav>ul {
+.header-nav > ul {
   margin: 0;
   padding: 0;
 }
@@ -629,7 +629,6 @@ h6 {
 }
 
 @media (min-width: 1200px) {
-
   #main,
   #footer {
     margin-left: 100px;
@@ -643,7 +642,6 @@ h6 {
 }
 
 @media (min-width: 1200px) {
-
   .toggle-sidebar #main,
   .toggle-sidebar #footer {
     margin-left: 0;
@@ -885,7 +883,7 @@ h6 {
 }
 
 /* News & Updates */
-.dashboard .news .post-item+.post-item {
+.dashboard .news .post-item + .post-item {
   margin-top: 15px;
 }
 
@@ -1257,7 +1255,8 @@ h6 {
   background: #d7b863;
   border: none;
   border-radius: 18px;
-  filter: drop-shadow(-9px -8px 20px rgba(218, 229, 251, 0.5)) drop-shadow(8px 8px 13px rgba(174, 174, 192, 0.5));
+  filter: drop-shadow(-9px -8px 20px rgba(218, 229, 251, 0.5))
+    drop-shadow(8px 8px 13px rgba(174, 174, 192, 0.5));
 }
 
 .card-content {
@@ -1498,10 +1497,10 @@ h6 {
   border: 1px solid black;
 }
 
-<<<<<<<<< Temporary merge branch 1 .pdf-container {
+.pdf-container {
   width: 100%;
-  height: 60vh;
-  overflow-y: auto;
+  height: 30rem;
+  overflow: hidden;
 }
 
 /* pdf css */
@@ -1534,7 +1533,7 @@ h6 {
   height: 100%;
 }
 
-#signDiv>div {
+#signDiv > div {
   height: 100%;
 }
 
