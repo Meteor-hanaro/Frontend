@@ -1,12 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "@fortawesome/fontawesome-free/css/all.min.css"; // i tag
-import Router from "./Router";
-import WebRTCProvider from "./contexts/WebRTCContext";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import '@fortawesome/fontawesome-free/css/all.min.css'; // i tag
+import Router from './Router';
+import WebRTCProvider from './contexts/WebRTCContext';
 
-const signaling = new WebSocket("ws://54.180.102.224:8888");
+const signaling = new WebSocket(`ws://${process.env.REACT_APP_WEBRTCWS}`);
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <WebRTCProvider signaling={signaling}>

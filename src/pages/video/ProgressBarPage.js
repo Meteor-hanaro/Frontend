@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from 'react';
 
 const ProgressBarPage = ({ setPageNumber }) => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -6,18 +6,18 @@ const ProgressBarPage = ({ setPageNumber }) => {
   const ws = useRef(null);
 
   useEffect(() => {
-    ws.current = new WebSocket("ws://54.180.102.224:8890");
+    ws.current = new WebSocket(`ws://${process.env.REACT_APP_PROGRESSWS}`);
 
     ws.current.onopen = () => {
-      console.log("WebSocket connection opened");
-      ws.current.send(JSON.stringify({ type: "getCurrentStep" }));
+      console.log('WebSocket connection opened');
+      ws.current.send(JSON.stringify({ type: 'getCurrentStep' }));
     };
 
     // 페이지 번호 데이터 수신
     ws.current.onmessage = (event) => {
       const receivedData = event.data;
       receivedData.text().then((text) => {
-        if (JSON.parse(text).type === "updateStep") {
+        if (JSON.parse(text).type === 'updateStep') {
           setPageNumber(JSON.parse(text).step);
           setCurrentStep(JSON.parse(text).step);
         }
@@ -29,12 +29,12 @@ const ProgressBarPage = ({ setPageNumber }) => {
   }, []);
 
   const updateProgress = (step) => {
-    console.log("click");
+    console.log('click');
     setPageNumber(step); // 페이지 변경용 useState
     setCurrentStep(step); // 동시성 유지를 위한 useState
     // 페이지 번호 변경할 때마다 데이터 전송
     if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-      ws.current.send(JSON.stringify({ type: "updateStep", step }));
+      ws.current.send(JSON.stringify({ type: 'updateStep', step }));
     }
   };
 
@@ -53,8 +53,8 @@ const ProgressBarPage = ({ setPageNumber }) => {
             className="progressCircle"
             onClick={() => updateProgress(index + 1)}
             style={{
-              backgroundColor: index < currentStep ? "#316df4" : "#ffffff",
-              color: index < currentStep ? "white" : "#316df4",
+              backgroundColor: index < currentStep ? '#316df4' : '#ffffff',
+              color: index < currentStep ? 'white' : '#316df4',
             }}
           >
             {index + 1}
