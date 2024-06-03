@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 function Card({
   type,
   cardTitle,
@@ -8,12 +8,10 @@ function Card({
   cardInDe,
   icon,
 }) {
-
-  const [perColor, setPerColor] = useState("text-success");
+  const [perColor, setPerColor] = useState('text-success');
   useEffect(() => {
-    if (cardInDe === "decrease") setPerColor("text-danger");
+    if (cardInDe === 'decrease') setPerColor('text-danger');
   });
-  
 
   return (
     <div className="col-xxl-4 col-md-6">

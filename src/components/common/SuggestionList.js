@@ -4,7 +4,9 @@ function SuggestionList({ setSuggestionNumber, data }) {
   const ws = useRef(null);
 
   useEffect(() => {
-    ws.current = new WebSocket('ws://localhost:8889');
+    ws.current = new WebSocket(
+      `ws://${process.env.REACT_APP_SUGGESTIONLISTWS}`
+    );
 
     ws.current.onopen = () => {
       console.log('WebSocket connection opened');

@@ -1,8 +1,8 @@
-import Header from "../components/sidebar/Header";
-import Sidebar from "../components/sidebar/Sidebar";
-import ProfileCard from "../components/user/ProfileCard";
-import Footer from "../components/sidebar/Footer";
-import ProfileDetail from "../components/user/ProfileDetail";
+import Header from '../components/sidebar/Header';
+import Sidebar from '../components/sidebar/Sidebar';
+import ProfileCard from '../components/user/ProfileCard';
+import Footer from '../components/sidebar/Footer';
+import ProfileDetail from '../components/user/ProfileDetail';
 
 function ProfilePage() {
   return (

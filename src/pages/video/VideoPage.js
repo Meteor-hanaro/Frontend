@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
-import WebRTC from "./WebRTC";
+import React, { useEffect, useState, useRef } from 'react';
+import WebRTC from './WebRTC';
 
 const VideoPage = () => {
   const [signaling, setSignaling] = useState(null);
   const sendMessageRef = useRef(null);
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:8888");
+    const ws = new WebSocket(`ws://${process.env.REACT_APP_WEBRTCWS}`);
     ws.onopen = () => {
-      console.log("Connected to signaling server");
+      console.log('Connected to signaling server');
     };
     setSignaling(ws);
 
