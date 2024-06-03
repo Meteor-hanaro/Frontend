@@ -221,3 +221,6 @@ video {
 #contractCanvas {
     display: block;
 }
+.marquee {
+  display: none;
+}

@@ -1,8 +1,8 @@
 import IdVerificationPage from "../consult/IdVerificationPage";
 import { useEffect } from "react"; 
 import RebalancingPage from "../consult/RebalancingPage";
-import Sign from "../Sign";
-import AuthPage from "../AuthPage";
+import Sign from "../consult/Sign";
+import AuthPage from "../consult/AuthPage";
 import ConsentPage from "./ConsentPage";
 
 const SharingPage = ({ number, localVideoRef }) => {

@@ -1,6 +1,10 @@
 import React from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 const IdVerificationPage = ({localVideoRef}) => {
+    const { params } = useParams();
+    const queryParams = new URLSearchParams(params);
+    const vipId = queryParams.get('vipId');
     const captureNow = () =>{
         if(localVideoRef.current){
             const video = localVideoRef.current;
@@ -19,6 +23,7 @@ const IdVerificationPage = ({localVideoRef}) => {
             canvas.toBlob(blob=>{
                 const formData = new FormData();
                 formData.append('image', blob, 'capture.png');
+                formData.append('vipId', vipId);
                            // 서버로 POST 요청 보내기
                 axios.post('http://localhost:8080/api/id/ocr', formData, {
                     headers:{
@@ -26,6 +31,7 @@ const IdVerificationPage = ({localVideoRef}) => {
                     },
                  }).then(response => {
                     console.log('Success:', response.data);
+                    alert(response.data);
                 }).catch(error => {
                    console.error('Error:', error);
                 });

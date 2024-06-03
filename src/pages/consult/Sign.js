@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
-import Pdf from "../components/common/Pdf";
 import { PDFDocument, rgb } from "pdf-lib";
+import Pdf from "../../components/common/Pdf";
 
 const defaultStyle = {
   border: "1px solid gray",
