@@ -454,6 +454,20 @@ h6 {
   color: #012970;
 }
 
+.signOutBtn {
+  margin-left: 15px;
+  background: #f6f9ff;
+  border: 0;
+  padding: 5px 10px;
+  font-weight: 550;
+  color: #4154f1;
+  border-radius: 15px;
+}
+
+.signOutBtn:hover {
+  background: #dfe8ff;
+}
+
 /*--------------------------------------------------------------
 # Header Nav
 --------------------------------------------------------------*/
