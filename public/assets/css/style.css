@@ -42,8 +42,8 @@ h6 {
 # Main
 --------------------------------------------------------------*/
 #main {
-  /* margin-top: 60px;
-  padding: 20px 30px; */
+  margin-top: 60px;
+  padding: 20px 30px;
   transition: all 0.3s;
 }
 
@@ -454,6 +454,20 @@ h6 {
   color: #012970;
 }
 
+.signOutBtn {
+  margin-left: 15px;
+  background: #f6f9ff;
+  border: 0;
+  padding: 5px 10px;
+  font-weight: 550;
+  color: #4154f1;
+  border-radius: 15px;
+}
+
+.signOutBtn:hover {
+  background: #dfe8ff;
+}
+
 /*--------------------------------------------------------------
 # Header Nav
 --------------------------------------------------------------*/
@@ -599,13 +613,12 @@ h6 {
 --------------------------------------------------------------*/
 .sidebar {
   position: fixed;
-  top: 0;
+  top: 60px;
   left: 0;
   bottom: 0;
   width: 100px;
   z-index: 996;
   transition: all 0.3s;
-  padding: 20px;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
@@ -680,6 +693,7 @@ h6 {
 .sidebar-nav .nav-link {
   display: flex;
   align-items: center;
+  width: 5.5em;
   font-size: 15px;
   font-weight: 600;
   color: #4154f1;
@@ -687,11 +701,13 @@ h6 {
   background: #f6f9ff;
   padding: 10px 15px;
   border-radius: 4px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
 }
 
 .sidebar-nav .nav-link i {
   font-size: 16px;
-  margin-right: 10px;
   color: #4154f1;
 }
 
@@ -1257,6 +1273,13 @@ h6 {
     drop-shadow(8px 8px 13px rgba(174, 174, 192, 0.5));
 }
 
+.card-content {
+  padding: 20px;
+  font-size: 15px;
+  border-radius: 5px;
+  background: #f3ebc7;
+}
+
 .consultingModalOverlay {
   position: fixed;
   top: 0;
@@ -1273,8 +1296,8 @@ h6 {
   position: relative;
   background: white;
   padding: 2rem;
-  border-radius: 0.625rem; 
-  max-width: 35rem; 
+  border-radius: 0.625rem;
+  max-width: 35rem;
   width: 100%;
   box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.3);
   text-align: center;
@@ -1285,16 +1308,55 @@ h6 {
   border: solid 0.01rem rgb(120, 120, 120);
   height: 2.5rem;
 }
-#buttonCheck, #buttonCancel {
+
+#buttonCheck,
+#buttonCancel {
   margin: 0 0.5rem;
 }
 
+.consultingModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.consultingModal {
+  position: relative;
+  background: white;
+  padding: 2rem;
+  border-radius: 0.625rem;
+  max-width: 35rem;
+  width: 100%;
+  box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+#inputPwd {
+  border-radius: 0.5rem;
+  border: solid 0.01rem rgb(120, 120, 120);
+  height: 2.5rem;
+}
+
+#buttonCheck,
+#buttonCancel {
+  margin: 0 0.5rem;
+}
 
 /*--------------------------------------------------------------
 # Pb
 --------------------------------------------------------------*/
 .search-bar {
   min-width: 360px;
+}
+
+.graph-table-button {
+  float: right;
 }
 
 @media (max-width: 1199px) {
@@ -1352,6 +1414,23 @@ h6 {
   color: #012970;
 }
 
+.pbBtn {
+  background: #f6f9ff;
+  border: 0;
+  padding: 5px 10px;
+  font-weight: 550;
+  color: #4154f1;
+  border-radius: 15px;
+}
+
+.pbBtn:hover {
+  background: #dfe8ff;
+}
+
+/*--------------------------------------------------------------
+# Pb Fund
+--------------------------------------------------------------*/
+
 .fund-page {
   display: flex;
 }
@@ -1369,9 +1448,11 @@ h6 {
 
 .fund-list {
   background-color: #ecf0f1;
+  background-color: #ecf0f1;
   padding: 20px;
   width: 30%;
-  max-height: 100vh; /* Adjust the height as needed */
+  max-height: 100vh;
+  /* Adjust the height as needed */
   overflow-y: auto;
 }
 
@@ -1384,6 +1465,7 @@ h6 {
 
 .fund-item:hover {
   background-color: #bdc3c7;
+  background-color: #bdc3c7;
 }
 
 /*--------------------------------------------------------------
@@ -1392,9 +1474,11 @@ h6 {
 
 .fund-detail {
   background-color: #ecf0f1;
+  background-color: #ecf0f1;
   padding: 20px;
   width: 70%;
-  max-height: 100vh; /* Adjust the height as needed */
+  max-height: 100vh;
+  /* Adjust the height as needed */
   overflow-y: auto;
 }
 
@@ -1421,24 +1505,20 @@ h6 {
   width: 100%;
 }
 
-table,
-th,
-td {
-  border: 1px solid black;
-}
-
 .stock-bond-table {
+  border: 1px solid black;
   padding-left: 20%;
   float: right;
   text-align: center;
   height: 90%;
   width: 90%;
+  border: 1px solid black;
 }
 
 .pdf-container {
   width: 100%;
-  height: 60vh;
-  overflow-y: auto;
+  height: 30rem;
+  overflow: hidden;
 }
 
 /* pdf css */
@@ -1450,9 +1530,11 @@ td {
 
 .react-pdf__Document {
   width: 100%;
+  height: 32.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: scroll;
 }
 
 .react-pdf__Page__canvas {
@@ -1464,6 +1546,40 @@ td {
   display: none;
 }
 
+/* sign css */
+#signDiv {
+  height: 100%;
+}
+
+#signDiv > div {
+  height: 100%;
+}
+
+/* 스크롤바의 폭 너비 */
+.react-pdf__Document::-webkit-scrollbar {
+  width: 1rem;
+}
+
+.react-pdf__Document::-webkit-scrollbar-thumb {
+  background: #717ff5; /* 스크롤바 색상 */
+  border-radius: 1rem; /* 스크롤바 둥근 테두리 */
+}
+
+.react-pdf__Document::-webkit-scrollbar-track {
+  background: #f6f6fe; /*스크롤바 뒷 배경 색상*/
+
+  background: #717ff5;
+  /* 스크롤바 색상 */
+  border-radius: 1rem;
+  /* 스크롤바 둥근 테두리 */
+}
+
+.react-pdf__Document::-webkit-scrollbar-track {
+  background: #f6f6fe;
+  /*스크롤바 뒷 배경 색상*/
+
+}
+
 /*--------------------------------------------------------------
 # Consent page
 --------------------------------------------------------------*/
@@ -1471,32 +1587,40 @@ td {
 .consent-page {
   width: 100%;
   max-width: 1200px;
-  padding: 20px;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin: 20px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.fund-contract {
+  width: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 10px;
 }
 
 .card-title {
   font-size: 2em;
+  font-weight: 1000;
   color: #333;
   margin-bottom: 10px;
 }
 
 .fund-header-left {
   align-self: flex-start;
-  font-size: 1.5em;
+  font-size: 1.3em;
   color: #212dd2;
   margin-bottom: 10px;
 }
 
-.card-body {
-  font-size: 1.2em;
+.fund-card-body {
+  font-size: 1.2rem;
   color: #666;
   margin-bottom: 20px;
-  text-align: center;
-  max-width: 600px;
+  width: 100%;
 }
 
 .fund-check-list {
@@ -1506,17 +1630,56 @@ td {
 .fund-check-item {
   display: flex;
   align-items: center;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin: 5px 0;
   cursor: pointer;
-  transition: background-color 0.3s;
-  width: 100%;
+  margin-bottom: 10px;
 }
 
-.fund-check-item:hover {
-  background-color: #f5f5f5;
+.custom-checkbox {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.custom-checkbox input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border-radius: 3px;
+}
+
+.custom-checkbox input:checked ~ .checkmark {
+  background-color: #2196f3;
+}
+
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.custom-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.custom-checkbox .checkmark:after {
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
 }
 
 .modal {
@@ -1556,13 +1719,4 @@ td {
 
 .pdf-container {
   margin: 20px 0;
-}
-
-.agree-container {
-  display: flex;
-  align-items: center;
-}
-
-.agree-container input[type='checkbox'] {
-  margin-right: 10px;
 }

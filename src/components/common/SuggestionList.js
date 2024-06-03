@@ -46,7 +46,11 @@ function SuggestionList({ setSuggestionNumber, data }) {
       <ul className="dropdown-menu">
         {data &&
           data.suggestionItems.map((item, index) => (
-            <li key={item.suggestionName} onClick={() => updateProgress(index)}>
+            <li
+              key={item.suggestionName}
+              className="dropdown-item"
+              onClick={() => updateProgress(index)}
+            >
               {item.suggestionName}
             </li>
           ))}

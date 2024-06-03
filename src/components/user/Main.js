@@ -1,22 +1,40 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import auth from '../../auth';
+import ConsultCard from '../../components/user/ConsultCard';
 import Modal from 'react-modal';
+import axios from 'axios';
 
 function Main() {
+  const [pb, setPb] = useState([]);
+  const [vip, setVip] = useState([]);
+  const [consult, setConsult] = useState([]);
+
   const [data, setData] = useState('');
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [vipId, setVipId] = useState('');
+  const [vipPwd, setVipPwd] = useState('');
+  const [pbId, setPbId] = useState('');
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const pbId = 1;
-  const userId = 1;
-
   useEffect(() => {
-    axios.get('http://localhost:8080/api').then((res) => {
-      setData(res.data);
-      console.log(data);
-    });
-  });
+    auth
+      .get('http://127.0.0.1:8080/api/vip/main')
+      .then((res) => {
+        setPb(res.data.pbInfo);
+        setVip(res.data.vipInfo);
+        setConsult(res.data.consultList);
+
+        console.log(res);
+        setVipId(res.data.vipInfo.vipId);
+        setVipPwd(res.data.vipInfo.password);
+        setPbId(res.data.pbInfo.pbId);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -32,19 +50,29 @@ function Main() {
   };
 
   const handlePasswordSubmit = (e) => {
-    if (password === '1111') {
-      setIsAuthenticated(true);
-      closeModal();
-      alert('확인되었습니다. 상담실로 입장합니다.');
-      window.open(
-        `./videoPage/pbId=${pbId}&userId=${userId}`,
-        '_blank',
-        'noopener,noreferrer'
-      );
-    } else {
-      alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
-      setPassword('');
-    }
+    axios
+      .post('http://127.0.0.1:8080/api/vip/main/pwdcheck', {
+        pwd: vipPwd,
+        writtenPwd: password,
+      })
+      .then((response) => {
+        if (response.data) {
+          setIsAuthenticated(true);
+          closeModal();
+          alert('확인되었습니다. 상담실로 입장합니다.');
+          window.open(
+            `./videoPage/20240603?pbId=${pbId}&vipId=${vipId}`,
+            '_blank',
+            'noopener,noreferrer'
+          );
+        } else {
+          alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
+          setPassword('');
+        }
+      })
+      .catch((error) => {
+        console.error();
+      });
   };
   return (
     <>
@@ -92,7 +120,7 @@ function Main() {
                 <div style={{ fontSize: '26px', fontWeight: '540' }}>
                   <div>
                     <span style={{ fontSize: '35px', fontWeight: '750' }}>
-                      이진만{' '}
+                      {vip.name}{' '}
                     </span>
                     님<div style={{ marginTop: '3px' }}>건행하세요 😊</div>
                   </div>
@@ -106,7 +134,7 @@ function Main() {
                         color: '#009476',
                       }}
                     >
-                      안정투자형
+                      {vip.riskType}
                     </span>
                     <div
                       style={{
@@ -116,7 +144,7 @@ function Main() {
                         color: '#5F5F5F',
                       }}
                     >
-                      최근 검사일 0000-00-00
+                      최근 검사일 {vip.riskTestDate}
                     </div>
                   </div>
                 </div>
@@ -177,7 +205,7 @@ function Main() {
               <div style={{ fontSize: '23px', fontWeight: '540' }}>
                 담당{' '}
                 <span style={{ fontSize: '26px', fontWeight: '750' }}>
-                  곽준영
+                  {pb.name}
                 </span>
               </div>
               <div
@@ -204,20 +232,20 @@ function Main() {
                   }}
                 >
                   <div>
-                    <span>bboyami@hana.co.kr</span>
+                    <span>{pb.email}</span>
                     <div
                       style={{
                         marginTop: '0.5px',
                       }}
                     >
-                      010-0000-0000
+                      {pb.phone}
                     </div>{' '}
                     <div
                       style={{
                         marginTop: '0.5px',
                       }}
                     >
-                      퇴근 원츄
+                      {pb.introduce}
                     </div>
                   </div>
                 </div>
@@ -231,6 +259,7 @@ function Main() {
             >
               <span
                 style={{
+                  marginBottom: '15px',
                   fontSize: '20px',
                   fontWeight: '600',
                   color: '#D7B863',
@@ -238,6 +267,9 @@ function Main() {
               >
                 상담 이력
               </span>
+              {consult.map((item) => (
+                <ConsultCard consult={item} />
+              ))}
             </div>
           </div>
         </div>

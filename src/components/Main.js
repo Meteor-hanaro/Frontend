@@ -23,7 +23,7 @@ function Main() {
           <div>
             <button
               type="button"
-              class="btn btn-outline-primary"
+              className="btn btn-outline-primary"
               onClick={() => {
                 window.open('./videoPage', '_blank', 'noopener,noreferrer');
               }}

@@ -6,7 +6,6 @@ import { useWebRTC } from '../../contexts/WebRTCContext';
 const WebRTC = () => {
   const { localVideoRef, remoteVideoRef } = useWebRTC();
   const { createOffer, sendMessage } = useWebRTC();
-
   const [pageNumber, setPageNumber] = useState(1);
 
   const handleSendMessage = () => {

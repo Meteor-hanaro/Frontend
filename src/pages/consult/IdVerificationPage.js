@@ -45,7 +45,7 @@ const IdVerificationPage = ({ localVideoRef }) => {
         id="captureButton"
         className="btn btn-primary"
       >
-        Capture
+        신분증촬영
       </button>{' '}
       <br />
       <br />

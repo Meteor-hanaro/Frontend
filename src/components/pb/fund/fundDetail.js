@@ -90,9 +90,11 @@ function FundDetail({ selectedFund }) {
       tooltip: {
         callbacks: {
           label: function (context) {
-            const label = context.dataset.labels[context.dataIndex] || '';
+            const l =
+              (context.dataset && context.dataset.labels[context.dataIndex]) ||
+              '';
             const value = context.formattedValue;
-            return `${label}: ${value}%`;
+            return `${l}: ${value}%`;
           },
         },
       },
@@ -121,15 +123,16 @@ function FundDetail({ selectedFund }) {
               <th>비중(%)</th>
             </tr>
           </thead>
-          <tr>
-            <td>주식</td>
-            <td>{stockPercentage}</td>
-          </tr>
-          <tr>
-            <td>채권</td>
-            <td>{bondPercentage}</td>
-          </tr>
-          <tbody></tbody>
+          <tbody>
+            <tr>
+              <td>주식</td>
+              <td>{stockPercentage}</td>
+            </tr>
+            <tr>
+              <td>채권</td>
+              <td>{bondPercentage}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
       <h3>펀드 상세정보</h3>
