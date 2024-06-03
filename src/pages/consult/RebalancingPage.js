@@ -1,14 +1,14 @@
-import axios from "axios";
-import { useState, useEffect, useRef } from "react";
-import SuggestionList from "../../components/common/SuggestionList";
-import TrafficChart from "../../components/common/chart/TrafficChart";
+import axios from 'axios';
+import { useState, useEffect, useRef } from 'react';
+import SuggestionList from '../../components/common/SuggestionList';
+import TrafficChart from '../../components/common/chart/TrafficChart';
 
 const RebalancingPage = () => {
   const [suggestionData, setSuggestionData] = useState([]);
   const [transferSGData, setTransferSGData] = useState([]);
   const [portfolioData, setPortfolioData] = useState([]);
   const [transferPFData, setTransferPFData] = useState([]);
-  const [suggestionName, setSuggestionName] = useState("");
+  const [suggestionName, setSuggestionName] = useState('');
 
   const [suggestionNumber, setSuggestionNumber] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -32,7 +32,7 @@ const RebalancingPage = () => {
   useEffect(() => {
     // 현재 포트폴리오 불러오기
     axios
-      .get("http://localhost:8080/api/portfolio/extract?vipId=1")
+      .get('http://localhost:8080/api/portfolio/extract?vipId=1')
       .then((res) => {
         setPortfolioData(res.data);
       })
@@ -40,7 +40,7 @@ const RebalancingPage = () => {
 
     // 수정안 데이터 불러오기
     axios
-      .get("http://localhost:8080/api/suggestion/extract?userId=1")
+      .get('http://localhost:8080/api/suggestion/extract?userId=1')
       .then((res) => {
         setSuggestionData(res.data);
         setLoading(true);
@@ -80,13 +80,17 @@ const RebalancingPage = () => {
           <div id="portfolioContainer">
             <TrafficChart
               data={transferPFData}
-              name={portfolioData.userName + "님의 포트폴리오"}
+              name={portfolioData.userName + '님의 포트폴리오'}
             />
           </div>
         </div>
         <div id="comparisonContainer">
           <div id="portfolioContainer">
             <TrafficChart data={transferSGData} name={suggestionName} />
+          </div>
+          <div className="d-flex justify-content-center">
+            <button className="btn btn-primary mx-1">거절</button>
+            <button className="btn btn-primary mx-1">수락</button>
           </div>
         </div>
       </div>
