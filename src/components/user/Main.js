@@ -5,7 +5,6 @@ import Modal from 'react-modal';
 import axios from 'axios';
 
 function Main() {
-
   const [pb, setPb] = useState([]);
   const [vip, setVip] = useState([]);
   const [consult, setConsult] = useState([]);
@@ -51,28 +50,29 @@ function Main() {
   };
 
   const handlePasswordSubmit = (e) => {
-    axios.post('http://127.0.0.1:8080/api/vip/main/pwdcheck', {
-      pwd: vipPwd,
-      writtenPwd: password
-    })
-    .then(response => {
-      if (response.data) {
-        setIsAuthenticated(true);
-        closeModal();
-        alert('확인되었습니다. 상담실로 입장합니다.');
-        window.open(
-          `./videoPage/pbId=${pbId}&vipId=${vipId}`,
-          '_blank',
-          'noopener,noreferrer'
-        );
-      } else {
-        alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
-        setPassword('');
-      }
-    })
-    .catch(error => {
-      console.error();
-    });
+    axios
+      .post('http://127.0.0.1:8080/api/vip/main/pwdcheck', {
+        pwd: vipPwd,
+        writtenPwd: password,
+      })
+      .then((response) => {
+        if (response.data) {
+          setIsAuthenticated(true);
+          closeModal();
+          alert('확인되었습니다. 상담실로 입장합니다.');
+          window.open(
+            `./videoPage/20240603?pbId=${pbId}&vipId=${vipId}`,
+            '_blank',
+            'noopener,noreferrer'
+          );
+        } else {
+          alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
+          setPassword('');
+        }
+      })
+      .catch((error) => {
+        console.error();
+      });
   };
   return (
     <>

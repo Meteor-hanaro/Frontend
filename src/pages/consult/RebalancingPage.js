@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import SuggestionList from '../../components/common/SuggestionList';
 import TrafficChart from '../../components/common/chart/TrafficChart';
+import { use } from 'echarts';
 
 const RebalancingPage = ({ setSuggestionItemList }) => {
   const [suggestionData, setSuggestionData] = useState([]);
@@ -13,10 +15,12 @@ const RebalancingPage = ({ setSuggestionItemList }) => {
   const [suggestionNumber, setSuggestionNumber] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const ws = useRef(null);
 
   const nameResizing = (data) => {
-    return data.length > 10 ? data.substring(0, 10) + '...' : data;
+    return data.length > 7 ? data.substring(0, 7) + '...' : data;
   };
 
   const portfolioDetailData = () =>
@@ -36,7 +40,10 @@ const RebalancingPage = ({ setSuggestionItemList }) => {
   useEffect(() => {
     // 현재 포트폴리오 불러오기
     axios
-      .get('http://localhost:8080/api/portfolio/extract?vipId=1')
+      .get(
+        'http://localhost:8080/api/portfolio/extract?vipId=' +
+          searchParams.get('vipId')
+      )
       .then((res) => {
         setPortfolioData(res.data);
       })
@@ -44,7 +51,10 @@ const RebalancingPage = ({ setSuggestionItemList }) => {
 
     // 수정안 데이터 불러오기
     axios
-      .get('http://localhost:8080/api/suggestion/extract?userId=1')
+      .get(
+        'http://localhost:8080/api/suggestion/extract?userId=' +
+          searchParams.get('vipId')
+      )
       .then((res) => {
         setSuggestionData(res.data);
         setLoading(true);
@@ -95,7 +105,7 @@ const RebalancingPage = ({ setSuggestionItemList }) => {
   };
 
   return (
-    <div id="divRebalancing">
+    <div id="divRebalancing" className="mt-3">
       <div className="d-flex">
         <div style={{ width: '50%' }}></div>
         <div className="d-flex align-items-center">
