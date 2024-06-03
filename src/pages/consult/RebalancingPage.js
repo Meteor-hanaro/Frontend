@@ -96,11 +96,22 @@ const RebalancingPage = ({ setSuggestionItemList }) => {
 
   return (
     <div id="divRebalancing">
-      <SuggestionList
-        setSuggestionNumber={setSuggestionNumber}
-        data={suggestionData}
-      />
-      <div className="mt-2 overflow-scroll">
+      <div className="d-flex">
+        <div style={{ width: '50%' }}></div>
+        <div className="d-flex align-items-center">
+          <SuggestionList
+            setSuggestionNumber={setSuggestionNumber}
+            data={suggestionData}
+          />
+          <button
+            className="btn btn-success m-2"
+            onClick={() => suggestionAccept()}
+          >
+            {suggestionName} 반영
+          </button>
+        </div>
+      </div>
+      <div className="d-flex mt-2">
         <div id="comparisonContainer">
           <div id="portfolioContainer">
             <TrafficChart
@@ -112,15 +123,6 @@ const RebalancingPage = ({ setSuggestionItemList }) => {
         <div id="comparisonContainer">
           <div id="portfolioContainer">
             <TrafficChart data={transferSGData} name={suggestionName} />
-            <div className="z-1 position-absolute d-flex ">
-              <button className="btn btn-danger mx-1">거절</button>
-              <button
-                className="btn btn-primary mx-1"
-                onClick={() => suggestionAccept()}
-              >
-                수락
-              </button>
-            </div>
           </div>
         </div>
       </div>
