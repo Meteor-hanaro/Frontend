@@ -1,18 +1,26 @@
 import { useEffect, useState } from 'react';
 import auth from '../../auth';
+import { useNavigate } from 'react-router-dom';
 
 function Main() {
   const [vip, setVip] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
     auth
       .get('http://127.0.0.1:8080/api/pb/main')
       .then((res) => {
+        console.log(res.data.vip);
         setVip(res.data.vip);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
+  const checkPortfolio = (vipId) => {
+    navigate(`/pb/portfolio`, { state: { vipId } });
+  };
 
   return (
     <>
@@ -80,9 +88,13 @@ function Main() {
                       <td>{item.riskType}</td>
                       <td>{item.consultDate}</td>
                       <td>
-                        <button type='button' className='pbBtn'>
+                        <button
+                          type='button'
+                          className='pbBtn'
+                          onClick={() => checkPortfolio(item.vipId)}
+                        >
                           <i class='bi bi-clipboard2-data'></i>
-                          &nbsp;포트폴리오
+                          포트폴리오
                         </button>
                         <button
                           type='button'
