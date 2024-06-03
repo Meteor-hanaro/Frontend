@@ -6,7 +6,7 @@ const VideoPage = () => {
   const sendMessageRef = useRef(null);
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:8888");
+    const ws = new WebSocket("ws://54.180.102.224:8888");
     ws.onopen = () => {
       console.log("Connected to signaling server");
     };
