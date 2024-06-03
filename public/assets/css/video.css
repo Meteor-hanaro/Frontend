@@ -99,17 +99,16 @@ video {
   top: 50%;
   left: 0;
   height: 0.625rem;
-  background-color: #316df4;
+  background-color: #d7b863;
   z-index: 1;
   transform: translateY(-50%);
   transition: width 0.4s ease;
 }
-
 .progressCircle {
   width: 3.75rem;
   height: 3.75rem;
   background-color: #ffffff;
-  border: 0.1875rem solid #316df4;
+  border: 0.1875rem solid #d7b863;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -222,4 +221,89 @@ video {
 
 #contractCanvas {
   display: block;
+}
+.marquee {
+  display: none;
+}
+
+#finalContract{
+  width: 120%;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
+}
+
+.final-title {
+  font-size: 1.5rem;
+  font-weight: 1000;
+  color: #333;
+  margin-bottom: 10px;
+  padding: 1rem;
+}
+
+.btn-sign{
+  margin: 1rem;
+}
+/* auth page css */
+#auth-box{
+  background-color: #fff;
+  padding: 2rem; /* 32px */
+  border-radius: 0.625rem; /* 10px */
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* 0 4px 8px */
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 80%; /* Responsive width */
+  max-width: 40rem; /* Max width 640px */
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.AuthPage{
+  width:100%;
+  height: 100%;
+  display: flex;
+}
+.btn-auth{
+  background-color: #d7b863;
+  border-color: #d7b863;
+  width:100%;
+  height: 40%;
+  color:#ebf1fe;
+  font-size: 1.5em;
+  font-weight: 1000;
+}
+.btn-auth:hover{
+  background-color: rgb(215, 194, 119);
+  border-color: rgb(215, 194, 119);
+  color:#ebf1fe;
+}
+.btn-auth:focus{
+  background-color: rgb(215, 194, 119);
+  border-color: rgb(215, 194, 119);
+}
+.btn-auth:active{
+  background-color: rgb(215, 194, 119);
+  border-color: rgb(215, 194, 119);
+}
+#middle-box{
+  width: 100%;
+  height: 50%;
+  align-content: center;
+  justify-items: center;
+}
+#icons-box{
+  justify-content: space-around;
+  align-items: center;
+  display:flex;
+  width:100%;
+  height: 30%;
+}
+#icons-box div {
+  display:flex;
+  justify-content: center;
+}
+#autn-img{
+  width:65%;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* 0 4px 8px */
+  justify-content: center;
 }
