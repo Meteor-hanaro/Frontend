@@ -1562,7 +1562,7 @@ td {
   width: 80%;
   max-width: 800px;
   max-height: 80%;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   border-radius: 8px;
 }
 
