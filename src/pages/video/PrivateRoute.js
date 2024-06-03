@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import auth from '../../auth';
 import axios from 'axios';
+import WebRTCContext from '../../contexts/WebRTCContext';
 
 Modal.setAppElement('#root');
 
@@ -62,7 +63,9 @@ const PrivateRoute = ({ children }) => {
   }
 
   return isAuthenticated ? (
-    children
+    <WebRTCContext signaling={new WebSocket('ws://localhost:8888')}>
+        {children}
+    </WebRTCContext>
   ) : (
     <>
       <Modal

@@ -30,8 +30,6 @@ function Router() {
               </PrivateRoute>
             }
           />
-          {/* <PrivateRoute path="/vip/videoPage/:params" element={<PrivateRoute element={VideoPage} />} /> */}
-          {/* <Route path="/vip/videoPage/:params" element={<VideoPage />} /> */}
         </Routes>
       </LoginContextProvider>
     </BrowserRouter>
