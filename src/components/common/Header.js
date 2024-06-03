@@ -50,7 +50,7 @@ function Header() {
                   className='signOutBtn'
                   onClick={handleLogout}
                 >
-                  <i class='bi bi-box-arrow-right' /> Sign Out
+                  <i className='bi bi-box-arrow-right' /> Sign Out
                 </button>
               </div>
               {/* End Profile Iamge Icon */}
