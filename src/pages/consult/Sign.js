@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
-import Pdf from '../components/common/Pdf';
 import { PDFDocument, rgb } from 'pdf-lib';
+import Pdf from '../../components/common/Pdf';
 
 const defaultStyle = {
   border: '1px solid gray',
@@ -186,10 +186,16 @@ function Sign() {
           확인
         </button>
       </Modal>
-      <Pdf pdfFile={pdfUrl} />
-      <button onClick={signNow} className="btn btn-primary">
-        서명
-      </button>
+
+      <div id="finalContract">
+        <div>
+          <h3 className="final-title">최종계약서</h3>
+        </div>
+        <Pdf pdfFile={pdfUrl} />
+        <button onClick={signNow} className="btn-sign btn btn-primary">
+          서명
+        </button>
+      </div>
     </div>
   );
 }
