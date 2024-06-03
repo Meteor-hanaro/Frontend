@@ -2,24 +2,33 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import FundCheckItem from '../../components/common/FundCheckItem';
 import Pdf from '../../components/common/Pdf';
-const fundId = 1;
+import FundContract from '../../components/common/FundContract';
 
-const ConsentPage = () => {
+const ConsentPage = ({ suggestionItemData }) => {
   const [data, setData] = useState();
   const [selectedItem, setSelectedItem] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     getData();
+    console.log(suggestionItemData);
   }, []);
 
   const getData = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8080/api/contract/join/${fundId}`
+        `https://195542be-07de-4400-96fd-095a9a72e125.mock.pstmn.io/api/contract/join`
       );
-      setData(addCheckProperty(data));
+      setData(addCheckInContract(data));
     } catch {}
+  };
+
+  // 각 계약동의서에 프로퍼티 추가
+  const addCheckInContract = (data) => {
+    return data.map((item) => ({
+      ...item,
+      fundContracts: addCheckProperty(item.fundContracts),
+    }));
   };
 
   // 체크여부 프로퍼티 추가하기
@@ -28,44 +37,38 @@ const ConsentPage = () => {
   };
 
   const handleItemClick = (item) => {
-    console.log('fdsf');
     setSelectedItem(item);
     setModalVisible(true);
   };
 
   const handleAgree = () => {
-    const updatedData = [...data];
-    const index = updatedData.findIndex(
-      (item) => item.title === selectedItem.title
-    );
-    if (index !== -1) {
-      updatedData[index].isChecked = !updatedData[index].isChecked;
-      setData(updatedData);
-    }
+    const updatedData = data.map((fund) => {
+      const updatedContracts = fund.fundContracts.map((contract) => {
+        if (contract.id === selectedItem.id) {
+          return { ...contract, isChecked: !contract.isChecked };
+        }
+        return contract;
+      });
+      return { ...fund, fundContracts: updatedContracts };
+    });
+
+    setData(updatedData);
+
+    const updatedSelectedItem = {
+      ...selectedItem,
+      isChecked: !selectedItem.isChecked,
+    };
+    setSelectedItem(updatedSelectedItem);
   };
 
   return (
     <div className="consent-page">
-      <h1 className="card-title">{'희망 미래 펀드'}</h1>
-      <h3 className="card-body">
-        {
-          '이 펀드는 어쩌구 저쩌구 펀드입니다. 이건 이렇구요 저건 저렇구요 이래되고요 저래되고 이런사람들한테 추천하는 펀드입니다요'
-        }
-      </h3>
-      <h5 className="fund-header-left">{'필수 서류 확인'}</h5>
-      <div className="fund-check-list">
-        {data &&
-          data.map((item, index) => {
-            return (
-              <FundCheckItem
-                key={index}
-                isCheck={item.isChecked}
-                title={item.title}
-                onClick={() => handleItemClick(item)}
-              />
-            );
-          })}
-      </div>
+      {data &&
+        data.map((item) => {
+          return (
+            <FundContract items={item} handleItemClick={handleItemClick} />
+          );
+        })}
 
       {modalVisible && selectedItem && (
         <div className="modal">
@@ -74,18 +77,21 @@ const ConsentPage = () => {
               <span className="close" onClick={() => setModalVisible(false)}>
                 &times;
               </span>
-              <h2>{selectedItem.title}</h2>
-              <p>{selectedItem.description}</p>
+              <p className="card-title">{selectedItem.title}</p>
+              <p className="fund-card-body">{selectedItem.description}</p>
               <div className="pdf-container">
                 <Pdf pdfFile={selectedItem.pdfUrl} />
               </div>
-              <div className="agree-container">
-                <input
-                  type="checkbox"
-                  checked={selectedItem.isChecked}
-                  onChange={handleAgree}
-                />
-                <label htmlFor="agree">동의합니다</label>
+              <div className="fund-check-item">
+                <label className="custom-checkbox">
+                  <input
+                    type="checkbox"
+                    checked={selectedItem.isChecked}
+                    onChange={handleAgree}
+                  />
+                  <span className="checkmark"></span>
+                </label>
+                위 내용을 확인하였으며, 동의합니다.
               </div>
             </div>
           </div>

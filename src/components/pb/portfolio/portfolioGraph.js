@@ -21,7 +21,7 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-function PortfolioGraph() {
+function PortfolioGraph(vipId) {
   const [graphData, setGraphData] = useState({
     labels: [],
     datasets: [],
