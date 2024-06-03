@@ -11,13 +11,15 @@ const ConsentPage = ({ suggestionItemData }) => {
 
   useEffect(() => {
     getData();
-    console.log(suggestionItemData);
   }, []);
 
   const getData = async () => {
     try {
-      const { data } = await axios.get(
-        `https://195542be-07de-4400-96fd-095a9a72e125.mock.pstmn.io/api/contract/join`
+      const { data } = await axios.post(
+        `http://localhost:8080/api/contract/join`,
+        {
+          fundIds: suggestionItemData,
+        }
       );
       setData(addCheckInContract(data));
     } catch {}
