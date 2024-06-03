@@ -4,6 +4,7 @@ import axios from 'axios';
 function PortfolioTable(vipId) {
   const [portfolioItems, setPortfolioItems] = useState([]);
   const [vipName, setVipName] = useState('');
+  const [loading, setLoading] = useState(true); // 로딩 상태 추가
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,9 +16,11 @@ function PortfolioTable(vipId) {
             },
           })
           .then((res) => {
+            setLoading(false); // 데이터를 모두 받아오면 로딩 상태 변경
             setPortfolioItems(res.data);
           });
       } catch (error) {
+        setLoading(false); // 데이터 로드 완료 후 로딩 상태 해제
         console.log(error);
       }
 
@@ -30,6 +33,7 @@ function PortfolioTable(vipId) {
           })
           .then((res) => {
             setVipName(res.data);
+            
           });
       } catch (error) {
         console.log(error);
@@ -37,6 +41,11 @@ function PortfolioTable(vipId) {
     };
     fetchData();
   }, []);
+
+  if (loading) {
+    console.log(loading);
+    return <div>Loading...</div>; // 로딩 중일 때 표시
+  }
 
   return (
     <div className='portfolio-status'>
