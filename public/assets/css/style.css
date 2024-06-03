@@ -42,8 +42,8 @@ h6 {
 # Main
 --------------------------------------------------------------*/
 #main {
-  /* margin-top: 60px;
-  padding: 20px 30px; */
+  margin-top: 60px;
+  padding: 20px 30px;
   transition: all 0.3s;
 }
 
@@ -599,13 +599,12 @@ h6 {
 --------------------------------------------------------------*/
 .sidebar {
   position: fixed;
-  top: 0;
+  top: 60px;
   left: 0;
   bottom: 0;
   width: 100px;
   z-index: 996;
   transition: all 0.3s;
-  padding: 20px;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
@@ -680,6 +679,7 @@ h6 {
 .sidebar-nav .nav-link {
   display: flex;
   align-items: center;
+  width: 5.5em;
   font-size: 15px;
   font-weight: 600;
   color: #4154f1;
@@ -687,11 +687,13 @@ h6 {
   background: #f6f9ff;
   padding: 10px 15px;
   border-radius: 4px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
 }
 
 .sidebar-nav .nav-link i {
   font-size: 16px;
-  margin-right: 10px;
   color: #4154f1;
 }
 
@@ -1257,6 +1259,13 @@ h6 {
     drop-shadow(8px 8px 13px rgba(174, 174, 192, 0.5));
 }
 
+.card-content {
+  padding: 20px;
+  font-size: 15px;
+  border-radius: 5px;
+  background: #f3ebc7;
+}
+
 .consultingModalOverlay {
   position: fixed;
   top: 0;
@@ -1273,8 +1282,8 @@ h6 {
   position: relative;
   background: white;
   padding: 2rem;
-  border-radius: 0.625rem; 
-  max-width: 35rem; 
+  border-radius: 0.625rem;
+  max-width: 35rem;
   width: 100%;
   box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.3);
   text-align: center;
@@ -1285,10 +1294,43 @@ h6 {
   border: solid 0.01rem rgb(120, 120, 120);
   height: 2.5rem;
 }
-#buttonCheck, #buttonCancel {
+#buttonCheck,
+#buttonCancel {
   margin: 0 0.5rem;
 }
 
+.consultingModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.consultingModal {
+  position: relative;
+  background: white;
+  padding: 2rem;
+  border-radius: 0.625rem;
+  max-width: 35rem;
+  width: 100%;
+  box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+#inputPwd {
+  border-radius: 0.5rem;
+  border: solid 0.01rem rgb(120, 120, 120);
+  height: 2.5rem;
+}
+#buttonCheck,
+#buttonCancel {
+  margin: 0 0.5rem;
+}
 
 /*--------------------------------------------------------------
 # Pb
@@ -1352,6 +1394,23 @@ h6 {
   color: #012970;
 }
 
+.pbBtn {
+  background: #f6f9ff;
+  border: 0;
+  padding: 5px 10px;
+  font-weight: 550;
+  color: #4154f1;
+  border-radius: 15px;
+}
+
+.pbBtn:hover {
+  background: #dfe8ff;
+}
+
+/*--------------------------------------------------------------
+# Pb Fund
+--------------------------------------------------------------*/
+
 .fund-page {
   display: flex;
 }
@@ -1369,6 +1428,7 @@ h6 {
 
 .fund-list {
   background-color: #ecf0f1;
+  background-color: #ecf0f1;
   padding: 20px;
   width: 30%;
   max-height: 100vh; /* Adjust the height as needed */
@@ -1384,6 +1444,7 @@ h6 {
 
 .fund-item:hover {
   background-color: #bdc3c7;
+  background-color: #bdc3c7;
 }
 
 /*--------------------------------------------------------------
@@ -1391,6 +1452,7 @@ h6 {
 --------------------------------------------------------------*/
 
 .fund-detail {
+  background-color: #ecf0f1;
   background-color: #ecf0f1;
   padding: 20px;
   width: 70%;
@@ -1421,18 +1483,14 @@ h6 {
   width: 100%;
 }
 
-table,
-th,
-td {
-  border: 1px solid black;
-}
-
 .stock-bond-table {
+  border: 1px solid black;
   padding-left: 20%;
   float: right;
   text-align: center;
   height: 90%;
   width: 90%;
+  border: 1px solid black;
 }
 
 .pdf-container {
@@ -1467,26 +1525,26 @@ td {
 }
 
 /* sign css */
-#signDiv{
+#signDiv {
   height: 100%;
 }
 
-#signDiv>div{
+#signDiv > div {
   height: 100%;
 }
 
 /* 스크롤바의 폭 너비 */
 .react-pdf__Document::-webkit-scrollbar {
-    width: 1rem;  
+  width: 1rem;
 }
 
 .react-pdf__Document::-webkit-scrollbar-thumb {
-    background: #717ff5; /* 스크롤바 색상 */
-    border-radius: 1rem; /* 스크롤바 둥근 테두리 */
+  background: #717ff5; /* 스크롤바 색상 */
+  border-radius: 1rem; /* 스크롤바 둥근 테두리 */
 }
 
 .react-pdf__Document::-webkit-scrollbar-track {
-    background: #f6f6fe;  /*스크롤바 뒷 배경 색상*/
+  background: #f6f6fe; /*스크롤바 뒷 배경 색상*/
 }
 
 /*--------------------------------------------------------------
@@ -1590,4 +1648,13 @@ td {
 
 .agree-container input[type='checkbox'] {
   margin-right: 10px;
+}
+
+.graph-table-button {
+  float: right;
+}
+
+.react-pdf__Page__textContent,
+.react-pdf__Page__annotations {
+  display: none;
 }
