@@ -10,7 +10,6 @@ function Main() {
     auth
       .get('http://127.0.0.1:8080/api/pb/main')
       .then((res) => {
-        console.log(res.data.vip);
         setVip(res.data.vip);
       })
       .catch((error) => {
