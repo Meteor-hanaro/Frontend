@@ -17,40 +17,40 @@ function Main() {
   return (
     <>
       <main
-        id='main'
-        className='main'
+        id="main"
+        className="main"
         style={{
           padding: '45px',
           height: `calc(100vh - 60px)`,
         }}
       >
-        <div className='pagetitle'>
+        <div className="pagetitle">
           <h1>사용자 목록</h1>
         </div>
         {/* Search Bar */}
-        <div className='search-bar' style={{ marginTop: '25px' }}>
+        <div className="search-bar" style={{ marginTop: '25px' }}>
           <form
-            className='search-form d-flex align-items-center'
-            method='POST'
-            action='#'
+            className="search-form d-flex align-items-center"
+            method="POST"
+            action="#"
           >
             <input
-              type='text'
-              name='query'
-              placeholder='Search'
-              title='Enter search keyword'
+              type="text"
+              name="query"
+              placeholder="Search"
+              title="Enter search keyword"
             />
-            <button type='submit' title='Search'>
-              <i className='bi bi-search' />
+            <button type="submit" title="Search">
+              <i className="bi bi-search" />
             </button>
           </form>
         </div>
         {/* End Search Bar */}
         {/* Recent Sales */}
-        <div className='col-12' style={{ marginTop: '25px' }}>
-          <div className='card recent-sales overflow-auto'>
-            <div className='card-body' style={{ padding: '20px' }}>
-              <table className='table table-borderless datatable'>
+        <div className="col-12" style={{ marginTop: '25px' }}>
+          <div className="card recent-sales overflow-auto">
+            <div className="card-body" style={{ padding: '20px' }}>
+              <table className="table table-borderless datatable">
                 <thead>
                   <tr>
                     <th className='col-1'>No</th>

@@ -9,7 +9,7 @@ import UserLoginPage from './pages/user/LoginPage';
 import UserMainPage from './pages/user/MainPage';
 
 function Router() {
-    return (
+  return (
     <BrowserRouter>
       <LoginContextProvider>
         <Routes>
@@ -22,12 +22,11 @@ function Router() {
           <Route path="/vip" element={<UserLoginPage />} />
           <Route path="/vip/main" element={<UserMainPage />} />
           // WebRTC
-          <Route path="/videoPage" element={<VideoPage />} />
+          <Route path="/vip/videoPage/:params" element={<VideoPage />} />
         </Routes>
       </LoginContextProvider>
     </BrowserRouter>
   );
-
 }
 
 export default Router;
