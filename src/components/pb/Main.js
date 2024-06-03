@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import auth from '../../auth';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Main() {
   const [vip, setVip] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
     auth
       .get('http://127.0.0.1:8080/api/pb/main')
@@ -14,6 +16,10 @@ function Main() {
         console.log(error);
       });
   }, []);
+
+  const checkPortfolio = (vipId) => {
+    navigate(`/pb/portfolio`, { state: { vipId } });
+  };
 
   return (
     <>
@@ -81,9 +87,13 @@ function Main() {
                       <td>{item.riskType}</td>
                       <td>{item.consultDate}</td>
                       <td>
-                        <button type="button" className="pbBtn">
-                          <i className="bi bi-clipboard2-data"></i>
-                          &nbsp;포트폴리오
+                        <button
+                          type='button'
+                          className='pbBtn'
+                          onClick={() => checkPortfolio(item.vipId)}
+                        >
+                          <i class='bi bi-clipboard2-data'></i>
+                          포트폴리오
                         </button>
                         <Link to={`/pb/suggestion/${item.vipId}`}>
                           <button
