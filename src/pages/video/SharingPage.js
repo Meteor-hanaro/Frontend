@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import RebalancingPage from '../consult/RebalancingPage';
 import Sign from '../Sign';
 import AuthPage from '../AuthPage';
-import ConsentPage from './ConsentPage';
+import ConsentPage from '../consult/ConsentPage';
 
 const SharingPage = ({ number, localVideoRef }) => {
   // RebalancingPage -> ConsentPage
