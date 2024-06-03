@@ -25,7 +25,7 @@ function PortfolioTable() {
 
       try {
         axios
-          .get('http://localhost:8080/api/user/name', {
+          .get('http://localhost:8080/api/vip/name', {
             params: {
               vipId: 1,
             },
