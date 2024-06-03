@@ -16,8 +16,6 @@ function PortfolioTable(vipId) {
           })
           .then((res) => {
             setPortfolioItems(res.data);
-            console.log(res.data);
-            // 2중 axios 가능?
           });
       } catch (error) {
         console.log(error);
@@ -31,9 +29,7 @@ function PortfolioTable(vipId) {
             },
           })
           .then((res) => {
-            console.log(res.data);
             setVipName(res.data);
-            // 2중 axios 가능?
           });
       } catch (error) {
         console.log(error);
