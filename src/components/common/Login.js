@@ -31,7 +31,6 @@ function Login() {
       .then((res) => {
         console.log(res);
         // LoginContextProvider
-        setIsLogin(true);
         setUserName(res.data.userName);
 
         // localStorage에 jwt token 저장
