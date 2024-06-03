@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function PortfolioTable() {
+function PortfolioTable(vipId) {
   const [portfolioItems, setPortfolioItems] = useState([]);
   const [vipName, setVipName] = useState('');
 
@@ -11,7 +11,7 @@ function PortfolioTable() {
         axios
           .get('http://localhost:8080/api/portfolio/itemValue', {
             params: {
-              vipId: 1,
+              vipId: vipId.vipId,
             },
           })
           .then((res) => {
@@ -27,7 +27,7 @@ function PortfolioTable() {
         axios
           .get('http://localhost:8080/api/vip/name', {
             params: {
-              vipId: 1,
+              vipId: vipId.vipId,
             },
           })
           .then((res) => {

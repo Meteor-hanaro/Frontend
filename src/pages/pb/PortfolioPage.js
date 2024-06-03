@@ -8,11 +8,14 @@ import Header from '../../components/common/Header';
 
 import { LoginContext } from '../../contexts/LoginContextProvider';
 import { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function PortfolioPage() {
   const [showGraph, setShowGraph] = useState(false);
   const { isLogin } = useContext(LoginContext);
+
+  const location = useLocation();
+  const { vipId } = location.state || {}; // state가 없을 경우를 대비하여 기본값을 빈 객체로 설정
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -37,7 +40,11 @@ function PortfolioPage() {
           {showGraph ? 'Show Table' : 'Show Graph'}
         </button>
         <div className='main-content'>
-          {showGraph ? <PortfolioGraph /> : <PortfolioTable />}
+          {showGraph ? (
+            <PortfolioGraph vipId={vipId} />
+          ) : (
+            <PortfolioTable vipId={vipId} />
+          )}
           {/* <AmountInput /> */}
         </div>
         <button className='graph-table-button btn btn-success'>
