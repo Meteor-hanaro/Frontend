@@ -151,7 +151,6 @@ video {
 #comparisonContainer {
   display: flex;
   flex-direction: column;
-  width: 48%;
   height: 100%;
 }
 

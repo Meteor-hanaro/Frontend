@@ -1,19 +1,23 @@
-import IdVerificationPage from "../consult/IdVerificationPage";
-import { useEffect } from "react"; 
-import RebalancingPage from "../consult/RebalancingPage";
-import Sign from "../Sign";
-import AuthPage from "../AuthPage";
-import ConsentPage from "./ConsentPage";
+import IdVerificationPage from '../consult/IdVerificationPage';
+import { useEffect, useState } from 'react';
+import RebalancingPage from '../consult/RebalancingPage';
+import Sign from '../Sign';
+import AuthPage from '../AuthPage';
+import ConsentPage from './ConsentPage';
 
 const SharingPage = ({ number, localVideoRef }) => {
-  //   useEffect(() => {}, [number]);
+  // RebalancingPage -> ConsentPage
+  const [suggestionItemList, setSuggestionItemList] = useState([]);
+
+  useEffect(() => {}, [suggestionItemList]);
 
   return (
     <div id="divSharing">
-      {/* SharingPage 화면의 주석을 해제하세요 ~_~ <br /><br /> */}
-      {number === 1 && <RebalancingPage />}
+      {number === 1 && (
+        <RebalancingPage setSuggestionItemList={setSuggestionItemList} />
+      )}
       {number === 2 && <IdVerificationPage localVideoRef={localVideoRef} />}
-      {number === 3 && <ConsentPage />}
+      {number === 3 && <ConsentPage suggestionItemData={suggestionItemList} />}
       {number === 4 && <AuthPage />}
       {number === 5 && <Sign />}
     </div>
