@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { LoginContext } from '../../contexts/LoginContextProvider';
+import { useContext } from 'react';
 import Login from './../../components/common/Login';
 
 function LoginPage() {
-  const [type, setType] = useState('vip');
+  const { setUserType } = useContext(LoginContext);
+  setUserType('vip');
 
-  return <Login type={type} />;
+  return <Login />;
 }
 
 export default LoginPage;

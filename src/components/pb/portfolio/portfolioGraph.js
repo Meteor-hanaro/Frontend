@@ -21,80 +21,87 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-function PortfolioGraph() {
+
+function PortfolioGraph({ vipId }) {
   const [graphData, setGraphData] = useState({
     labels: [],
     datasets: [],
   });
 
+  const colors = [
+    'rgba(75, 192, 192, 1)',
+    'rgba(255, 99, 132, 1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)',
+    'rgba(153, 102, 255, 1)',
+    'rgba(255, 159, 64, 1)',
+    'rgba(199, 199, 199, 1)',
+    'rgba(83, 102, 255, 1)',
+    'rgba(99, 255, 132, 1)',
+    'rgba(255, 99, 255, 1)',
+  ];
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        axios
-          .get('http://localhost:8080/api/portfolio/graphData', {
+        const res = await axios.get(
+          'http://localhost:8080/api/portfolio/graphData',
+          {
             params: {
-              vipId: 1,
+              vipId: vipId,
             },
-          })
-          .then((res) => {
-            let keys = Object.keys(res.data);
-            let k = keys[0];
-            let timeline = res.data[k].serialTime;
+          }
+        );
 
-            let ds = [];
-            let values = [];
-            for (let i = 0; i < keys.length; i++) {
-              let k = keys[i];
-              let d = {
-                label: k,
-                data: res.data[k].serialValue,
-              };
-              values.push(res.data[k].serialValue);
-              ds.push(d);
-            }
+        let keys = Object.keys(res.data);
+        let k = keys[0];
 
-            let timeline_length = values[0].length;
+        let ds = [];
+        let values = [];
+        for (let i = 0; i < keys.length; i++) {
+          let k = keys[i];
+          let d = {
+            label: k,
+            data: res.data[k].serialValue,
+            borderColor: colors[i % colors.length],
+            backgroundColor: colors[i % colors.length].replace('1)', '0.2)'),
+          };
+          values.push(res.data[k].serialValue);
+          ds.push(d);
+        }
 
-            let total_values = [];
-            for (let i = 0; i < timeline_length; i++) {
-              let sum = 0;
-              for (let j = 0; j < values.length; j++) {
-                sum += values[j][i];
-              }
-              total_values.push(sum);
-            }
+        let timeline_length = values[0].length;
 
-            // let sum_values = [];
-            // values.forEach((v) => {
-            //   for (let i = 0; i < v.length; i++) {
-            //     if (i == 0) {
-            //       sum_values.push(v[i]);
-            //     } else {
-            //       sum_values[i] += v[i];
-            //     }
-            //   }
-            // });
+        let total_values = [];
+        for (let i = 0; i < timeline_length; i++) {
+          let sum = 0;
+          for (let j = 0; j < values.length; j++) {
+            sum += values[j][i];
+          }
+          total_values.push(sum);
+        }
 
-            ds.push({
-              label: 'Total',
-              data: total_values,
-            });
+        ds.push({
+          label: 'Total',
+          data: total_values,
+          borderColor: colors[ds.length % colors.length],
+          backgroundColor: colors[ds.length % colors.length].replace(
+            '1)',
+            '0.2)'
+          ),
+        });
 
-            // console.log(sum_values);
-
-            console.log(ds[0]);
-            let gd = {
-              labels: res.data[k].serialTime,
-              datasets: ds,
-            };
-            setGraphData(gd);
-          });
+        let gd = {
+          labels: res.data[k].serialTime,
+          datasets: ds,
+        };
+        setGraphData(gd);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  }, []);
+  }, [vipId]);
 
   const options = {
     responsive: true,

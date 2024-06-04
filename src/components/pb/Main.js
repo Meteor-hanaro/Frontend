@@ -1,18 +1,43 @@
 import { useEffect, useState } from 'react';
 import auth from '../../auth';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Main() {
   const [vip, setVip] = useState([]);
+  const [state, setState] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
+    // vip 정보
     auth
       .get('http://127.0.0.1:8080/api/pb/main')
       .then((res) => {
         setVip(res.data.vip);
+        setState(res.data.state);
       })
       .catch((error) => {
         console.log(error);
       });
+
+    // 일정 시간 간격으로 state 정보 갱신
+    const intervalId = setInterval(getUserState, 2000);
+    return () => clearInterval(intervalId);
   }, []);
+
+  const getUserState = () => {
+    auth
+      .get('http://127.0.0.1:8080/api/pb/main/state')
+      .then((res) => {
+        setState(res.data.state);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const checkPortfolio = (vipId) => {
+    navigate(`/pb/portfolio`, { state: { vipId } });
+  };
 
   return (
     <>
@@ -62,42 +87,50 @@ function Main() {
                   </tr>
                 </thead>
                 <tbody>
-                  {vip.map((item, index) => (
+                  {state.map((item, index) => (
                     <tr key={index}>
-                      <th scope="row">
-                        <a href={`#${item.vipId}`}>{`#${item.vipId}`}</a>
+                      <th scope='row'>
+                        <a
+                          href={`#${vip[index].vipId}`}
+                        >{`#${vip[index].vipId}`}</a>
                       </th>
                       <td>
                         <span
                           className={`badge bg-${
-                            item.status ? 'success' : 'warning'
+                            item.state ? 'success' : 'warning'
                           }`}
                         >
-                          {item.status ? 'Approved' : 'Pending'}
+                          {item.state ? 'Active' : 'In-Active'}
                         </span>
                       </td>
-                      <td>{item.name}</td>
-                      <td>{item.riskType}</td>
-                      <td>{item.consultDate}</td>
+                      <td>{vip[index].name}</td>
+                      <td>{vip[index].riskType}</td>
+                      <td>{vip[index].consultDate}</td>
                       <td>
-                        <button type="button" className="pbBtn">
-                          <i class="bi bi-clipboard2-data"></i>
-                          &nbsp;포트폴리오
+                        <button
+                          type='button'
+                          className='pbBtn'
+                          onClick={() => checkPortfolio(vip[index].vipId)}
+                        >
+                          <i class='bi bi-clipboard2-data'></i>
+                          포트폴리오
                         </button>
+                        <Link to={`/pb/suggestion/${item.vipId}`}>
+                          <button
+                            type="button"
+                            className="pbBtn"
+                            style={{ marginLeft: '20px' }}
+                          >
+                            <i className="bi bi-clipboard2-check"></i>
+                            &nbsp; 제안서
+                          </button>
+                        </Link>
                         <button
                           type="button"
                           className="pbBtn"
                           style={{ marginLeft: '20px' }}
                         >
-                          <i class="bi bi-clipboard2-check"></i>
-                          &nbsp; 제안서
-                        </button>
-                        <button
-                          type="button"
-                          class="pbBtn"
-                          style={{ marginLeft: '20px' }}
-                        >
-                          <i class="bi bi-person-rolodex"></i>
+                          <i className="bi bi-person-rolodex"></i>
                           &nbsp; 상담 신청
                         </button>
                       </td>

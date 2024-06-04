@@ -80,7 +80,7 @@ function FundDetail({ selectedFund }) {
   }, [selectedFund]);
 
   if (!selectedFund) {
-    return <div className='fund-detail'>펀드를 선택하세요</div>;
+    return <div className="fund-detail">펀드를 선택하세요</div>;
   }
 
   const options = {
@@ -90,9 +90,11 @@ function FundDetail({ selectedFund }) {
       tooltip: {
         callbacks: {
           label: function (context) {
-            const label = context.dataset.labels[context.dataIndex] || '';
+            const l =
+              (context.dataset && context.dataset.labels[context.dataIndex]) ||
+              '';
             const value = context.formattedValue;
-            return `${label}: ${value}%`;
+            return `${l}: ${value}%`;
           },
         },
       },
@@ -104,36 +106,37 @@ function FundDetail({ selectedFund }) {
   // 차트 컴포넌트에서 options를 설정하여 Pie Chart의 크기를 조절
 
   return (
-    <div className='fund-detail'>
+    <div className="fund-detail">
       <h2>{selectedFund.name}</h2>
       <h3>포트폴리오 현황</h3>
-      <div className='portfolio-status alignHorizontal'>
-        <div className='fund-chart'>
+      <div className="portfolio-status alignHorizontal">
+        <div className="fund-chart">
           {chartData && (
-            <Pie data={chartData} id='fundPieChart' options={options} />
+            <Pie data={chartData} id="fundPieChart" options={options} />
           )}
           {/* 차트 컴포넌트를 여기에 포함할 수 있습니다 */}
         </div>
-        <table className='table stock-bond-table'>
+        <table className="table stock-bond-table">
           <thead>
             <tr>
               <th>자산구분</th>
               <th>비중(%)</th>
             </tr>
           </thead>
-          <tr>
-            <td>주식</td>
-            <td>{stockPercentage}</td>
-          </tr>
-          <tr>
-            <td>채권</td>
-            <td>{bondPercentage}</td>
-          </tr>
-          <tbody></tbody>
+          <tbody>
+            <tr>
+              <td>주식</td>
+              <td>{stockPercentage}</td>
+            </tr>
+            <tr>
+              <td>채권</td>
+              <td>{bondPercentage}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
       <h3>펀드 상세정보</h3>
-      <table className='fund-table'>
+      <table className="fund-table">
         <thead>
           <tr>
             <th>순위</th>

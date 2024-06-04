@@ -20,122 +20,123 @@
 }
 
 video {
-    width: 80%;
-    margin-bottom: 0.625rem;
+  width: 80%;
+  margin-bottom: 0.625rem;
 }
 
 #divVideos {
-    flex: 2;
-    padding: 1.25rem;
+  flex: 2;
+  padding: 1.25rem;
 }
 
 #localVideo {
   background-color: black;
   /* width: 500px;
     height: 375px; */
-    width: 25rem;
-    height: 18.75rem;
-    transform: scaleX(-1);
+  width: 25rem;
+  height: 18.75rem;
+  transform: scaleX(-1);
 }
 
 #remoteVideo {
-    background-color: black;
-    width: 25rem;
-    height: 18.75rem;
-    transform: scaleX(-1);
+  background-color: black;
+  width: 25rem;
+  height: 18.75rem;
+  transform: scaleX(-1);
 }
 
 #divInteraction {
-    flex: 8;
-    background-color: rgb(34, 34, 34);
-    padding: 1.25rem;
-    box-sizing: border-box;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+  flex: 8;
+  background-color: #f6f9ff;
+  padding: 1.25rem;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: scroll;
+  border-left: 3px solid #ccc;
 }
 
 #divProgressBar {
-    width: 100%;
-    height: 10rem;
-    box-sizing: border-box;
+  width: 100%;
+  height: 10rem;
+  box-sizing: border-box;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.875rem;
-    padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.875rem;
+  padding: 1.25rem;
 }
 
 #progressContainer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 75rem;
-    position: relative;
-    margin-top: 3.125rem;
-    margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 75rem;
+  position: relative;
+  margin-top: 3.125rem;
+  margin-bottom: 1.25rem;
 }
 
 #progressContainer::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0.625rem;
-    right: 0.625rem;
-    height: 0.625rem;
-    background-color: #d3d3d3;
-    z-index: 0;
-    transform: translateY(-50%);
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0.625rem;
+  right: 0.625rem;
+  height: 0.625rem;
+  background-color: #d3d3d3;
+  z-index: 0;
+  transform: translateY(-50%);
 }
 
 #progress {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    height: 0.625rem;
-    background-color: #316df4;
-    z-index: 1;
-    transform: translateY(-50%);
-    transition: width 0.4s ease;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 0.625rem;
+  background-color: #d7b863;
+  z-index: 1;
+  transform: translateY(-50%);
+  transition: width 0.4s ease;
 }
-
 .progressCircle {
-    width: 3.75rem;
-    height: 3.75rem;
-    background-color: #ffffff;
-    border: 0.1875rem solid #316df4;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.875rem;
-    color: #ebf1fe;
-    z-index: 2;
-    position: relative;
-    transition: background-color 0.4s ease, color 0.4s ease;
-    cursor: pointer;
+  width: 3.75rem;
+  height: 3.75rem;
+  background-color: #ffffff;
+  border: 0.1875rem solid #d7b863;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.875rem;
+  color: #ebf1fe;
+  z-index: 2;
+  position: relative;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  cursor: pointer;
 }
 
 #progressButtons {
-    display: flex;
-    justify-content: center;
-    gap: 1.25rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
 }
 
 #divSharing {
-    /* background-color: rgb(34, 34, 34); */
-    width: 100%;
-    height: 62.5rem;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 1.25rem;
-    padding: 1.25rem;
+  /* background-color: rgb(34, 34, 34); */
+  width: 100%;
+  height: 62.5rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* margin: 1.25rem;
+  padding: 1.25rem; */
 }
 
 #divRebalancing {
@@ -151,7 +152,7 @@ video {
 #comparisonContainer {
   display: flex;
   flex-direction: column;
-  width: 48%;
+  width: 50%;
   height: 100%;
 }
 
@@ -165,23 +166,23 @@ video {
 }
 
 #portfolioContainer {
-    margin-right: 0.625rem;
-    margin-bottom: 0.625rem;
+  margin-right: 0.625rem;
+  margin-bottom: 0.625rem;
 }
 
 #suggestionContainer {
-    margin-right: 0.625rem;
-    margin-top: 0.625rem;
+  margin-right: 0.625rem;
+  margin-top: 0.625rem;
 }
 
 #suggestionsListContainer {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    background-color: white;
-    margin-left: 0.625rem;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: white;
+  margin-left: 0.625rem;
 }
 
 #divIdVerification {
@@ -212,12 +213,97 @@ video {
 }
 
 #canvasContainer {
-    border: 0.0625rem solid black;
-    overflow: auto;
-    height: 37.5rem; 
-    scrollbar-width: 6.25rem;
+  border: 0.0625rem solid black;
+  overflow: auto;
+  height: 37.5rem;
+  scrollbar-width: 6.25rem;
 }
 
 #contractCanvas {
-    display: block;
+  display: block;
+}
+.marquee {
+  display: none;
+}
+
+#finalContract{
+  width: 120%;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
+}
+
+.final-title {
+  font-size: 1.5rem;
+  font-weight: 1000;
+  color: #333;
+  margin-bottom: 10px;
+  padding: 1rem;
+}
+
+.btn-sign{
+  margin: 1rem;
+}
+/* auth page css */
+#auth-box{
+  background-color: #fff;
+  padding: 2rem; /* 32px */
+  border-radius: 0.625rem; /* 10px */
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* 0 4px 8px */
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 80%; /* Responsive width */
+  max-width: 40rem; /* Max width 640px */
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.AuthPage{
+  width:100%;
+  height: 100%;
+  display: flex;
+}
+.btn-auth{
+  background-color: #d7b863;
+  border-color: #d7b863;
+  width:100%;
+  height: 40%;
+  color:#ebf1fe;
+  font-size: 1.5em;
+  font-weight: 1000;
+}
+.btn-auth:hover{
+  background-color: rgb(215, 194, 119);
+  border-color: rgb(215, 194, 119);
+  color:#ebf1fe;
+}
+.btn-auth:focus{
+  background-color: rgb(215, 194, 119);
+  border-color: rgb(215, 194, 119);
+}
+.btn-auth:active{
+  background-color: rgb(215, 194, 119);
+  border-color: rgb(215, 194, 119);
+}
+#middle-box{
+  width: 100%;
+  height: 50%;
+  align-content: center;
+  justify-items: center;
+}
+#icons-box{
+  justify-content: space-around;
+  align-items: center;
+  display:flex;
+  width:100%;
+  height: 30%;
+}
+#icons-box div {
+  display:flex;
+  justify-content: center;
+}
+#autn-img{
+  width:65%;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* 0 4px 8px */
+  justify-content: center;
 }

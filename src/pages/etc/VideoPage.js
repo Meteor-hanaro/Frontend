@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import WebRTC from '../WebRTC';
 
@@ -11,7 +10,7 @@ function VideoPage() {
       console.log('Connected to signaling server');
     };
     setSignaling(ws);
- 
+
     return () => {
       ws.close();
     };

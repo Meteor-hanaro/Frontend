@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useRef,
   useState,
-} from "react";
+} from 'react';
 
 const WebRTCContext = createContext(null);
 
@@ -21,7 +21,7 @@ const WebRTCProvider = ({ signaling, children }) => {
     const configuration = {
       iceServers: [
         {
-          urls: "stun:stun.l.google.com:19302",
+          urls: 'stun:stun.l.google.com:19302',
         },
       ],
     };
@@ -32,7 +32,7 @@ const WebRTCProvider = ({ signaling, children }) => {
     peerConnection.onicecandidate = (event) => {
       if (event.candidate) {
         signaling.send(
-          JSON.stringify({ "new-ice-candidate": event.candidate })
+          JSON.stringify({ 'new-ice-candidate': event.candidate })
         );
       }
     };
@@ -44,8 +44,8 @@ const WebRTCProvider = ({ signaling, children }) => {
     };
 
     // 데이터 채널 설정
-    const channel = peerConnection.createDataChannel("chat");
-    channel.onopen = () => console.log("Data channel is open");
+    const channel = peerConnection.createDataChannel('chat');
+    channel.onopen = () => console.log('Data channel is open');
     setDataChannel(channel);
 
     // 데이터 채널 수신 설정
@@ -82,7 +82,7 @@ const WebRTCProvider = ({ signaling, children }) => {
           }
         });
       } catch (error) {
-        console.error("Error accessing media devices.", error);
+        console.error('Error accessing media devices.', error);
       }
     };
 
@@ -96,10 +96,10 @@ const WebRTCProvider = ({ signaling, children }) => {
         await pc.setLocalDescription(offer);
         signaling.send(JSON.stringify({ offer: pc.localDescription }));
       } else {
-        console.error("PeerConnection not initialized.");
+        console.error('PeerConnection not initialized.');
       }
     } catch (error) {
-      console.error("Error creating offer:", error);
+      console.error('Error creating offer:', error);
     }
   };
 
@@ -129,13 +129,13 @@ const WebRTCProvider = ({ signaling, children }) => {
         signaling.send(JSON.stringify({ answer }));
       } else if (data.answer) {
         await pc.setRemoteDescription(new RTCSessionDescription(data.answer));
-      } else if (data["new-ice-candidate"]) {
+      } else if (data['new-ice-candidate']) {
         await pc.addIceCandidate(
-          new RTCIceCandidate(data["new-ice-candidate"])
+          new RTCIceCandidate(data['new-ice-candidate'])
         );
       }
     } catch (error) {
-      console.error("Error handling signaling data", error);
+      console.error('Error handling signaling data', error);
     }
   };
 
@@ -149,7 +149,7 @@ const WebRTCProvider = ({ signaling, children }) => {
   }, [handleSignalingData, signaling, pc]);
 
   const sendMessage = (message) => {
-    if (dataChannel && dataChannel.readyState === "open") {
+    if (dataChannel && dataChannel.readyState === 'open') {
       dataChannel.send(message);
     }
   };

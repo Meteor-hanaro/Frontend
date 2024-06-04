@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function PortfolioTable() {
+function PortfolioTable(vipId) {
   const [portfolioItems, setPortfolioItems] = useState([]);
   const [vipName, setVipName] = useState('');
+  const [loading, setLoading] = useState(true); // 로딩 상태 추가
 
   useEffect(() => {
     const fetchData = async () => {
@@ -11,29 +12,28 @@ function PortfolioTable() {
         axios
           .get('http://localhost:8080/api/portfolio/itemValue', {
             params: {
-              vipId: 1,
+              vipId: vipId.vipId,
             },
           })
           .then((res) => {
+            setLoading(false); // 데이터를 모두 받아오면 로딩 상태 변경
             setPortfolioItems(res.data);
-            console.log(res.data);
-            // 2중 axios 가능?
           });
       } catch (error) {
+        setLoading(false); // 데이터 로드 완료 후 로딩 상태 해제
         console.log(error);
       }
 
       try {
         axios
-          .get('http://localhost:8080/api/user/name', {
+          .get('http://localhost:8080/api/vip/name', {
             params: {
-              vipId: 1,
+              vipId: vipId.vipId,
             },
           })
           .then((res) => {
-            console.log(res.data);
             setVipName(res.data);
-            // 2중 axios 가능?
+            
           });
       } catch (error) {
         console.log(error);
@@ -41,6 +41,11 @@ function PortfolioTable() {
     };
     fetchData();
   }, []);
+
+  if (loading) {
+    console.log(loading);
+    return <div>Loading...</div>; // 로딩 중일 때 표시
+  }
 
   return (
     <div className='portfolio-status'>
