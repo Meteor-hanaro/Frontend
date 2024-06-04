@@ -1,28 +1,17 @@
 // 손님 포트폴리오 관리 페이지
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import SideBar from '../../components/pb/Sidebar';
 import PortfolioTable from '../../components/pb/portfolio/portfolioTable';
 import PortfolioGraph from '../../components/pb/portfolio/portfolioGraph';
 import Header from '../../components/common/Header';
 
-import { LoginContext } from '../../contexts/LoginContextProvider';
-import { useContext, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-
 function PortfolioPage() {
   const [showGraph, setShowGraph] = useState(false);
-  const { isLogin } = useContext(LoginContext);
 
   const location = useLocation();
   const { vipId } = location.state || {}; // state가 없을 경우를 대비하여 기본값을 빈 객체로 설정
-
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!isLogin) {
-      navigate('/pb');
-    }
-  }, []);
 
   const toggleView = () => {
     setShowGraph(!showGraph);

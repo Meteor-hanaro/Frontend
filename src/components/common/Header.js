@@ -1,10 +1,14 @@
-import { useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LoginContext } from '../../contexts/LoginContextProvider';
 import auth from '../../auth';
 
 function Header() {
-  const { userType, userName } = useContext(LoginContext);
+  const [userType, setUserType] = useState(() =>
+    localStorage.getItem('userType')
+  );
+  const [userName, setUserName] = useState(() =>
+    localStorage.getItem('userName')
+  );
 
   const navigate = useNavigate();
   const handleLogout = () => {
