@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Modal from 'react-modal';
 import auth from '../../auth';
 import ConsultCard from '../../components/user/ConsultCard';
-import Modal from 'react-modal';
-import axios from 'axios';
 
 function Main() {
   const [pb, setPb] = useState([]);
@@ -35,45 +36,53 @@ function Main() {
         console.log(error);
       });
   }, []);
+  
+  const clickEnterButton = () => {
+    window.open(
+      `./videoPage/:params`,
+      '_blank',
+      'noopener,noreferrer'
+    );
+  }
 
-  const openModal = () => {
-    setModalIsOpen(true);
-  };
+//   const openModal = () => {
+//     setModalIsOpen(true);
+//   };
 
-  const closeModal = () => {
-    setPassword('');
-    setModalIsOpen(false);
-  };
+//   const closeModal = () => {
+//     setPassword('');
+//     setModalIsOpen(false);
+//   };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+//   const handlePasswordChange = (e) => {
+//     setPassword(e.target.value);
+//   };
 
-  const handlePasswordSubmit = (e) => {
-    axios
-      .post('http://127.0.0.1:8080/api/vip/main/pwdcheck', {
-        pwd: vipPwd,
-        writtenPwd: password,
-      })
-      .then((response) => {
-        if (response.data) {
-          setIsAuthenticated(true);
-          closeModal();
-          alert('확인되었습니다. 상담실로 입장합니다.');
-          window.open(
-            `./videoPage/20240603?pbId=${pbId}&vipId=${vipId}`,
-            '_blank',
-            'noopener,noreferrer'
-          );
-        } else {
-          alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
-          setPassword('');
-        }
-      })
-      .catch((error) => {
-        console.error();
-      });
-  };
+//   const handlePasswordSubmit = (e) => {
+//     axios
+//       .post('http://127.0.0.1:8080/api/vip/main/pwdcheck', {
+//         pwd: vipPwd,
+//         writtenPwd: password,
+//       })
+//       .then((response) => {
+//         if (response.data) {
+//           setIsAuthenticated(true);
+//           closeModal();
+//           alert('확인되었습니다. 상담실로 입장합니다.');
+//           window.open(
+//             `./videoPage/20240603?pbId=${pbId}&vipId=${vipId}`,
+//             '_blank',
+//             'noopener,noreferrer'
+//           );
+//         } else {
+//           alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
+//           setPassword('');
+//         }
+//       })
+//       .catch((error) => {
+//         console.error();
+//       });
+//   };
   return (
     <>
       <main
@@ -153,41 +162,10 @@ function Main() {
                 type="button"
                 className="enterButton"
                 style={{ marginBottom: '0px' }}
-                onClick={openModal}
+                onClick={clickEnterButton}
               >
                 상담 바로 입장하기
               </button>
-
-              <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                contentLabel="Password Modal"
-                className="consultingModal"
-                overlayClassName="consultingModalOverlay"
-              >
-                <h4>상담실 입장을 위해 비밀번호 확인이 필요합니다.</h4> <br />
-                <input
-                  id="inputPwd"
-                  type="password"
-                  value={password}
-                  onChange={handlePasswordChange}
-                />{' '}
-                <br /> <br />
-                <button
-                  id="buttonCheck"
-                  className="btn btn-primary"
-                  onClick={handlePasswordSubmit}
-                >
-                  확인
-                </button>
-                <button
-                  id="buttonCancel"
-                  className="btn btn-primary"
-                  onClick={closeModal}
-                >
-                  취소
-                </button>
-              </Modal>
             </div>
             <div
               className="card info-card alignVertical"
