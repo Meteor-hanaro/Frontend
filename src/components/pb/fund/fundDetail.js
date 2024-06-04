@@ -18,11 +18,14 @@ function FundDetail({ selectedFund }) {
     const fetchData = async () => {
       try {
         axios
-          .get('http://localhost:8080/api/fund/securities/get', {
-            params: {
-              id: selectedFund.id,
-            },
-          })
+          .get(
+            `http://${process.env.REACT_APP_BESERVERURI}/api/fund/securities/get`,
+            {
+              params: {
+                id: selectedFund.id,
+              },
+            }
+          )
           .then((res) => {
             let stockPercentage = 0;
             let bondPercentage = 0;

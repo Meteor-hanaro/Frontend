@@ -13,6 +13,7 @@ const PrivateRoute = ({ children }) => {
   const [vipName, setVipName] = useState('');
   const [vipPwd, setVipPwd] = useState('');
   const [pbId, setPbId] = useState('');
+  const [consultId, setConsultId] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(true);
   const [inputPassword, setInputPassword] = useState('');
@@ -20,7 +21,7 @@ const PrivateRoute = ({ children }) => {
   const navigate = useNavigate();
   useEffect(() => {
     auth
-      .get('http://127.0.0.1:8080/api/vip/main')
+      .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/main`)
       .then((res) => {
         setVipId(res.data.vipInfo.vipId);
         setVipPwd(res.data.vipInfo.password);
@@ -34,18 +35,32 @@ const PrivateRoute = ({ children }) => {
       });
   }, []);
 
+  useEffect(() => {
+    axios
+      .get(
+        `http://${process.env.REACT_APP_BESERVERURI}/api/consult/extractRTCRoom?vipId=${vipId}`
+      )
+      .then((res) => {
+        setConsultId(res.data.consultId);
+      })
+      .catch((e) => console.log(e));
+  }, [vipId]);
+
   const handleAuthentication = () => {
     axios
-      .post('http://127.0.0.1:8080/api/vip/main/pwdcheck', {
-        pwd: vipPwd,
-        writtenPwd: inputPassword,
-      })
+      .post(
+        `http://${process.env.REACT_APP_BESERVERURI}/api/vip/main/pwdcheck`,
+        {
+          pwd: vipPwd,
+          writtenPwd: inputPassword,
+        }
+      )
       .then((response) => {
         if (response.data) {
           setIsAuthenticated(true);
           setModalIsOpen(false);
           alert('확인되었습니다. 상담실로 입장합니다.');
-          navigate(`/vip/videoPage/pbId=${pbId}&vipId=${vipId}`);
+          navigate(`/vip/videoPage/${consultId}?pbId=${pbId}&vipId=${vipId}`);
         } else {
           alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
           setInputPassword('');
@@ -63,8 +78,10 @@ const PrivateRoute = ({ children }) => {
   }
 
   return isAuthenticated ? (
-    <WebRTCContext signaling={new WebSocket('ws://localhost:8888')}>
-        {children}
+    <WebRTCContext
+      signaling={new WebSocket(`ws://${process.env.REACT_APP_WEBRTCWS}`)}
+    >
+      {children}
     </WebRTCContext>
   ) : (
     <>

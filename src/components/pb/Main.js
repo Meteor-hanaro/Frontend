@@ -10,7 +10,7 @@ function Main() {
   useEffect(() => {
     // vip 정보
     auth
-      .get('http://127.0.0.1:8080/api/pb/main')
+      .get(`http://${process.env.REACT_APP_BESERVERURI}/api/pb/main`)
       .then((res) => {
         setVip(res.data.vip);
         setState(res.data.state);
@@ -26,7 +26,7 @@ function Main() {
 
   const getUserState = () => {
     auth
-      .get('http://127.0.0.1:8080/api/pb/main/state')
+      .get(`http://${process.env.REACT_APP_BESERVERURI}/api/pb/main/state`)
       .then((res) => {
         setState(res.data.state);
       })
@@ -89,7 +89,7 @@ function Main() {
                 <tbody>
                   {state.map((item, index) => (
                     <tr key={index}>
-                      <th scope='row'>
+                      <th scope="row">
                         <a
                           href={`#${vip[index].vipId}`}
                         >{`#${vip[index].vipId}`}</a>
@@ -108,11 +108,11 @@ function Main() {
                       <td>{vip[index].consultDate}</td>
                       <td>
                         <button
-                          type='button'
-                          className='pbBtn'
+                          type="button"
+                          className="pbBtn"
                           onClick={() => checkPortfolio(vip[index].vipId)}
                         >
-                          <i class='bi bi-clipboard2-data'></i>
+                          <i class="bi bi-clipboard2-data"></i>
                           포트폴리오
                         </button>
                         <Link to={`/pb/suggestion/${item.vipId}`}>

@@ -21,7 +21,7 @@ function Main() {
 
   useEffect(() => {
     auth
-      .get('http://127.0.0.1:8080/api/vip/main')
+      .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/main`)
       .then((res) => {
         setPb(res.data.pbInfo);
         setVip(res.data.vipInfo);
@@ -36,53 +36,49 @@ function Main() {
         console.log(error);
       });
   }, []);
-  
+
   const clickEnterButton = () => {
-    window.open(
-      `./videoPage/:params`,
-      '_blank',
-      'noopener,noreferrer'
-    );
-  }
+    window.open(`./videoPage/:params`, '_blank', 'noopener,noreferrer');
+  };
 
-//   const openModal = () => {
-//     setModalIsOpen(true);
-//   };
+  //   const openModal = () => {
+  //     setModalIsOpen(true);
+  //   };
 
-//   const closeModal = () => {
-//     setPassword('');
-//     setModalIsOpen(false);
-//   };
+  //   const closeModal = () => {
+  //     setPassword('');
+  //     setModalIsOpen(false);
+  //   };
 
-//   const handlePasswordChange = (e) => {
-//     setPassword(e.target.value);
-//   };
+  //   const handlePasswordChange = (e) => {
+  //     setPassword(e.target.value);
+  //   };
 
-//   const handlePasswordSubmit = (e) => {
-//     axios
-//       .post('http://127.0.0.1:8080/api/vip/main/pwdcheck', {
-//         pwd: vipPwd,
-//         writtenPwd: password,
-//       })
-//       .then((response) => {
-//         if (response.data) {
-//           setIsAuthenticated(true);
-//           closeModal();
-//           alert('확인되었습니다. 상담실로 입장합니다.');
-//           window.open(
-//             `./videoPage/20240603?pbId=${pbId}&vipId=${vipId}`,
-//             '_blank',
-//             'noopener,noreferrer'
-//           );
-//         } else {
-//           alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
-//           setPassword('');
-//         }
-//       })
-//       .catch((error) => {
-//         console.error();
-//       });
-//   };
+  //   const handlePasswordSubmit = (e) => {
+  //     axios
+  //       .post('http://127.0.0.1:8080/api/vip/main/pwdcheck', {
+  //         pwd: vipPwd,
+  //         writtenPwd: password,
+  //       })
+  //       .then((response) => {
+  //         if (response.data) {
+  //           setIsAuthenticated(true);
+  //           closeModal();
+  //           alert('확인되었습니다. 상담실로 입장합니다.');
+  //           window.open(
+  //             `./videoPage/20240603?pbId=${pbId}&vipId=${vipId}`,
+  //             '_blank',
+  //             'noopener,noreferrer'
+  //           );
+  //         } else {
+  //           alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
+  //           setPassword('');
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error();
+  //       });
+  //   };
   return (
     <>
       <main

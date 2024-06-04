@@ -26,11 +26,15 @@ const IdVerificationPage = ({ localVideoRef }) => {
         formData.append('vipId', vipId);
         // 서버로 POST 요청 보내기
         axios
-          .post('http://localhost:8080/api/id/ocr', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          })
+          .post(
+            `http://${process.env.REACT_APP_BESERVERURI}/api/id/ocr`,
+            formData,
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            }
+          )
           .then((response) => {
             console.log('Success:', response.data);
             alert(response.data);
