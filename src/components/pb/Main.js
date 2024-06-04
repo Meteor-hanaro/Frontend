@@ -3,30 +3,69 @@ import auth from '../../auth';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Main() {
+  const navigate = useNavigate();
+  const [isPause, setIsPause] = useState(true); // vip 접속 확인 허용 변수
   const [vip, setVip] = useState([]);
   const [state, setState] = useState([]);
-  const navigate = useNavigate();
 
+  // 1. /pb/main 최초 진입 시, vip 목록 가져오기
   useEffect(() => {
-    // vip 정보
     auth
-      .get('http://127.0.0.1:8080/api/pb/main')
+      .get(`http://${process.env.REACT_APP_BESERVERURI}:8080/api/pb/main`)
       .then((res) => {
+        setIsPause(false); // vip 접속 확인 허용
         setVip(res.data.vip);
         setState(res.data.state);
       })
       .catch((error) => {
         console.log(error);
       });
-
-    // 일정 시간 간격으로 state 정보 갱신
-    const intervalId = setInterval(getUserState, 2000);
-    return () => clearInterval(intervalId);
   }, []);
 
-  const getUserState = () => {
+  // 2. /pb/main vip 검색
+  const searchUser = () => {
+    setIsPause(true); // vip 접속 확인 비허용
+
+    const url = `http://${process.env.REACT_APP_BESERVERURI}:8080/api/pb/main/filter`;
+    const data = {
+      riskType: document.querySelector('.datatable-selector').value,
+      name: document.querySelector('.search-form').value,
+    };
     auth
-      .get(`http://${process.env.REACT_APP_BESERVERURI}:8080/api/pb/main/state`)
+      .post(url, null, {
+        params: data,
+      })
+      .then((res) => {
+        setVip(res.data.vip);
+        setState(res.data.state);
+        setIsPause(false); // vip 접속 확인 허용
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // 3. isPause(vip 접속 확인 허용 변수)가 false면 vip 접속 확인을 반복적으로 수행
+  useEffect(() => {
+    if (!isPause) {
+      const intervalId = setInterval(() => getUserState(vip), 4000);
+      return () => clearInterval(intervalId);
+    }
+  }, [isPause]); // isPause이 변경될 때마다 useEffect 수행
+
+  // 4.
+  const getUserState = (vip) => {
+    console.log('getUserState : ' + vip);
+    const url = `http://${process.env.REACT_APP_BESERVERURI}:8080/api/pb/main/state`;
+    const data = {
+      vip: vip,
+    };
+    auth
+      .post(url, data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then((res) => {
         setState(res.data.state);
       })
@@ -72,7 +111,12 @@ function Main() {
             placeholder='Search'
             title='Enter search keyword'
           />
-          <button className='search-button' type='submit' title='Search'>
+          <button
+            className='search-button'
+            type='submit'
+            title='Search'
+            onClick={() => searchUser()}
+          >
             <i className='bi bi-search' />
           </button>
         </div>
