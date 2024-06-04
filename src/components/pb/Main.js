@@ -3,30 +3,69 @@ import auth from '../../auth';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Main() {
+  const navigate = useNavigate();
+  const [isPause, setIsPause] = useState(true); // vip 접속 확인 허용 변수
   const [vip, setVip] = useState([]);
   const [state, setState] = useState([]);
-  const navigate = useNavigate();
 
+  // 1. /pb/main 최초 진입 시, vip 목록 가져오기
   useEffect(() => {
-    // vip 정보
     auth
-      .get('http://127.0.0.1:8080/api/pb/main')
+      .get(`http://${process.env.REACT_APP_BESERVERURI}:8080/api/pb/main`)
       .then((res) => {
+        setIsPause(false); // vip 접속 확인 허용
         setVip(res.data.vip);
         setState(res.data.state);
       })
       .catch((error) => {
         console.log(error);
       });
-
-    // 일정 시간 간격으로 state 정보 갱신
-    const intervalId = setInterval(getUserState, 2000);
-    return () => clearInterval(intervalId);
   }, []);
 
-  const getUserState = () => {
+  // 2. /pb/main vip 검색
+  const searchUser = () => {
+    setIsPause(true); // vip 접속 확인 비허용
+
+    const url = `http://${process.env.REACT_APP_BESERVERURI}:8080/api/pb/main/filter`;
+    const data = {
+      riskType: document.querySelector('.datatable-selector').value,
+      name: document.querySelector('.search-form').value,
+    };
     auth
-      .get(`http://${process.env.REACT_APP_BESERVERURI}:8080/api/pb/main/state`)
+      .post(url, null, {
+        params: data,
+      })
+      .then((res) => {
+        setVip(res.data.vip);
+        setState(res.data.state);
+        setIsPause(false); // vip 접속 확인 허용
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // 3. isPause(vip 접속 확인 허용 변수)가 false면 vip 접속 확인을 반복적으로 수행
+  useEffect(() => {
+    if (!isPause) {
+      const intervalId = setInterval(() => getUserState(vip), 4000);
+      return () => clearInterval(intervalId);
+    }
+  }, [isPause]); // isPause이 변경될 때마다 useEffect 수행
+
+  // 4.
+  const getUserState = (vip) => {
+    console.log('getUserState : ' + vip);
+    const url = `http://${process.env.REACT_APP_BESERVERURI}:8080/api/pb/main/state`;
+    const data = {
+      vip: vip,
+    };
+    auth
+      .post(url, data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then((res) => {
         setState(res.data.state);
       })
@@ -42,54 +81,65 @@ function Main() {
   return (
     <>
       <main
-        id="main"
-        className="main"
+        id='main'
+        className='main'
         style={{
           padding: '45px',
           height: `calc(100vh - 60px)`,
         }}
       >
-        <div className="pagetitle">
+        <div className='pagetitle'>
           <h1>사용자 목록</h1>
         </div>
         {/* Search Bar */}
-        <div className="search-bar" style={{ marginTop: '25px' }}>
-          <form
-            className="search-form d-flex align-items-center"
-            method="POST"
-            action="#"
+        <div
+          className='alignHorizontal search-bar'
+          style={{ marginTop: '25px' }}
+        >
+          <select className='datatable-selector'>
+            <option>전체</option>
+            <option>STABLE</option>
+            <option>CONSERVATIVE</option>
+            <option>NEUTRAL</option>
+            <option>GROWTH</option>
+            <option>AGGRESSIVE</option>
+          </select>
+          <input
+            className='search-form'
+            type='text'
+            name='query'
+            placeholder='Search'
+            title='Enter search keyword'
+          />
+          <button
+            className='search-button'
+            type='submit'
+            title='Search'
+            onClick={() => searchUser()}
           >
-            <input
-              type="text"
-              name="query"
-              placeholder="Search"
-              title="Enter search keyword"
-            />
-            <button type="submit" title="Search">
-              <i className="bi bi-search" />
-            </button>
-          </form>
+            <i className='bi bi-search' />
+          </button>
         </div>
         {/* End Search Bar */}
         {/* Recent Sales */}
-        <div className="col-12" style={{ marginTop: '25px' }}>
-          <div className="card recent-sales overflow-auto">
-            <div className="card-body" style={{ padding: '20px' }}>
-              <table className="table table-borderless datatable">
+        <div className='col-12' style={{ marginTop: '25px' }}>
+          <div className='card recent-sales overflow-auto'>
+            <div className='card-body' style={{ padding: '20px' }}>
+              <table className='table table-borderless datatable'>
                 <thead>
                   <tr>
-                    <th className="col-1">No</th>
-                    <th className="col-1">Status</th>
-                    <th className="col-1">Name</th>
-                    <th className="col-2">Risk Tolerance</th>
-                    <th className="col-3">Final Consultation Date</th>
-                    <th className="col-5">Portfolio</th>
+                    <th className='col-1'>No</th>
+                    <th className='col-1'>Status</th>
+                    <th className='col-1'>Name</th>
+                    <th className='col-2'>Risk Tolerance</th>
+                    <th className='col-3'>Final Consultation Date</th>
+                    <th className='col-5'>Portfolio</th>
                   </tr>
                 </thead>
                 <tbody>
                   {state.map((item, index) => (
                     <tr key={index}>
-                      <th scope="row">
+                      <th scope='row'>
                         <a
                           href={`#${vip[index].vipId}`}
                         >{`#${vip[index].vipId}`}</a>
@@ -108,29 +158,29 @@ function Main() {
                       <td>{vip[index].consultDate}</td>
                       <td>
                         <button
-                          type="button"
-                          className="pbBtn"
+                          type='button'
+                          className='pbBtn'
                           onClick={() => checkPortfolio(vip[index].vipId)}
                         >
-                          <i class="bi bi-clipboard2-data"></i>
+                          <i class='bi bi-clipboard2-data'></i>
                           포트폴리오
                         </button>
                         <Link to={`/pb/suggestion/${item.vipId}`}>
                           <button
-                            type="button"
-                            className="pbBtn"
+                            type='button'
+                            className='pbBtn'
                             style={{ marginLeft: '20px' }}
                           >
-                            <i className="bi bi-clipboard2-check"></i>
+                            <i className='bi bi-clipboard2-check'></i>
                             &nbsp; 제안서
                           </button>
                         </Link>
                         <button
-                          type="button"
-                          className="pbBtn"
+                          type='button'
+                          className='pbBtn'
                           style={{ marginLeft: '20px' }}
                         >
-                          <i className="bi bi-person-rolodex"></i>
+                          <i className='bi bi-person-rolodex'></i>
                           &nbsp; 상담 신청
                         </button>
                       </td>
