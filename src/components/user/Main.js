@@ -1,7 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Modal from 'react-modal';
 import auth from '../../auth';
 import ConsultCard from '../../components/user/ConsultCard';
 
@@ -10,79 +7,22 @@ function Main() {
   const [vip, setVip] = useState([]);
   const [consult, setConsult] = useState([]);
 
-  const [data, setData] = useState('');
-
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [vipId, setVipId] = useState('');
-  const [vipPwd, setVipPwd] = useState('');
-  const [pbId, setPbId] = useState('');
-  const [password, setPassword] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   useEffect(() => {
     auth
-      .get('http://127.0.0.1:8080/api/vip/main')
+      .get(`http://${process.env.REACT_APP_BESERVERURI}:8080/api/vip/main`)
       .then((res) => {
         setPb(res.data.pbInfo);
         setVip(res.data.vipInfo);
         setConsult(res.data.consultList);
-
-        console.log(res);
-        setVipId(res.data.vipInfo.vipId);
-        setVipPwd(res.data.vipInfo.password);
-        setPbId(res.data.pbInfo.pbId);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
-  
+
   const clickEnterButton = () => {
-    window.open(
-      `./videoPage/:params`,
-      '_blank',
-      'noopener,noreferrer'
-    );
-  }
-
-//   const openModal = () => {
-//     setModalIsOpen(true);
-//   };
-
-//   const closeModal = () => {
-//     setPassword('');
-//     setModalIsOpen(false);
-//   };
-
-//   const handlePasswordChange = (e) => {
-//     setPassword(e.target.value);
-//   };
-
-//   const handlePasswordSubmit = (e) => {
-//     axios
-//       .post('http://127.0.0.1:8080/api/vip/main/pwdcheck', {
-//         pwd: vipPwd,
-//         writtenPwd: password,
-//       })
-//       .then((response) => {
-//         if (response.data) {
-//           setIsAuthenticated(true);
-//           closeModal();
-//           alert('확인되었습니다. 상담실로 입장합니다.');
-//           window.open(
-//             `./videoPage/20240603?pbId=${pbId}&vipId=${vipId}`,
-//             '_blank',
-//             'noopener,noreferrer'
-//           );
-//         } else {
-//           alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
-//           setPassword('');
-//         }
-//       })
-//       .catch((error) => {
-//         console.error();
-//       });
-//   };
+    window.open(`./videoPage/:params`, '_blank', 'noopener,noreferrer');
+  };
   return (
     <>
       <main
@@ -252,7 +192,6 @@ function Main() {
           </div>
         </div>
       </main>
-      {/* End #main */}
     </>
   );
 }

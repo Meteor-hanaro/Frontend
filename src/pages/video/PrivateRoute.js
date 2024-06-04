@@ -36,16 +36,19 @@ const PrivateRoute = ({ children }) => {
 
   const handleAuthentication = () => {
     axios
-      .post('http://127.0.0.1:8080/api/vip/main/pwdcheck', {
-        pwd: vipPwd,
-        writtenPwd: inputPassword,
-      })
+      .post(
+        `http://${process.env.REACT_APP_BESERVERURI}:8080/api/vip/main/pwdcheck`,
+        {
+          pwd: vipPwd,
+          writtenPwd: inputPassword,
+        }
+      )
       .then((response) => {
         if (response.data) {
           setIsAuthenticated(true);
           setModalIsOpen(false);
           alert('확인되었습니다. 상담실로 입장합니다.');
-          navigate(`/vip/videoPage/pbId=${pbId}&vipId=${vipId}`);
+          navigate(`/vip/videoPage/1?pbId=${pbId}&vipId=${vipId}`);
         } else {
           alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
           setInputPassword('');
@@ -64,7 +67,7 @@ const PrivateRoute = ({ children }) => {
 
   return isAuthenticated ? (
     <WebRTCContext signaling={new WebSocket('ws://localhost:8888')}>
-        {children}
+      {children}
     </WebRTCContext>
   ) : (
     <>
