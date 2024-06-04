@@ -7,9 +7,11 @@ function FundList({ onSelectFund }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        axios.get('http://localhost:8080/api/fund/get').then((res) => {
-          setFunds(res.data);
-        });
+        axios
+          .get(`http://${process.env.REACT_APP_BESERVERURI}:8080/api/fund/get`)
+          .then((res) => {
+            setFunds(res.data);
+          });
       } catch (error) {
         console.log(error);
       }
@@ -18,11 +20,11 @@ function FundList({ onSelectFund }) {
   }, []);
 
   return (
-    <div className='fund-list'>
+    <div className="fund-list">
       {funds.map((fund, index) => (
         <div
           key={index}
-          className='fund-item'
+          className="fund-item"
           onClick={() => onSelectFund(fund)}
         >
           {fund.name}

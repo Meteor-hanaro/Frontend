@@ -10,11 +10,14 @@ function PortfolioTable(vipId) {
     const fetchData = async () => {
       try {
         axios
-          .get('http://localhost:8080/api/portfolio/itemValue', {
-            params: {
-              vipId: vipId.vipId,
-            },
-          })
+          .get(
+            `http://${process.env.REACT_APP_BESERVERURI}:8080/api/portfolio/itemValue`,
+            {
+              params: {
+                vipId: vipId.vipId,
+              },
+            }
+          )
           .then((res) => {
             setLoading(false); // 데이터를 모두 받아오면 로딩 상태 변경
             setPortfolioItems(res.data);
@@ -26,14 +29,16 @@ function PortfolioTable(vipId) {
 
       try {
         axios
-          .get('http://localhost:8080/api/vip/name', {
-            params: {
-              vipId: vipId.vipId,
-            },
-          })
+          .get(
+            `http://${process.env.REACT_APP_BESERVERURI}:8080/api/vip/name`,
+            {
+              params: {
+                vipId: vipId.vipId,
+              },
+            }
+          )
           .then((res) => {
             setVipName(res.data);
-            
           });
       } catch (error) {
         console.log(error);
@@ -48,9 +53,9 @@ function PortfolioTable(vipId) {
   }
 
   return (
-    <div className='portfolio-status'>
+    <div className="portfolio-status">
       <h2>{vipName}님의 포트폴리오</h2>
-      <table className='table port fund-table'>
+      <table className="table port fund-table">
         <thead>
           <tr>
             <th>펀드명</th>

@@ -8,7 +8,10 @@ function Header() {
 
   const navigate = useNavigate();
   const handleLogout = () => {
-    const url = 'http://127.0.0.1:8080/api/' + userType + '/logout';
+    const url =
+      `http://${process.env.REACT_APP_BESERVERURI}:8080/api/` +
+      userType +
+      '/logout';
     auth
       .post(url, null, null)
       .then((res) => {
@@ -30,27 +33,27 @@ function Header() {
     <>
       {/* ======= Header ======= */}
       <header
-        id='header'
-        className='header fixed-top d-flex align-items-center'
+        id="header"
+        className="header fixed-top d-flex align-items-center"
       >
-        <div className='d-flex align-items-center justify-content-between'>
-          <a href='index.html' className='logo d-flex align-items-center'>
-            <img src={`${process.env.PUBLIC_URL}/assets/logo.png`} alt='' />
-            <span className='d-none d-lg-block'>Gold Lounge</span>
+        <div className="d-flex align-items-center justify-content-between">
+          <a href="index.html" className="logo d-flex align-items-center">
+            <img src={`${process.env.PUBLIC_URL}/assets/logo.png`} alt="" />
+            <span className="d-none d-lg-block">Gold Lounge</span>
           </a>
         </div>
         {/* End Logo */}
-        <nav className='header-nav ms-auto'>
-          <ul className='d-flex align-items-center'>
-            <li className='nav-item dropdown pe-3'>
-              <div className='nav-link nav-profile d-flex align-items-center pe-0'>
-                <span className='d-none d-md-block ps-2'>{userName}</span>
+        <nav className="header-nav ms-auto">
+          <ul className="d-flex align-items-center">
+            <li className="nav-item dropdown pe-3">
+              <div className="nav-link nav-profile d-flex align-items-center pe-0">
+                <span className="d-none d-md-block ps-2">{userName}</span>
                 <button
-                  type='button'
-                  className='signOutBtn'
+                  type="button"
+                  className="signOutBtn"
                   onClick={handleLogout}
                 >
-                  <i className='bi bi-box-arrow-right' /> Sign Out
+                  <i className="bi bi-box-arrow-right" /> Sign Out
                 </button>
               </div>
               {/* End Profile Iamge Icon */}
