@@ -15,16 +15,16 @@ function Router() {
     <BrowserRouter>
       <LoginContextProvider>
         <Routes>
-          // pb
+          {/* pb */}
           <Route path="/pb" element={<PbLoginPage />} />
           <Route path="/pb/main" element={<PbMainPage />} />
           <Route path="/pb/fund" element={<PbFundPage />} />
           <Route path="/pb/portfolio" element={<PbPortfolioPage />} />
           <Route path="/pb/suggestion/:vipId" element={<SuggestionPage />} />
-          // vip
+          {/* vip */}
           <Route path="/vip" element={<UserLoginPage />} />
           <Route path="/vip/main" element={<UserMainPage />} />
-          // WebRTC
+          {/* WebRTC */}
           <Route
             path="/vip/videoPage/:params"
             element={
