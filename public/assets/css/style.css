@@ -1,10 +1,8 @@
-/**
-* Template Name: NiceAdmin
-* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-* Updated: Apr 20 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+@font-face {
+  font-family: 'Hana2-M';
+  font-weight: normal;
+  src: url('../../../src/fonts/Hana2-Medium.otf') format('truetype');
+}
 
 /*--------------------------------------------------------------
 # General
@@ -14,7 +12,8 @@
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  /* font-family: 'Open Sans', sans-serif; */
+  font-family: 'Hana2-M';
   background: #f6f9ff;
   color: #444444;
 }
@@ -1273,6 +1272,10 @@ h6 {
     drop-shadow(8px 8px 13px rgba(174, 174, 192, 0.5));
 }
 
+.enterButton:disabled {
+  background: #d4d4d4;
+}
+
 .card-content {
   padding: 20px;
   font-size: 15px;
@@ -1359,58 +1362,38 @@ h6 {
   float: right;
 }
 
-@media (max-width: 1199px) {
-  .search-bar {
-    position: fixed;
-    top: 50px;
-    left: 0;
-    right: 0;
-    padding: 20px;
-    box-shadow: 0px 0px 15px 0px rgba(1, 41, 112, 0.1);
-    background: white;
-    z-index: 9999;
-    transition: 0.3s;
-    visibility: hidden;
-    opacity: 0;
-  }
-
-  .search-bar-show {
-    top: 60px;
-    visibility: visible;
-    opacity: 1;
-  }
+.datatable-selector {
+  background: #dfe8ff;
+  border: 0;
+  padding: 5px 10px;
+  color: #4154f1;
+  border-radius: 3px;
 }
 
-.search-form {
-  width: 100%;
-}
-
-.search-form input {
+input[type='text'].search-form {
   border: 0;
   font-size: 14px;
   color: #012970;
-  border: 1px solid rgba(1, 41, 112, 0.2);
   padding: 7px 38px 7px 8px;
   border-radius: 3px;
   transition: 0.3s;
   width: 100%;
 }
 
-.search-form input:focus,
-.search-form input:hover {
+input[type='text'].search-form input:focus,
+input[type='text'].search-form input:hover {
   outline: none;
   box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15);
   border: 1px solid rgba(1, 41, 112, 0.3);
 }
 
-.search-form button {
+.search-button {
   border: 0;
-  padding: 0;
   margin-left: -30px;
   background: none;
 }
 
-.search-form button i {
+.search-button i {
   color: #012970;
 }
 
@@ -1579,7 +1562,6 @@ h6 {
 .react-pdf__Document::-webkit-scrollbar-track {
   background: #f6f6fe;
   /*스크롤바 뒷 배경 색상*/
-
 }
 #finalPdf{
   overflow-y: scroll;
@@ -1749,7 +1731,7 @@ h6 {
 .pdf-container {
   margin: 20px 0;
 }
-#capturedScreen{
+#capturedScreen {
   align-items: center;
   display: flex;
   justify-content: center;

@@ -11,7 +11,7 @@ function PortfolioTable(vipId) {
       try {
         axios
           .get(
-            `http://${process.env.REACT_APP_BESERVERURI}:8080/api/portfolio/itemValue`,
+            `http://${process.env.REACT_APP_BESERVERURI}/api/portfolio/itemValue`,
             {
               params: {
                 vipId: vipId.vipId,
@@ -29,14 +29,11 @@ function PortfolioTable(vipId) {
 
       try {
         axios
-          .get(
-            `http://${process.env.REACT_APP_BESERVERURI}:8080/api/vip/name`,
-            {
-              params: {
-                vipId: vipId.vipId,
-              },
-            }
-          )
+          .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/name`, {
+            params: {
+              vipId: vipId.vipId,
+            },
+          })
           .then((res) => {
             setVipName(res.data);
           });

@@ -16,7 +16,7 @@ const ConsentPage = ({ suggestionItemData }) => {
   const getData = async () => {
     try {
       const { data } = await axios.post(
-        `http://${process.env.REACT_APP_BESERVERURI}:8080/api/contract/join`,
+        `http://${process.env.REACT_APP_BESERVERURI}/api/contract/join`,
         {
           fundIds: suggestionItemData,
         }

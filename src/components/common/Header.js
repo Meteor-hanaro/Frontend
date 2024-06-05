@@ -1,17 +1,19 @@
-import { useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LoginContext } from '../../contexts/LoginContextProvider';
 import auth from '../../auth';
 
 function Header() {
-  const { userType, userName } = useContext(LoginContext);
+  const [userType, setUserType] = useState(() =>
+    localStorage.getItem('userType')
+  );
+  const [userName, setUserName] = useState(() =>
+    localStorage.getItem('userName')
+  );
 
   const navigate = useNavigate();
   const handleLogout = () => {
     const url =
-      `http://${process.env.REACT_APP_BESERVERURI}:8080/api/` +
-      userType +
-      '/logout';
+      `http://${process.env.REACT_APP_BESERVERURI}/api/` + userType + '/logout';
     auth
       .post(url, null, null)
       .then((res) => {

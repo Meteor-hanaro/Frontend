@@ -8,7 +8,7 @@ function FundList({ onSelectFund }) {
     const fetchData = async () => {
       try {
         axios
-          .get(`http://${process.env.REACT_APP_BESERVERURI}:8080/api/fund/get`)
+          .get(`http://${process.env.REACT_APP_BESERVERURI}/api/fund/get`)
           .then((res) => {
             setFunds(res.data);
           });

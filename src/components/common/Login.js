@@ -1,12 +1,13 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LoginContext } from '../../contexts/LoginContextProvider';
 import axios from 'axios';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { userType, setIsLogin, setUserName } = useContext(LoginContext);
+  const [userType, setUserType] = useState(() =>
+    localStorage.getItem('userType')
+  );
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
@@ -19,9 +20,7 @@ function Login() {
 
   const handleLogin = () => {
     const url =
-      `http://${process.env.REACT_APP_BESERVERURI}:8080/api/` +
-      userType +
-      '/login';
+      `http://${process.env.REACT_APP_BESERVERURI}/api/` + userType + '/login';
     const data = {
       email: email,
       password: password,
@@ -33,10 +32,8 @@ function Login() {
       })
       .then((res) => {
         console.log(res);
-        // LoginContextProvider
-        setUserName(res.data.userName);
-
         // localStorage에 jwt token 저장
+        localStorage.setItem('userName', res.data.userName);
         localStorage.setItem('accessToken', res.data.accessToken);
         localStorage.setItem('refreshToken', res.data.refreshToken);
 
