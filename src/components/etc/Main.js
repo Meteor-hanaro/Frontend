@@ -9,7 +9,7 @@ function Main() {
   const [data, setData] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api').then((res) => {
+    axios.get(`http://${process.env.REACT_APP_BESERVERURI}/api`).then((res) => {
       setData(res.data);
       console.log(data);
     });

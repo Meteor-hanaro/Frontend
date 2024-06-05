@@ -45,7 +45,7 @@ function PortfolioGraph({ vipId }) {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://${process.env.REACT_APP_BESERVERURI}:8080/api/portfolio/graphData`,
+          `http://${process.env.REACT_APP_BESERVERURI}/api/portfolio/graphData`,
           {
             params: {
               vipId: vipId,

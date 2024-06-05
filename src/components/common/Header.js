@@ -13,9 +13,7 @@ function Header() {
   const navigate = useNavigate();
   const handleLogout = () => {
     const url =
-      `http://${process.env.REACT_APP_BESERVERURI}:8080/api/` +
-      userType +
-      '/logout';
+      `http://${process.env.REACT_APP_BESERVERURI}/api/` + userType + '/logout';
     auth
       .post(url, null, null)
       .then((res) => {

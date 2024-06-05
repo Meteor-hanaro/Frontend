@@ -20,9 +20,7 @@ function Login() {
 
   const handleLogin = () => {
     const url =
-      `http://${process.env.REACT_APP_BESERVERURI}:8080/api/` +
-      userType +
-      '/login';
+      `http://${process.env.REACT_APP_BESERVERURI}/api/` + userType + '/login';
     const data = {
       email: email,
       password: password,
