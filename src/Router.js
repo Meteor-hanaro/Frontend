@@ -15,7 +15,7 @@ function Router() {
     <BrowserRouter>
       <LoginContextProvider>
         <Routes>
-          // pb
+          {/* pb */}
           <Route path="/pb" element={<PbLoginPage />} />
           <Route path="/pb/main" element={<PbMainPage />} />
           <Route path="/pb/fund" element={<PbFundPage />} />
@@ -25,7 +25,7 @@ function Router() {
           // vip
           <Route path="/vip" element={<UserLoginPage />} />
           <Route path="/vip/main" element={<UserMainPage />} />
-          // WebRTC
+          {/* WebRTC */}
           <Route
             path="/vip/videoPage/:params"
             element={
