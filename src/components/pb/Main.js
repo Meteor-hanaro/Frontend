@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import auth from '../../auth';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Main() {
+  const ws = useRef(null);
   const navigate = useNavigate();
   const [isPause, setIsPause] = useState(true); // vip 접속 확인 허용 변수
   const [vip, setVip] = useState([]);
   const [state, setState] = useState([]);
 
-  // 1. /pb/main 최초 진입 시, vip 목록 가져오기
   useEffect(() => {
+    // web socket
+    ws.current = new WebSocket(`ws://${process.env.REACT_APP_CONSULTREQUEST}`);
+
+    // 1. /pb/main 최초 진입 시, vip 목록 가져오기
     auth
       .get(`http://${process.env.REACT_APP_BESERVERURI}:8080/api/pb/main`)
       .then((res) => {
@@ -76,6 +80,13 @@ function Main() {
 
   const checkPortfolio = (vipId) => {
     navigate(`/pb/portfolio`, { state: { vipId } });
+  };
+
+  const sendConsultRequest = (vipId) => {
+    if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+      console.log('send from pb to vip : ' + vipId);
+      ws.current.send(vipId);
+    }
   };
 
   return (
@@ -162,7 +173,7 @@ function Main() {
                           className='pbBtn'
                           onClick={() => checkPortfolio(vip[index].vipId)}
                         >
-                          <i class='bi bi-clipboard2-data'></i>
+                          <i className='bi bi-clipboard2-data'></i>
                           포트폴리오
                         </button>
                         <Link to={`/pb/suggestion/${item.vipId}`}>
@@ -179,6 +190,7 @@ function Main() {
                           type='button'
                           className='pbBtn'
                           style={{ marginLeft: '20px' }}
+                          onClick={() => sendConsultRequest(vip[index].vipId)}
                         >
                           <i className='bi bi-person-rolodex'></i>
                           &nbsp; 상담 신청
