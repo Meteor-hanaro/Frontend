@@ -51,9 +51,7 @@ function PortfolioTable(vipId) {
 
   return (
     <div className="portfolio-status">
-    <div className="portfolio-status">
       <h2>{vipName}님의 포트폴리오</h2>
-      <table className="table port fund-table">
       <table className="table port fund-table">
         <thead>
           <tr>

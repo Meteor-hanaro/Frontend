@@ -21,11 +21,9 @@ function FundList({ onSelectFund }) {
 
   return (
     <div className="fund-list">
-    <div className="fund-list">
       {funds.map((fund, index) => (
         <div
           key={index}
-          className="fund-item"
           className="fund-item"
           onClick={() => onSelectFund(fund)}
         >

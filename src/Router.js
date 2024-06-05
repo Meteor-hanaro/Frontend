@@ -21,8 +21,8 @@ function Router() {
           <Route path="/pb/fund" element={<PbFundPage />} />
           <Route path="/pb/portfolio" element={<PbPortfolioPage />} />
           <Route path="/pb/suggestion/:vipId" element={<SuggestionPage />} />
-          <Route path="/pb/videoPage/:params" element={<VideoPage />} />
-          // vip
+          {/* <Route path="/pb/videoPage/:params" element={<VideoPage />} /> */}
+          {/* vip */}
           <Route path="/vip" element={<UserLoginPage />} />
           <Route path="/vip/main" element={<UserMainPage />} />
           {/* WebRTC */}

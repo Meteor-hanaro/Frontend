@@ -82,12 +82,12 @@ function Main() {
   };
 
   // 3. isPause(vip 접속 확인 허용 변수)가 false면 vip 접속 확인을 반복적으로 수행
-  useEffect(() => {
-    if (!isPause) {
-      const intervalId = setInterval(() => getUserState(vip), 4000);
-      return () => clearInterval(intervalId);
-    }
-  }, [isPause]); // isPause이 변경될 때마다 useEffect 수행
+  // useEffect(() => {
+  //   if (!isPause) {
+  //     const intervalId = setInterval(() => getUserState(vip), 4000);
+  //     return () => clearInterval(intervalId);
+  //   }
+  // }, [isPause]); // isPause이 변경될 때마다 useEffect 수행
 
   // redis에서 고객 입장여부 실시간 확인
   const getUserState = () => {
@@ -133,7 +133,11 @@ function Main() {
     const roomNumber = consultData.find((item) =>
       Object.is(data.vipId, item.vipId)
     ).consultId;
-    window.open(`/pb/videoPage/${roomNumber}?pbId=${pbId}&vipId=${data.vipId}`);
+    window.open(
+      `/vip/videoPage/${roomNumber}?pbId=${pbId}&vipId=${data.vipId}`
+    );
+    localStorage.setItem('isPb', true);
+    localStorage.setItem('pbVip', data.vipId);
   };
 
   return (
