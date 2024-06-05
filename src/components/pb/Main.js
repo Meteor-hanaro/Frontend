@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import auth from '../../auth';
 
 function Main() {
+  const ws = useRef(null);
   const navigate = useNavigate();
   const [isPause, setIsPause] = useState(true); // vip 접속 확인 허용 변수
   const [vip, setVip] = useState([]);
@@ -12,8 +13,11 @@ function Main() {
   const [consultState, setConsultState] = useState([]);
   const [consultData, setConsultData] = useState([]);
 
-  // 1. /pb/main 최초 진입 시, vip 목록 가져오기
   useEffect(() => {
+    // web socket
+    ws.current = new WebSocket(`ws://${process.env.REACT_APP_CONSULTREQUEST}`);
+
+    // 1. /pb/main 최초 진입 시, vip 목록 가져오기
     async function fetchData() {
       try {
         const res = await auth.get(
@@ -105,6 +109,13 @@ function Main() {
     navigate(`/pb/portfolio`, { state: { vipId } });
   };
 
+  const sendConsultRequest = (vipId) => {
+    if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+      console.log('send from pb to vip : ' + vipId);
+      ws.current.send(vipId);
+    }
+  };
+
   // 고객과의 상담 생성
   const registerConsult = (data, index) => {
     axios
@@ -126,6 +137,7 @@ function Main() {
         alert(`${data.name}님과의 화상 상담방이 생성되었습니다.`);
       })
       .catch((e) => console.log(e));
+    sendConsultRequest(data.vipId);
   };
 
   // pb가 상담방 입장할 때 적절한 상담방으로 입장하게끔 url 생성 및 페이지 open
@@ -224,6 +236,7 @@ function Main() {
                           className="pbBtn"
                           onClick={() => checkPortfolio(vip[index].vipId)}
                         >
+                          <i className="bi bi-clipboard2-data"></i>
                           <i className="bi bi-clipboard2-data"></i>
                           포트폴리오
                         </button>

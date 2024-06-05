@@ -1,15 +1,13 @@
 const WebSocket = require('ws');
 
-const wssvm = new WebSocket.Server({ port: 8886 }); // vip/main
-const wsspm = new WebSocket.Server({ port: 8887 }); // pb/main
-
+const wsscr = new WebSocket.Server({ port: 8887 }); // consult request
 const wss = new WebSocket.Server({ port: 8888 }); // videopage - WebRTC
 const wsssl = new WebSocket.Server({ port: 8889 }); // suggestion list
-const wsspb = new WebSocket.Server({ port: 8890 }); // progrss bar
+const wsspb = new WebSocket.Server({ port: 8890 }); // progress bar
 
-wssvm.on('connection', (ws) => {
+wsscr.on('connection', (ws) => {
   ws.on('message', (message) => {
-    wssvm.clients.forEach((client) => {
+    wsscr.clients.forEach((client) => {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
         client.send(message);
       }
@@ -17,23 +15,13 @@ wssvm.on('connection', (ws) => {
   });
 
   ws.on('close', () => {
-    console.log('port 8886 Connection closed');
+    console.log('Connection closed');
   });
 });
 
-wsspm.on('connection', (ws) => {
-  ws.on('message', (message) => {
-    wsspm.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(message);
-      }
-    });
-  });
-
-  ws.on('close', () => {
-    console.log('port 8887 Connection closed');
-  });
-});
+console.log(
+  'WebSocket server for consult request is running on ws://localhost:8887'
+);
 
 wss.on('connection', (ws) => {
   ws.on('message', (message) => {

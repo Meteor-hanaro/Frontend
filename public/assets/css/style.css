@@ -1272,6 +1272,10 @@ h6 {
     drop-shadow(8px 8px 13px rgba(174, 174, 192, 0.5));
 }
 
+.enterButton:disabled {
+  background: #d4d4d4;
+}
+
 .card-content {
   padding: 20px;
   font-size: 15px;
