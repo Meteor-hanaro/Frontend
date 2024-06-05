@@ -17,23 +17,38 @@ const PrivateRoute = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(true);
   const [inputPassword, setInputPassword] = useState('');
+  const [isVip, setIsVip] = useState(null);
 
   const navigate = useNavigate();
+
   useEffect(() => {
-    auth
-      .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/main`)
-      .then((res) => {
-        setVipId(res.data.vipInfo.vipId);
-        setVipPwd(res.data.vipInfo.password);
-        setVipName(res.data.vipInfo.name);
-        setPbId(res.data.pbInfo.pbId);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false);
-      });
+    setIsVip(localStorage.getItem('isVip'));
+    if (
+      !localStorage.getItem('isVip') ||
+      localStorage.getItem('isVip') == null
+    ) {
+      window.close();
+      alert('접근 권한이 없습니다.');
+    }
   }, []);
+
+  useEffect(() => {
+    if (isVip) {
+      auth
+        .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/main`)
+        .then((res) => {
+          setVipId(res.data.vipInfo.vipId);
+          setVipPwd(res.data.vipInfo.password);
+          setVipName(res.data.vipInfo.name);
+          setPbId(res.data.pbInfo.pbId);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+  }, [isVip]);
 
   useEffect(() => {
     axios

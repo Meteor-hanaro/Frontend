@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Modal from 'react-modal';
+// import { useNavigate } from 'react-router-dom';
+// import axios from 'axios';
+// import Modal from 'react-modal';
 import auth from '../../auth';
 import ConsultCard from '../../components/user/ConsultCard';
 
@@ -10,27 +10,23 @@ function Main() {
   const [vip, setVip] = useState([]);
   const [consult, setConsult] = useState([]);
 
-  const [data, setData] = useState('');
+  // const [data, setData] = useState('');
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [vipId, setVipId] = useState('');
-  const [vipPwd, setVipPwd] = useState('');
-  const [pbId, setPbId] = useState('');
-  const [password, setPassword] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [modalIsOpen, setModalIsOpen] = useState(false);
+  // const [vipId, setVipId] = useState('');
+  // const [vipPwd, setVipPwd] = useState('');
+  // const [pbId, setPbId] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     auth
       .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/main`)
       .then((res) => {
+        console.log(res.data);
         setPb(res.data.pbInfo);
         setVip(res.data.vipInfo);
         setConsult(res.data.consultList);
-
-        console.log(res);
-        setVipId(res.data.vipInfo.vipId);
-        setVipPwd(res.data.vipInfo.password);
-        setPbId(res.data.pbInfo.pbId);
       })
       .catch((error) => {
         console.log(error);
@@ -39,6 +35,7 @@ function Main() {
 
   const clickEnterButton = () => {
     window.open(`./videoPage/:params`, '_blank', 'noopener,noreferrer');
+    localStorage.setItem('isVip', vip.isvip);
   };
 
   //   const openModal = () => {
