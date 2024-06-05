@@ -12,8 +12,6 @@ function AuthPage() {
     IMP.init("imp74352341");
     IMP.certification(
       {
-        // param
-        // pg: "inicis_unified.{CPID}", //본인인증 설정이 2개이상 되어 있는 경우 필수
         merchant_uid: vipId,
         popup: true,
       },

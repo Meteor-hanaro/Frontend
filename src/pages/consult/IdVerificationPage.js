@@ -41,6 +41,7 @@ const IdVerificationPage = ({ localVideoRef }) => {
           })
           .catch((error) => {
             console.error('Error:', error);
+            alert('신분증 인식에 실패했습니다.');
           });
       }, 'image/png');
     } else {

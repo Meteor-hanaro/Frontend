@@ -66,7 +66,7 @@ const PrivateRoute = ({ children }) => {
   }
 
   return isAuthenticated ? (
-    <WebRTCContext signaling={new WebSocket('ws://localhost:8888')}>
+    <WebRTCContext signaling={new WebSocket(`ws://${process.env.REACT_APP_WEBRTCWS}`)}>
       {children}
     </WebRTCContext>
   ) : (

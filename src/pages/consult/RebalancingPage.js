@@ -5,7 +5,7 @@ import SuggestionList from '../../components/common/SuggestionList';
 import TrafficChart from '../../components/common/chart/TrafficChart';
 import { use } from 'echarts';
 
-const RebalancingPage = ({ setSuggestionItemList }) => {
+const RebalancingPage = ({ setSuggestionItemList, setSuggestionItemNumber, setSuggestionId }) => {
   const [suggestionData, setSuggestionData] = useState([]);
   const [transferSGData, setTransferSGData] = useState([]);
   const [portfolioData, setPortfolioData] = useState([]);
@@ -46,6 +46,7 @@ const RebalancingPage = ({ setSuggestionItemList }) => {
       )
       .then((res) => {
         setPortfolioData(res.data);
+        setSuggestionId(res.data.id);
       })
       .catch((e) => console.log(e));
 
@@ -87,6 +88,7 @@ const RebalancingPage = ({ setSuggestionItemList }) => {
 
   // 수정안 버튼 클릭시 작성해야할 계약서 리스트 전달
   const suggestionAccept = () => {
+    console.log(suggestionData);
     suggestionData.suggestionItems[suggestionNumber].suggestionItems.map(
       (item) => {
         if (existCheckInPortfolio(item.suggestionItemId)) {
@@ -94,6 +96,7 @@ const RebalancingPage = ({ setSuggestionItemList }) => {
         }
       }
     );
+    setSuggestionItemNumber(transferSGData);
   };
 
   // 수정안 중 새로 가입하는 펀드 확인
