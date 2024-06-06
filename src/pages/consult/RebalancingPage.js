@@ -41,7 +41,7 @@ const RebalancingPage = ({ setSuggestionItemList }) => {
     // 현재 포트폴리오 불러오기
     axios
       .get(
-        `http://${process.env.REACT_APP_BESERVERURI}:8080/api/portfolio/extract?vipId=` +
+        `http://${process.env.REACT_APP_BESERVERURI}/api/portfolio/extract?vipId=` +
           searchParams.get('vipId')
       )
       .then((res) => {
@@ -52,7 +52,7 @@ const RebalancingPage = ({ setSuggestionItemList }) => {
     // 수정안 데이터 불러오기
     axios
       .get(
-        `http://${process.env.REACT_APP_BESERVERURI}:8080/api/suggestion/extract?userId=` +
+        `http://${process.env.REACT_APP_BESERVERURI}/api/suggestion/extract?userId=` +
           searchParams.get('vipId')
       )
       .then((res) => {

@@ -27,7 +27,7 @@ const IdVerificationPage = ({ localVideoRef }) => {
         // 서버로 POST 요청 보내기
         axios
           .post(
-            `http://${process.env.REACT_APP_BESERVERURI}:8080/api/id/ocr`,
+            `http://${process.env.REACT_APP_BESERVERURI}/api/id/ocr`,
             formData,
             {
               headers: {

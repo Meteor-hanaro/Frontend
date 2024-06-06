@@ -24,7 +24,7 @@ function Main() {
     };
 
     auth
-      .get(`http://${process.env.REACT_APP_BESERVERURI}:8080/api/vip/main`)
+      .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/main`)
       .then((res) => {
         localStorage.setItem('vipId', res.data.vipInfo.vipId);
         setPb(res.data.pbInfo);
@@ -38,7 +38,9 @@ function Main() {
 
   const clickEnterButton = () => {
     window.open(`./videoPage/:params`, '_blank', 'noopener,noreferrer');
+    localStorage.setItem('isVip', vip.isvip);
   };
+
   return (
     <>
       <main

@@ -19,7 +19,7 @@ function FundDetail({ selectedFund }) {
       try {
         axios
           .get(
-            `http://${process.env.REACT_APP_BESERVERURI}:8080/api/fund/securities/get`,
+            `http://${process.env.REACT_APP_BESERVERURI}/api/fund/securities/get`,
             {
               params: {
                 id: selectedFund.id,

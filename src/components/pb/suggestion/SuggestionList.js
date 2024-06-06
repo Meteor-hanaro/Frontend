@@ -20,7 +20,7 @@ function SuggestionList({ id }) {
   useEffect(() => {
     axios
       .get(
-        `http://${process.env.REACT_APP_BESERVERURI}:8080/api/suggestion/extract?userId=` +
+        `http://${process.env.REACT_APP_BESERVERURI}/api/suggestion/extract?userId=` +
           id
       )
       .then((res) => {

@@ -1,10 +1,8 @@
-/**
-* Template Name: NiceAdmin
-* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-* Updated: Apr 20 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+@font-face {
+  font-family: 'Hana2-M';
+  font-weight: normal;
+  src: url('../../../src/fonts/Hana2-Medium.otf') format('truetype');
+}
 
 /*--------------------------------------------------------------
 # General
@@ -14,7 +12,8 @@
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  /* font-family: 'Open Sans', sans-serif; */
+  font-family: 'Hana2-M';
   background: #f6f9ff;
   color: #444444;
 }

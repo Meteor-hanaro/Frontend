@@ -33,7 +33,7 @@ wss.on('connection', (ws) => {
   });
 
   ws.on('close', () => {
-    console.log('Connection closed');
+    console.log('port 8888 Connection closed');
   });
 });
 
@@ -47,11 +47,11 @@ wsssl.on('connection', (ws) => {
   });
 
   ws.on('close', () => {
-    console.log('Connection closed');
+    console.log('port 8889 Connection closed');
   });
 });
 
-console.log('suggestion list socket server is running on ws://localhost:8889');
+// console.log('suggestion list socket server is running on ws://localhost:8889');
 
 wsspb.on('connection', (ws) => {
   ws.on('message', (message) => {
@@ -63,8 +63,8 @@ wsspb.on('connection', (ws) => {
   });
 
   ws.on('close', () => {
-    console.log('Connection closed');
+    console.log('port 8890 Connection closed');
   });
 });
 
-console.log('progress bar socket server is running on ws://localhost:8889');
+// console.log('progress bar socket server is running on ws://localhost:8889');

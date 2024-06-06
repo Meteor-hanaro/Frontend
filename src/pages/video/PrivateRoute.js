@@ -13,31 +13,76 @@ const PrivateRoute = ({ children }) => {
   const [vipName, setVipName] = useState('');
   const [vipPwd, setVipPwd] = useState('');
   const [pbId, setPbId] = useState('');
+  const [consultId, setConsultId] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(true);
   const [inputPassword, setInputPassword] = useState('');
+  const [isVip, setIsVip] = useState(null);
+  const [isPb, setIsPb] = useState(null);
 
   const navigate = useNavigate();
+
+  // vip 권한 확인
   useEffect(() => {
-    auth
-      .get('http://127.0.0.1:8080/api/vip/main')
-      .then((res) => {
-        setVipId(res.data.vipInfo.vipId);
-        setVipPwd(res.data.vipInfo.password);
-        setVipName(res.data.vipInfo.name);
-        setPbId(res.data.pbInfo.pbId);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false);
-      });
+    setIsVip(localStorage.getItem('isVip'));
+    setIsPb(localStorage.getItem('isPb'));
+    if (localStorage.getItem('isVip') && localStorage.getItem('isPb')) {
+      window.close();
+      alert('접근 권한이 없습니다.');
+    }
   }, []);
 
-  const handleAuthentication = () => {
+  // vip 비밀번호 체크를 위한 정보 호출
+  useEffect(() => {
+    // vip
+    if (isVip) {
+      auth
+        .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/main`)
+        .then((res) => {
+          setVipId(res.data.vipInfo.vipId);
+          setVipPwd(res.data.vipInfo.password);
+          setVipName(res.data.vipInfo.name);
+          setPbId(res.data.pbInfo.pbId);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+    // pb
+    else if (isPb) {
+      auth
+        .get(`http://${process.env.REACT_APP_BESERVERURI}/api/pb/main`)
+        .then((res) => {
+          setVipId(localStorage.getItem('pbVip'));
+          setPbId(res.data.vip[0].pbId);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+  }, [isVip, isPb]);
+
+  // 화상상담방 번호 확인
+  useEffect(() => {
+    axios
+      .get(
+        `http://${process.env.REACT_APP_BESERVERURI}/api/consult/extractRTCRoom?vipId=${vipId}`
+      )
+      .then((res) => {
+        setConsultId(res.data.consultId);
+      })
+      .catch((e) => console.log(e));
+  }, [vipId, pbId]);
+
+  // 사용자가 입력한 비밀번호가 일치하는지 확인
+  const handleVipAuthentication = () => {
     axios
       .post(
-        `http://${process.env.REACT_APP_BESERVERURI}:8080/api/vip/main/pwdcheck`,
+        `http://${process.env.REACT_APP_BESERVERURI}/api/vip/main/pwdcheck`,
         {
           pwd: vipPwd,
           writtenPwd: inputPassword,
@@ -48,7 +93,36 @@ const PrivateRoute = ({ children }) => {
           setIsAuthenticated(true);
           setModalIsOpen(false);
           alert('확인되었습니다. 상담실로 입장합니다.');
-          navigate(`/vip/videoPage/1?pbId=${pbId}&vipId=${vipId}`);
+          navigate(`/vip/videoPage/${consultId}?pbId=${pbId}&vipId=${vipId}`);
+        } else {
+          alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
+          setInputPassword('');
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        alert('오류가 발생했습니다. 창이 닫힙니다.');
+        window.close();
+      });
+  };
+
+  // pb가 입장했을 때 비밀번호 입력 후 검증하는 로직
+  const handlePbAuthentication = () => {
+    axios
+      .post(
+        `http://${process.env.REACT_APP_BESERVERURI}/api/pb/main/pwdcheck`,
+        {
+          pbId: pbId,
+          inputPwd: inputPassword,
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        if (response.data) {
+          setIsAuthenticated(true);
+          setModalIsOpen(false);
+          alert('확인되었습니다. 상담실로 입장합니다.');
+          navigate(`/vip/videoPage/${consultId}?pbId=${pbId}&vipId=${vipId}`);
         } else {
           alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
           setInputPassword('');
@@ -66,7 +140,9 @@ const PrivateRoute = ({ children }) => {
   }
 
   return isAuthenticated ? (
-    <WebRTCContext signaling={new WebSocket('ws://localhost:8888')}>
+    <WebRTCContext
+      signaling={new WebSocket(`ws://${process.env.REACT_APP_WEBRTCWS}`)}
+    >
       {children}
     </WebRTCContext>
   ) : (
@@ -80,11 +156,19 @@ const PrivateRoute = ({ children }) => {
         className="consultingModal"
         overlayClassName="consultingModalOverlay"
       >
-        <h4>
-          안녕하세요, {vipName}님!
-          <br />
-          상담실 입장을 위해 비밀번호 확인이 필요합니다.
-        </h4>{' '}
+        {isVip ? (
+          <h4>
+            안녕하세요, {vipName}님!
+            <br />
+            상담실 입장을 위해 비밀번호 확인이 필요합니다.
+          </h4>
+        ) : (
+          <h4>
+            안녕하세요, PB님!
+            <br />
+            상담실 입장을 위해 비밀번호 확인이 필요합니다.
+          </h4>
+        )}
         <br />
         <input
           id="inputPwd"
@@ -93,13 +177,23 @@ const PrivateRoute = ({ children }) => {
           onChange={(e) => setInputPassword(e.target.value)}
         />{' '}
         <br /> <br />
-        <button
-          id="buttonCheck"
-          className="btn btn-primary"
-          onClick={handleAuthentication}
-        >
-          확인
-        </button>
+        {isVip ? (
+          <button
+            id="buttonCheck"
+            className="btn btn-primary"
+            onClick={handleVipAuthentication}
+          >
+            확인
+          </button>
+        ) : (
+          <button
+            id="buttonCheck"
+            className="btn btn-primary"
+            onClick={handlePbAuthentication}
+          >
+            확인
+          </button>
+        )}
         <button
           id="buttonCancel"
           className="btn btn-primary"
