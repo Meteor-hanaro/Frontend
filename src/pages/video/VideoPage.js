@@ -12,6 +12,11 @@ const VideoPage = () => {
     };
     setSignaling(ws);
 
+    // 권한 초기화
+    localStorage.removeItem('isVip');
+    localStorage.removeItem('isPb');
+    localStorage.removeItem('pbVip');
+
     return () => {
       ws.close();
     };

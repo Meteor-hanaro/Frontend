@@ -150,6 +150,9 @@ function Main() {
     );
     localStorage.setItem('isPb', true);
     localStorage.setItem('pbVip', data.vipId);
+    // console.log(pbId);
+    // console.log(localStorage.getItem('isVip'));
+    // console.log(localStorage.getItem('isPb'));
   };
 
   return (
