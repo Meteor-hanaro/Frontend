@@ -37,27 +37,10 @@ function OcrCapture({ setSuggestionNumber, data }) {
   };
 
   return (
-    <div className="dropdown">
-      <button
-        type="button"
-        className="btn btn-primary dropdown-toggle"
-        data-bs-toggle="dropdown"
-      >
-        Suggestion List
-      </button>
-      <ul className="dropdown-menu">
-        {data &&
-          data.suggestionItems.map((item, index) => (
-            <li
-              key={item.suggestionName}
-              className="dropdown-item"
-              onClick={() => updateProgress(index)}
-            >
-              {item.suggestionName}
-            </li>
-          ))}
-      </ul>
-    </div>
+    <>
+      
+    
+    </>
   );
 }
 

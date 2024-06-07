@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
 const IdVerificationPage = ({ localVideoRef }) => {
+  const ws = useRef(null);
   function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
   const query = useQuery();
   const pbId = query.get('pbId');
   const vipId = query.get('vipId');
+  // const [imageData, setImageData] = useState();
   const captureNow = () => {
     if (localVideoRef.current) {
       const video = localVideoRef.current;
@@ -61,7 +63,7 @@ const IdVerificationPage = ({ localVideoRef }) => {
         className="btn btn-primary"
       >
         신분증촬영
-      </button>{' '}
+      </button>
       <br />
       <br />
       <div id="capturedScreen">신분증을 카메라에 가져다 대주세요.</div>
