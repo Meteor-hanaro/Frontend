@@ -12,6 +12,7 @@ import PrivateRoute from './pages/video/PrivateRoute';
 import SuggestionPage from './pages/pb/SuggestionPage';
 import AdminPage from './pages/system_admin/AdminPage';
 import AdminPrivateRoute from './pages/system_admin/AdminPrivateRoute';
+import RebalancingPage from './pages/consult/RebalancingPage';
 
 function Router() {
   return (
@@ -26,6 +27,10 @@ function Router() {
           <Route path='/pb/fund' element={<PbFundPage />} />
           <Route path='/pb/portfolio' element={<PbPortfolioPage />} />
           <Route path='/pb/suggestion/:vipId' element={<SuggestionPage />} />
+          <Route
+            path='/pb/suggestion/rebalance'
+            element={<RebalancingPage />}
+          />
           {/* vip */}
           <Route path='/vip' element={<UserLoginPage />} />
           <Route path='/vip/main' element={<UserMainPage />} />
@@ -40,7 +45,7 @@ function Router() {
           />
           {/* System Admin */}
           <Route
-            path="/admin"
+            path='/admin'
             element={
               <AdminPrivateRoute>
                 <AdminPage />
