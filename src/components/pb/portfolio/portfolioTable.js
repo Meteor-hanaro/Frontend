@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import auth from '../../../auth';
 
 function PortfolioTable(vipId) {
   const [portfolioItems, setPortfolioItems] = useState([]);
@@ -28,7 +29,7 @@ function PortfolioTable(vipId) {
       }
 
       try {
-        axios
+        auth
           .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/name`, {
             params: {
               vipId: vipId.vipId,
@@ -50,9 +51,9 @@ function PortfolioTable(vipId) {
   }
 
   return (
-    <div className="portfolio-status">
+    <div className='portfolio-status'>
       <h2>{vipName}님의 포트폴리오</h2>
-      <table className="table port fund-table">
+      <table className='table port fund-table'>
         <thead>
           <tr>
             <th>펀드명</th>
