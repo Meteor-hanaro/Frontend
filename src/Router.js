@@ -12,7 +12,7 @@ import PrivateRoute from './pages/video/PrivateRoute';
 import SuggestionPage from './pages/pb/SuggestionPage';
 import AdminPage from './pages/system_admin/AdminPage';
 import AdminPrivateRoute from './pages/system_admin/AdminPrivateRoute';
-import RebalancingPage from './pages/consult/RebalancingPage';
+import SuggestionAddPage from './pages/pb/SuggestionAddPage';
 
 function Router() {
   return (
@@ -28,8 +28,8 @@ function Router() {
           <Route path='/pb/portfolio' element={<PbPortfolioPage />} />
           <Route path='/pb/suggestion/:vipId' element={<SuggestionPage />} />
           <Route
-            path='/pb/suggestion/rebalance'
-            element={<RebalancingPage />}
+            path='/pb/suggestion/add'
+            element={<SuggestionAddPage />}
           />
           {/* vip */}
           <Route path='/vip' element={<UserLoginPage />} />
