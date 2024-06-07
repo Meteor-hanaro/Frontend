@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-const ProgressBarPage = ({ setPageNumber }) => {
+const ProgressBarPage = ({ setPageNumber, rtcRoomNum }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 5;
   const ws = useRef(null);
 
   useEffect(() => {
-    ws.current = new WebSocket(`ws://${process.env.REACT_APP_PROGRESSWS}`);
+    ws.current = new WebSocket(
+      `ws://${process.env.REACT_APP_PROGRESSWS}/${rtcRoomNum}`
+    );
 
     ws.current.onopen = () => {
       console.log('WebSocket connection opened');

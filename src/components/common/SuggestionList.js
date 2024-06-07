@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
 
-function SuggestionList({ setSuggestionNumber, data }) {
+function SuggestionList({ setSuggestionNumber, data, rtcRoomNum }) {
   const ws = useRef(null);
 
   useEffect(() => {
     ws.current = new WebSocket(
-      `ws://${process.env.REACT_APP_SUGGESTIONLISTWS}`
+      `ws://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`
     );
 
     ws.current.onopen = () => {
@@ -49,7 +49,7 @@ function SuggestionList({ setSuggestionNumber, data }) {
         {data &&
           data.suggestionItems.map((item, index) => (
             <li
-              key={item.suggestionName}
+              key={index}
               className="dropdown-item"
               onClick={() => updateProgress(index)}
             >

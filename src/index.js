@@ -9,9 +9,9 @@ const signaling = new WebSocket(`ws://${process.env.REACT_APP_WEBRTCWS}`);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <WebRTCProvider signaling={signaling}>
-      <Router />
-    </WebRTCProvider>
+    {/* <WebRTCProvider signaling={signaling}> */}
+    <Router />
+    {/* </WebRTCProvider> */}
   </React.StrictMode>
 );
 

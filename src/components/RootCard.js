@@ -20,17 +20,17 @@ function RootCard({ value }) {
 
   return (
     <div>
-      <div className='select-box'>
-        <div className='select-box-wrapper'>
-          <div className='icon'>
+      <div className="select-box">
+        <div className="select-box-wrapper">
+          <div className="icon">
             <img
               src={src}
-              className='iconImg'
+              className="iconImg"
               onClick={() => getLoginPage(value)}
             />
           </div>
-          <div className='summary'>{value.toUpperCase()}</div>
-          <div class='description'>
+          <div className="summary">{value.toUpperCase()}</div>
+          <div class="description">
             <br />
             {line1}
             <br />

@@ -27,6 +27,7 @@ function Main() {
       .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/main`)
       .then((res) => {
         localStorage.setItem('vipId', res.data.vipInfo.vipId);
+        console.log(res.data.vipInfo.hasConsult);
         setPb(res.data.pbInfo);
         setVip(res.data.vipInfo);
         setConsult(res.data.consultList);
