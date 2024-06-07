@@ -10,6 +10,8 @@ import UserLoginPage from './pages/user/LoginPage';
 import UserMainPage from './pages/user/MainPage';
 import PrivateRoute from './pages/video/PrivateRoute';
 import SuggestionPage from './pages/pb/SuggestionPage';
+import AdminPage from './pages/system_admin/AdminPage';
+import AdminPrivateRoute from './pages/system_admin/AdminPrivateRoute';
 
 function Router() {
   return (
@@ -34,6 +36,15 @@ function Router() {
               <PrivateRoute>
                 <VideoPage />
               </PrivateRoute>
+            }
+          />
+          {/* System Admin */}
+          <Route
+            path="/admin"
+            element={
+              <AdminPrivateRoute>
+                <AdminPage />
+              </AdminPrivateRoute>
             }
           />
         </Routes>
