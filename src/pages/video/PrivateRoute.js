@@ -26,16 +26,22 @@ const PrivateRoute = ({ children }) => {
   useEffect(() => {
     setIsVip(localStorage.getItem('isVip'));
     setIsPb(localStorage.getItem('isPb'));
-    // if (localStorage.getItem('isVip') && localStorage.getItem('isPb')) {
-    //   window.close();
-    //   alert('접근 권한이 없습니다.');
-    // }
+
+    if (
+      (localStorage.getItem('isVip') === null ||
+        localStorage.getItem('isVip') === 'false') &&
+      (localStorage.getItem('isPb') === null ||
+        localStorage.getItem('isPb') === 'false')
+    ) {
+      window.close();
+      alert('접근 권한이 없습니다.');
+    }
   }, []);
 
   // vip 비밀번호 체크를 위한 정보 호출
   useEffect(() => {
     // vip
-    if (isVip) {
+    if (isVip === 'true') {
       auth
         .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/main`)
         .then((res) => {
@@ -51,10 +57,11 @@ const PrivateRoute = ({ children }) => {
         });
     }
     // pb
-    else if (isPb) {
+    else if (isPb === 'true') {
       auth
         .get(`http://${process.env.REACT_APP_BESERVERURI}/api/pb/main`)
         .then((res) => {
+          console.log(res.data);
           setVipId(localStorage.getItem('pbVip'));
           setPbId(res.data.vip[0].pbId);
           setIsLoading(false);
@@ -151,11 +158,11 @@ const PrivateRoute = ({ children }) => {
         onRequestClose={() => {
           window.close();
         }}
-        contentLabel="Password Modal"
-        className="consultingModal"
-        overlayClassName="consultingModalOverlay"
+        contentLabel='Password Modal'
+        className='consultingModal'
+        overlayClassName='consultingModalOverlay'
       >
-        {isVip ? (
+        {isVip === 'true' ? (
           <h4>
             안녕하세요, {vipName}님!
             <br />
@@ -170,32 +177,32 @@ const PrivateRoute = ({ children }) => {
         )}
         <br />
         <input
-          id="inputPwd"
-          type="password"
+          id='inputPwd'
+          type='password'
           value={inputPassword}
           onChange={(e) => setInputPassword(e.target.value)}
         />{' '}
         <br /> <br />
-        {isVip ? (
+        {isVip === 'true' ? (
           <button
-            id="buttonCheck"
-            className="btn btn-primary"
+            id='buttonCheck'
+            className='btn btn-primary'
             onClick={handleVipAuthentication}
           >
             확인
           </button>
         ) : (
           <button
-            id="buttonCheck"
-            className="btn btn-primary"
+            id='buttonCheck'
+            className='btn btn-primary'
             onClick={handlePbAuthentication}
           >
             확인
           </button>
         )}
         <button
-          id="buttonCancel"
-          className="btn btn-primary"
+          id='buttonCancel'
+          className='btn btn-primary'
           onClick={() => {
             window.close();
           }}

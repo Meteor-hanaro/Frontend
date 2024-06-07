@@ -26,10 +26,13 @@ function Main() {
     auth
       .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/main`)
       .then((res) => {
-        localStorage.setItem('vipId', res.data.vipInfo.vipId);
         setPb(res.data.pbInfo);
         setVip(res.data.vipInfo);
         setConsult(res.data.consultList);
+
+        // "상담방 입장하기" button
+        localStorage.setItem('hasConsult', res.data.vipInfo.hasConsult);
+        localStorage.setItem('vipId', res.data.vipInfo.vipId);
       })
       .catch((error) => {
         console.log(error);
@@ -120,7 +123,10 @@ function Main() {
                 type='button'
                 className='enterButton'
                 style={{ marginBottom: '0px' }}
-                disabled={requestVipId !== localStorage.getItem('vipId')}
+                disabled={
+                  localStorage.getItem('hasConsult') !== 'true' &&
+                  requestVipId !== localStorage.getItem('vipId')
+                }
                 onClick={clickEnterButton}
               >
                 상담 바로 입장하기
