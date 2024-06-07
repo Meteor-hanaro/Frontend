@@ -1749,3 +1749,93 @@ input[type='text'].search-form input:hover {
   justify-content: space-between;
   width:100%;
 }
+.btn:hover {
+  background-color: #e0c886;
+  border-color: #dbbf75;
+}
+.btn-primary{
+  --bs-btn-bg: #e0c886;
+  --bs-btn-border-color: #e0c886;
+  --bs-btn-disabled-bg: #e0c886;
+  --bs-btn-disabled-border-color: #e0c886;
+
+  --bs-btn-hover-bg: #dbbf75;
+  --bs-btn-hover-border-color: #dbbf75;
+  --bs-btn-active-bg: #dbbf75;
+  --bs-btn-active-border-color: #dbbf75;
+}
+
+/* 인증완료 modal css */
+.open-modal-button {
+  background-color: #dbbf75;
+  border-color: #dbbf75;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s, border-color 0.3s;
+  margin: 20px;
+}
+
+.open-modal-button:hover {
+  background-color: #e0c886;
+  border-color: #e0c886;
+}
+
+/* Modal body */
+.modal-body {
+  text-align: center;
+  font-size: 18px;
+  padding: 30px;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Icon inside the modal */
+.modal-icon {
+  margin-bottom: 20px;
+  color: #dbbf75;
+}
+
+.modal-icon svg {
+  width: 64px;
+  height: 64px;
+}
+
+/* Title inside the modal */
+.modal-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Message inside the modal */
+.modal-message {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* Button to close the modal */
+.close-modal-button {
+  background-color: #dbbf75;
+  border-color: #dbbf75;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s, border-color 0.3s;
+  width: 100%;
+}
+
+.close-modal-button:hover {
+  background-color: #e0c886;
+  border-color: #e0c886;
+}
+.modal-backdrop.show {
+  opacity: 0 !important;
+}

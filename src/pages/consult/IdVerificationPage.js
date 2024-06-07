@@ -1,10 +1,14 @@
 import React from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 const IdVerificationPage = ({ localVideoRef }) => {
-  const { params } = useParams();
-  const queryParams = new URLSearchParams(params);
-  const vipId = queryParams.get('vipId');
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
+  const query = useQuery();
+  const pbId = query.get('pbId');
+  const vipId = query.get('vipId');
   const captureNow = () => {
     if (localVideoRef.current) {
       const video = localVideoRef.current;

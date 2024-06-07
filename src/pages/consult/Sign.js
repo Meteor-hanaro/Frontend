@@ -80,15 +80,18 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId }) {
 
   const getPdf = () => {
     axios.post(
-      `http://${process.env.REACT_APP_BESERVERURI}:8080/api/contract/finalcontract`,
+      `http://${process.env.REACT_APP_BESERVERURI}/api/contract/finalcontract`,
       {
         fundIds: suggestionItemData
       }
     )
     .then((response) => {
-      const tmp = response.data.map((item) => item.fundContracts[0]);
+      const tmp = response.data.map((item, index) => ({
+        ...item.fundContracts[0],
+        id: index // assuming each fundContracts has a unique index
+      }));
       setPdfUrls(tmp);
-      console.log('tmp확인', pdfUrls);
+      console.log('tmp확인', tmp);
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -173,9 +176,9 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId }) {
       setSignatureCoordinates({ x, y });
       const pdfBytes = await pdfDoc.save();
       const base64pdf = Buffer.from(pdfBytes).toString('base64');
-
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
+      console.log("url확인", url);
 
       return { ...pdfUrl, pdfUrl: url, signedContract: base64pdf };
     }));
@@ -195,27 +198,27 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId }) {
       return;
     }
     const contracts = [];
-    for(let i=0; i<suggestionItemData.length; i++){
+    for (let i = 0; i < suggestionItemData.length; i++) {
       let pushItem = {
-        "fundId" : suggestionItemData[i],
-        "signedContract" : pdfUrls[i].signedContract
-      }
+        "fundId": suggestionItemData[i],
+        "signedContract": pdfUrls[i].signedContract
+      };
       contracts.push(pushItem);
     }
-    axios.post(`http://${process.env.REACT_APP_BESERVERURI}:8080/api/contract/signedcontract`, 
-    {
-      suggestionId: suggestionId,
-      vipId: vipId,
-      pbId: pbId,
-      contracts: contracts
-    })
-    .then((response) => {
-      alert('상품 가입이 완료되었습니다.');
-      console.log(response);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+    axios.post(`http://${process.env.REACT_APP_BESERVERURI}:8080/api/contract/signedcontract`,
+      {
+        suggestionId: suggestionId,
+        vipId: vipId,
+        pbId: pbId,
+        contracts: contracts
+      })
+      .then((response) => {
+        alert('상품 가입이 완료되었습니다.');
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
 
   return (

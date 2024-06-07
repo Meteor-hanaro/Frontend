@@ -26,10 +26,10 @@ const PrivateRoute = ({ children }) => {
   useEffect(() => {
     setIsVip(localStorage.getItem('isVip'));
     setIsPb(localStorage.getItem('isPb'));
-    if (localStorage.getItem('isVip') && localStorage.getItem('isPb')) {
-      window.close();
-      alert('접근 권한이 없습니다.');
-    }
+    // if (localStorage.getItem('isVip') && localStorage.getItem('isPb')) {
+    //   window.close();
+    //   alert('접근 권한이 없습니다.');
+    // }
   }, []);
 
   // vip 비밀번호 체크를 위한 정보 호출
