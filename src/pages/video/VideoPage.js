@@ -12,6 +12,11 @@ const VideoPage = () => {
     };
     setSignaling(ws);
 
+    // 권한 초기화
+    localStorage.removeItem('isVip');
+    localStorage.removeItem('isPb');
+    localStorage.removeItem('pbVip');
+
     return () => {
       ws.close();
     };
@@ -22,8 +27,8 @@ const VideoPage = () => {
   };
 
   return (
-    <div className="VideoPage">
-      <div id="videoContainer">
+    <div className='VideoPage'>
+      <div id='videoContainer'>
         {signaling && (
           <WebRTC signaling={signaling} onSendMessage={handleSendMessage} />
         )}
