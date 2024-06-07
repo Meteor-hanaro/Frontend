@@ -33,8 +33,8 @@ const VideoPage = () => {
   };
 
   return (
-    <div className="VideoPage">
-      <div id="videoContainer">
+    <div className='VideoPage'>
+      <div id='videoContainer'>
         {signaling && (
           <WebRTC
             signaling={signaling}
