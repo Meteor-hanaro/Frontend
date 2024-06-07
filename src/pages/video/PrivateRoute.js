@@ -158,9 +158,9 @@ const PrivateRoute = ({ children }) => {
         onRequestClose={() => {
           window.close();
         }}
-        contentLabel="Password Modal"
-        className="consultingModal"
-        overlayClassName="consultingModalOverlay"
+        contentLabel='Password Modal'
+        className='consultingModal'
+        overlayClassName='consultingModalOverlay'
       >
         {isVip === 'true' ? (
           <h4>
@@ -177,32 +177,32 @@ const PrivateRoute = ({ children }) => {
         )}
         <br />
         <input
-          id="inputPwd"
-          type="password"
+          id='inputPwd'
+          type='password'
           value={inputPassword}
           onChange={(e) => setInputPassword(e.target.value)}
         />{' '}
         <br /> <br />
         {isVip === 'true' ? (
           <button
-            id="buttonCheck"
-            className="btn btn-primary"
+            id='buttonCheck'
+            className='btn btn-primary'
             onClick={handleVipAuthentication}
           >
             확인
           </button>
         ) : (
           <button
-            id="buttonCheck"
-            className="btn btn-primary"
+            id='buttonCheck'
+            className='btn btn-primary'
             onClick={handlePbAuthentication}
           >
             확인
           </button>
         )}
         <button
-          id="buttonCancel"
-          className="btn btn-primary"
+          id='buttonCancel'
+          className='btn btn-primary'
           onClick={() => {
             window.close();
           }}
