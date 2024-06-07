@@ -23,10 +23,18 @@ console.log(
   'WebSocket server for consult request is running on ws://localhost:8887'
 );
 
-wss.on('connection', (ws) => {
+wss.on('connection', (ws, req) => {
+  const channel = req.url.split('/').pop();
+
+  ws.channel = channel;
+
   ws.on('message', (message) => {
     wss.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
+      if (
+        client !== ws &&
+        client.readyState === WebSocket.OPEN &&
+        client.channel === channel
+      ) {
         client.send(message);
       }
     });
@@ -37,10 +45,20 @@ wss.on('connection', (ws) => {
   });
 });
 
-wsssl.on('connection', (ws) => {
+wsssl.on('connection', (ws, req) => {
+  const channel = req.url.split('/').pop();
+
+  console.log(req.url);
+  ws.channel = channel;
+
+  console.log(`New Connection to Channel: ${ws.channel}`);
   ws.on('message', (message) => {
     wsssl.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
+      if (
+        client !== ws &&
+        client.readyState === WebSocket.OPEN &&
+        client.channel === channel
+      ) {
         client.send(message);
       }
     });
@@ -51,12 +69,18 @@ wsssl.on('connection', (ws) => {
   });
 });
 
-// console.log('suggestion list socket server is running on ws://localhost:8889');
+wsspb.on('connection', (ws, req) => {
+  const channel = req.url.split('/').pop();
 
-wsspb.on('connection', (ws) => {
+  ws.channel = channel;
+
   ws.on('message', (message) => {
     wsspb.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
+      if (
+        client !== ws &&
+        client.readyState === WebSocket.OPEN &&
+        client.channel === channel
+      ) {
         client.send(message);
       }
     });
@@ -66,5 +90,3 @@ wsspb.on('connection', (ws) => {
     console.log('port 8890 Connection closed');
   });
 });
-
-// console.log('progress bar socket server is running on ws://localhost:8889');

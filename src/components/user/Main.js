@@ -26,6 +26,7 @@ function Main() {
     auth
       .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/main`)
       .then((res) => {
+        console.log(res.data.vipInfo.hasConsult);
         setPb(res.data.pbInfo);
         setVip(res.data.vipInfo);
         setConsult(res.data.consultList);

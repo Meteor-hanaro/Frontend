@@ -1,12 +1,18 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import WebRTC from './WebRTC';
 
 const VideoPage = () => {
   const [signaling, setSignaling] = useState(null);
   const sendMessageRef = useRef(null);
 
+  const params = useParams();
+
   useEffect(() => {
-    const ws = new WebSocket(`ws://${process.env.REACT_APP_WEBRTCWS}`);
+    // console.log(params.params);
+    const ws = new WebSocket(
+      `ws://${process.env.REACT_APP_WEBRTCWS}/${params.params}`
+    );
     ws.onopen = () => {
       console.log('Connected to signaling server');
     };
@@ -27,10 +33,14 @@ const VideoPage = () => {
   };
 
   return (
-    <div className='VideoPage'>
-      <div id='videoContainer'>
+    <div className="VideoPage">
+      <div id="videoContainer">
         {signaling && (
-          <WebRTC signaling={signaling} onSendMessage={handleSendMessage} />
+          <WebRTC
+            signaling={signaling}
+            onSendMessage={handleSendMessage}
+            rtcRoomNum={params.params}
+          />
         )}
       </div>
     </div>

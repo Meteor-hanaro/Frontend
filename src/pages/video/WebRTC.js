@@ -3,7 +3,7 @@ import SharingPage from './SharingPage';
 import { useState } from 'react';
 import { useWebRTC } from '../../contexts/WebRTCContext';
 
-const WebRTC = () => {
+const WebRTC = ({ rtcRoomNum }) => {
   const { localVideoRef, remoteVideoRef } = useWebRTC();
   const { createOffer, sendMessage } = useWebRTC();
   const [pageNumber, setPageNumber] = useState(1);
@@ -49,8 +49,15 @@ const WebRTC = () => {
       </div>
 
       <div id="divInteraction">
-        <ProgressBarPage setPageNumber={setPageNumber} />
-        <SharingPage number={pageNumber} localVideoRef={localVideoRef} />
+        <ProgressBarPage
+          setPageNumber={setPageNumber}
+          rtcRoomNum={rtcRoomNum}
+        />
+        <SharingPage
+          number={pageNumber}
+          localVideoRef={localVideoRef}
+          rtcRoomNum={rtcRoomNum}
+        />
       </div>
     </div>
   );
