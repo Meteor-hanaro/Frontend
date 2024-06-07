@@ -86,7 +86,7 @@ const PrivateRoute = ({ children }) => {
 
   // 사용자가 입력한 비밀번호가 일치하는지 확인
   const handleVipAuthentication = () => {
-    axios
+    auth
       .post(
         `http://${process.env.REACT_APP_BESERVERURI}/api/vip/main/pwdcheck`,
         {
@@ -114,7 +114,7 @@ const PrivateRoute = ({ children }) => {
 
   // pb가 입장했을 때 비밀번호 입력 후 검증하는 로직
   const handlePbAuthentication = () => {
-    axios
+    auth
       .post(
         `http://${process.env.REACT_APP_BESERVERURI}/api/pb/main/pwdcheck`,
         {
