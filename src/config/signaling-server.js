@@ -69,6 +69,13 @@ wsssl.on('connection', (ws, req) => {
   ws.channel = channel;
 
   console.log(`New Connection to Channel: ${ws.channel}`);
+wsssl.on('connection', (ws, req) => {
+  const channel = req.url.split('/').pop();
+
+  console.log(req.url);
+  ws.channel = channel;
+
+  console.log(`New Connection to Channel: ${ws.channel}`);
   ws.on('message', (message) => {
     wsssl.clients.forEach((client) => {
       if (
