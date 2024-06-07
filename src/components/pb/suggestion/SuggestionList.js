@@ -36,14 +36,17 @@ function SuggestionList({ id }) {
   }
 
   return (
-    <div id="main" className="d-flex">
-      {suggestionItemList &&
-        suggestionItemList.suggestionItems.map((item, index) => (
-          <SuggestionCard
-            data={makingChartData(item)}
-            name={item.suggestionName}
-          />
-        ))}
+    <div className='suggestion-list-page vertical-align'>
+      <div id='main' className='d-flex'>
+        {suggestionItemList &&
+          suggestionItemList.suggestionItems.map((item, index) => (
+            <SuggestionCard
+              data={makingChartData(item)}
+              name={item.suggestionName}
+            />
+          ))}
+      </div>
+      <button className='btn btn-success add-suggestion-btn'>Add suggestion</button> 
     </div>
   );
 }
