@@ -3,7 +3,6 @@ import axios from 'axios';
 import SuggestionCard from './SuggestionCard';
 import { useNavigate } from 'react-router-dom';
 
-
 function SuggestionList({ id }) {
   const navigate = useNavigate();
 
@@ -22,8 +21,18 @@ function SuggestionList({ id }) {
     }));
 
   const handleAddSuggestion = () => {
-    navigate('/add-suggestion');
-  }
+    // 현재 user의 포트폴리오를 복붙해서 새로운 suggestion을 만들어준다.
+    axios
+      .post(
+        `http://${process.env.REACT_APP_BESERVERURI}/api/suggestion/append?vipId=` +
+          id
+      )
+      .then((res) => {
+        console.log(res.data);
+        navigate(`/pb/suggestion/add`, { state: { suggestionId: res.data } });
+      })
+      .catch((e) => console.log(e));
+  };
 
   useEffect(() => {
     axios
@@ -54,7 +63,12 @@ function SuggestionList({ id }) {
             />
           ))}
       </div>
-      <button className='btn btn-success add-suggestion-btn'>Add suggestion</button> 
+      <button
+        className='btn btn-success add-suggestion-btn'
+        onClick={handleAddSuggestion}
+      >
+        Add suggestion
+      </button>
     </div>
   );
 }
