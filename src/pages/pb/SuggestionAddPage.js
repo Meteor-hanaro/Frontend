@@ -1,4 +1,5 @@
 import Header from '../../components/common/Header';
+import SideBar from '../../components/pb/Sidebar';
 import { useParams } from 'react-router-dom';
 import SuggestionAdd from '../../components/pb/suggestion/SuggestionAdd';
 
@@ -9,6 +10,7 @@ function SuggestionAddPage() {
   return (
     <>
       <Header />
+      <SideBar />
       <SuggestionAdd />
     </>
   );
