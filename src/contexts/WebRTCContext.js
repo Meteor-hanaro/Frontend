@@ -15,8 +15,33 @@ const WebRTCProvider = ({ signaling, children }) => {
   const remoteVideoRef = useRef(null);
   const [pc, setPc] = useState(null);
   const [dataChannel, setDataChannel] = useState(null);
+  const [participants, setParticipants] = useState(0);
+  const [ws, setWs] = useState(null);
+  const maxParticipants = 3;
+  useEffect(() => {
+    const websocket = new WebSocket(`ws://${process.env.REACT_APP_WEBRTCWS}`);
+    
+
+    websocket.onmessage = (message) => {
+      const data = JSON.parse(message.data);
+      if (data.type === 'participants') {
+        setParticipants(data.count);
+      }
+    };
+
+    setWs(websocket);
+
+    return () => {
+      websocket.close();
+    };
+  }, []);
 
   useEffect(() => {
+    if (participants >= maxParticipants) {
+      alert('Participant limit reached');
+      return;
+    }
+
     // STUN 서버 설정
     const configuration = {
       iceServers: [
@@ -52,7 +77,7 @@ const WebRTCProvider = ({ signaling, children }) => {
     peerConnection.ondatachannel = (event) => {
       const receiveChannel = event.channel;
       receiveChannel.onmessage = (event) => {
-        alert(`저쪽에서.. "${event.data}"랍니다.`);
+        alert(`Received message: "${event.data}"`);
       };
     };
 
@@ -61,7 +86,7 @@ const WebRTCProvider = ({ signaling, children }) => {
     return () => {
       peerConnection.close();
     };
-  }, [signaling]);
+  }, [participants, signaling]);
 
   useEffect(() => {
     // 페이지 로드 시 본인의 비디오 스트림을 가져와 설정
@@ -91,12 +116,16 @@ const WebRTCProvider = ({ signaling, children }) => {
 
   const createOffer = async () => {
     try {
-      if (pc) {
-        const offer = await pc.createOffer();
-        await pc.setLocalDescription(offer);
-        signaling.send(JSON.stringify({ offer: pc.localDescription }));
+      if (participants < maxParticipants) {
+        if (pc) {
+          const offer = await pc.createOffer();
+          await pc.setLocalDescription(offer);
+          signaling.send(JSON.stringify({ offer: pc.localDescription }));
+        } else {
+          console.error('PeerConnection not initialized.');
+        }
       } else {
-        console.error('PeerConnection not initialized.');
+        alert('Participant limit reached');
       }
     } catch (error) {
       console.error('Error creating offer:', error);
@@ -108,25 +137,29 @@ const WebRTCProvider = ({ signaling, children }) => {
 
     try {
       if (data.offer) {
-        await pc.setRemoteDescription(new RTCSessionDescription(data.offer));
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-          audio: true,
-        });
+        if (participants < maxParticipants) {
+          await pc.setRemoteDescription(new RTCSessionDescription(data.offer));
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true,
+          });
 
-        if (localVideoRef.current) {
-          localVideoRef.current.srcObject = stream;
-        }
-
-        stream.getTracks().forEach((track) => {
-          if (pc) {
-            pc.addTrack(track, stream);
+          if (localVideoRef.current) {
+            localVideoRef.current.srcObject = stream;
           }
-        });
 
-        const answer = await pc.createAnswer();
-        await pc.setLocalDescription(answer);
-        signaling.send(JSON.stringify({ answer }));
+          stream.getTracks().forEach((track) => {
+            if (pc) {
+              pc.addTrack(track, stream);
+            }
+          });
+
+          const answer = await pc.createAnswer();
+          await pc.setLocalDescription(answer);
+          signaling.send(JSON.stringify({ answer }));
+        } else {
+          alert('Participant limit reached');
+        }
       } else if (data.answer) {
         await pc.setRemoteDescription(new RTCSessionDescription(data.answer));
       } else if (data['new-ice-candidate']) {

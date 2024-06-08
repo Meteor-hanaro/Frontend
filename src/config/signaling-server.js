@@ -5,6 +5,8 @@ const wss = new WebSocket.Server({ port: 8888 }); // videopage - WebRTC
 const wsssl = new WebSocket.Server({ port: 8889 }); // suggestion list
 const wsspb = new WebSocket.Server({ port: 8890 }); // progress bar
 
+let participants = 0;
+
 wsscr.on('connection', (ws) => {
   ws.on('message', (message) => {
     wsscr.clients.forEach((client) => {
@@ -28,20 +30,35 @@ wss.on('connection', (ws, req) => {
 
   ws.channel = channel;
 
-  ws.on('message', (message) => {
+  participants++;
+  console.log('New connection. Participants:', participants);
+
+  // Send the current participants count to the new client
+  ws.send(JSON.stringify({ type: 'participants', count: participants }));
+
+  // Broadcast the updated participants count to all clients
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify({ type: 'participants', count: participants }));
+    }
+  });
+
+  ws.on('close', () => {
+    participants--;
+    console.log('Connection closed. Participants:', participants);
+
+    // Broadcast the updated participants count to all clients
     wss.clients.forEach((client) => {
       if (
         client !== ws &&
         client.readyState === WebSocket.OPEN &&
         client.channel === channel
       ) {
+        // client.send(JSON.stringify({ type: 'participants', count: participants }));
+
         client.send(message);
       }
     });
-  });
-
-  ws.on('close', () => {
-    console.log('port 8888 Connection closed');
   });
 });
 
