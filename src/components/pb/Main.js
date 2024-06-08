@@ -239,8 +239,7 @@ function Main() {
                           className="pbBtn"
                           onClick={() => checkPortfolio(vip[index].vipId)}
                         >
-                          <i className="bi bi-clipboard2-data"></i>
-                          <i className="bi bi-clipboard2-data"></i>
+                          <i className='bi bi-clipboard2-data'></i>
                           포트폴리오
                         </button>
                         <Link to={`/pb/suggestion/${vip[index].vipId}`}>

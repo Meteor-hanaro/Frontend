@@ -50,14 +50,14 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-function Sign({ suggestionItemData, suggestionItemNumber, suggestionId }) {
-  console.log("넘어오는 데이터 확인");
-  console.log(suggestionItemData);
+function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomNum}) {
+  const ws = useRef(null);
   const [signatureCoordinates, setSignatureCoordinates] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [imageURL, setImageURL] = useState('');
   const [pdfUrls, setPdfUrls] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [receivedPdfs, setReceivedPdfs] = useState([]);
   const canvasRef = useRef(null);
   const array = useRef([]).current;
   const ctxRef = useRef(null);
@@ -65,7 +65,40 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId }) {
   const query = useQuery();
   const pbId = query.get('pbId');
   const vipId = query.get('vipId');
+  useEffect(() => {
+    ws.current = new WebSocket(`ws://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
+    ws.current.onopen = () => {
+      console.log('WebSocket connection opened');
+    };
 
+    ws.current.onmessage = (event) => {
+      try {
+        console.log('Message from server:', event);
+        const message = JSON.parse(event.data);
+        if (message.type === 'signedPdfs') {
+          setReceivedPdfs(message.data);
+        } else if (event.data instanceof Blob) {
+          const reader = new FileReader();
+          reader.onload = function(loadEvent) {
+            const imageDataUrl = loadEvent.target.result;
+            const img = document.createElement('img');
+            img.src = imageDataUrl;
+            document.getElementById('capturedScreen').innerHTML = '';
+            document.getElementById('capturedScreen').appendChild(img);
+          };
+          reader.readAsDataURL(event.data);
+        }
+      } catch (error) {
+        console.error('Error parsing WebSocket message:', error);
+      }
+    };
+
+    return () => {
+      if (ws.current) {
+        ws.current.close();
+      }
+    };
+  }, [rtcRoomNum]);
   useEffect(() => {
     getPdf();
     const canvas = canvasRef.current;
@@ -186,6 +219,14 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId }) {
     setPdfUrls(updatedPdfUrls);
     clearCanvas();
     setShowModal(false);
+    // WebSocket을 통해 싸인된 PDF 목록을 전송
+    if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+      const signedPdfs = updatedPdfUrls.map(pdf => ({
+        id: pdf.id,
+        signedContract: pdf.signedContract,
+      }));
+      ws.current.send(JSON.stringify({ type: 'signedPdfs', data: signedPdfs }));
+    }
   };
 
   const signNow = () => {

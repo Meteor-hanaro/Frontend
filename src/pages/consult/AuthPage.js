@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import useScript from "../etc/useScript";
 import { useParams } from 'react-router-dom';
 import { Button, Modal } from "react-bootstrap";
 
-function AuthPage() {
+function AuthPage({rtcRoomNum}) {
+  const ws = useRef(null);
   const { params } = useParams();
   const queryParams = new URLSearchParams(params);
   const vipId = queryParams.get('vipId');
@@ -11,6 +12,24 @@ function AuthPage() {
   const handleClose = () => setShow(false);
   useScript("https://code.jquery.com/jquery-1.12.4.min.js");
   useScript("https://cdn.iamport.kr/js/iamport.payment-1.2.0.js");
+  useEffect(() => {
+    ws.current = new WebSocket(`ws://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
+    ws.current.onopen = () => {
+      console.log('WebSocket connection opened');
+    };
+
+    ws.current.onmessage = (event) => {
+      const receivedData = event.data;
+      receivedData.text().then((text) => {
+        if (JSON.parse(text).type === 'authResult') {
+          alert(JSON.parse(text).authResult);
+        }
+      });
+    };
+    return () => {
+      ws.current.close();
+    };
+  }, []);
   const certify = () => {
     const { IMP } = window;
     IMP.init("imp74352341");
@@ -21,12 +40,14 @@ function AuthPage() {
       },
       (rsp) => {
         if (rsp.success) {
-          // alert("인증되었습니다.");
           setShow(true);
           console.log(rsp);
+          ws.current.send(JSON.stringify({ type: 'authResult', authResult:'인증성공' }));
         } else {
           alert(`인증에 실패했습니다. 에러: ${rsp.error_msg}`);
+          ws.current.send(JSON.stringify({ type: 'authResult', authResult:'인증실패' }));
         }
+        
       }
     );
   };
