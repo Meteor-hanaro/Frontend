@@ -1417,6 +1417,13 @@ input[type='text'].search-form input:hover {
   float: right;
 }
 
+.suggestion-add-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+
+}
+
 /*--------------------------------------------------------------
 # Pb Fund
 --------------------------------------------------------------*/
