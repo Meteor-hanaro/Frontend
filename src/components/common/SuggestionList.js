@@ -5,7 +5,7 @@ function SuggestionList({ setSuggestionNumber, data, rtcRoomNum }) {
 
   useEffect(() => {
     ws.current = new WebSocket(
-      `wss://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`
+      `${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`
     );
 
     ws.current.onopen = () => {

@@ -11,7 +11,7 @@ const VideoPage = () => {
   useEffect(() => {
     // console.log(params.params);
     const ws = new WebSocket(
-      `wss://${process.env.REACT_APP_WEBRTCWS}/${params.params}`
+      `${process.env.REACT_APP_WEBRTCWS}/${params.params}`
     );
     ws.onopen = () => {
       console.log('Connected to signaling server');
