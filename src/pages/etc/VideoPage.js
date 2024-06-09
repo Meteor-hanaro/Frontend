@@ -5,7 +5,7 @@ function VideoPage() {
   const [signaling, setSignaling] = useState(null);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:8888');
+    const ws = new WebSocket(`ws://${process.env.REACT_APP_WEBRTCWS}`);
     ws.onopen = () => {
       console.log('Connected to signaling server');
     };
