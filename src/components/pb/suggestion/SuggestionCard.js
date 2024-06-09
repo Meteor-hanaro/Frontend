@@ -9,6 +9,7 @@ function SuggestionCard({ id, data, name }) {
     axios.get('http://localhost:8080/api/suggestion/remove?suggestion_id=' + id)
       .then((res) => {
         console.log(res.data);
+        window.location.reload();
         alert('삭제되었습니다.');
       })
       .catch((e) => console.log(e));
