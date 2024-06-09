@@ -113,19 +113,6 @@ function VipRegsiter() {
                     </label>
                   </div>
                 </div>
-
-                {/* <label for="country" class="form-label">
-                  담당 PB
-                </label>
-                <select class="form-select" id="country" required>
-                  <option value="">PB 선택</option>
-                  <option>김가원</option>
-                  <option>김주혜</option>
-                  <option>김하영</option>
-                </select>
-                <div class="invalid-feedback">
-                  Please select a valid country.
-                </div> */}
               </div>
               <div className="col-12">
                 <label className="form-label" htmlFor="username">
