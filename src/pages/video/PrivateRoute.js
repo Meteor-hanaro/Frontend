@@ -35,7 +35,7 @@ const PrivateRoute = ({ children }) => {
       window.close();
       alert('접근 권한이 없습니다.');
     }
-  }, []);
+  }, [isVip]);
 
   // vip 비밀번호 체크를 위한 정보 호출
   useEffect(() => {
@@ -128,7 +128,7 @@ const PrivateRoute = ({ children }) => {
           setIsAuthenticated(true);
           setModalIsOpen(false);
           alert('확인되었습니다. 상담실로 입장합니다.');
-          navigate(`/vip/videoPage/${consultId}?pbId=${pbId}&vipId=${vipId}`);
+          navigate(`/pb/videoPage/${consultId}?pbId=${pbId}&vipId=${vipId}`);
         } else {
           alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
           setInputPassword('');
@@ -147,7 +147,15 @@ const PrivateRoute = ({ children }) => {
 
   return isAuthenticated ? (
     <WebRTCContext
+<<<<<<< 92-featureone-to-one-in-consulting-room
       signaling={new WebSocket(`ws://${process.env.REACT_APP_WEBRTCWS}`)}
+      isVip={isVip}
+      isPb={isPb}
+      vipId={vipId}
+      pbId={pbId}
+=======
+      signaling={new WebSocket(`${process.env.REACT_APP_WEBRTCWS}`)}
+>>>>>>> main
     >
       {children}
     </WebRTCContext>
@@ -158,9 +166,9 @@ const PrivateRoute = ({ children }) => {
         onRequestClose={() => {
           window.close();
         }}
-        contentLabel='Password Modal'
-        className='consultingModal'
-        overlayClassName='consultingModalOverlay'
+        contentLabel="Password Modal"
+        className="consultingModal"
+        overlayClassName="consultingModalOverlay"
       >
         {isVip === 'true' ? (
           <h4>
@@ -177,32 +185,32 @@ const PrivateRoute = ({ children }) => {
         )}
         <br />
         <input
-          id='inputPwd'
-          type='password'
+          id="inputPwd"
+          type="password"
           value={inputPassword}
           onChange={(e) => setInputPassword(e.target.value)}
         />{' '}
         <br /> <br />
         {isVip === 'true' ? (
           <button
-            id='buttonCheck'
-            className='btn btn-primary'
+            id="buttonCheck"
+            className="btn btn-primary"
             onClick={handleVipAuthentication}
           >
             확인
           </button>
         ) : (
           <button
-            id='buttonCheck'
-            className='btn btn-primary'
+            id="buttonCheck"
+            className="btn btn-primary"
             onClick={handlePbAuthentication}
           >
             확인
           </button>
         )}
         <button
-          id='buttonCancel'
-          className='btn btn-primary'
+          id="buttonCancel"
+          className="btn btn-primary"
           onClick={() => {
             window.close();
           }}

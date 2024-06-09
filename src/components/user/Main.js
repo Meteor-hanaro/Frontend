@@ -84,9 +84,9 @@ function Main() {
               </span>
               <div
                 className="alignHorizontal"
-                style={{
-                  marginTop: '5%',
-                }}
+                // style={{
+                //   marginTop: '5%',
+                // }}
               >
                 <div style={{ fontSize: '26px', fontWeight: '540' }}>
                   <div>
@@ -120,77 +120,94 @@ function Main() {
                   </div>
                 </div>
               </div>
-              <button
-                type="button"
-                className="enterButton"
-                style={{ marginBottom: '0px' }}
-                disabled={
-                  localStorage.getItem('hasConsult') !== 'true' &&
-                  requestVipId !== localStorage.getItem('vipId')
-                }
-                onClick={clickEnterButton}
-              >
-                상담 바로 입장하기
-              </button>
+              <div>
+                {localStorage.getItem('hasConsult') === 'true' ? (
+                  <p>담당 PB가 상담을 요청하였습니다.</p>
+                ) : null}
+                <button
+                  type="button"
+                  className="enterButton"
+                  style={{ marginBottom: '0px' }}
+                  disabled={
+                    localStorage.getItem('hasConsult') !== 'true' &&
+                    requestVipId !== localStorage.getItem('vipId')
+                  }
+                  onClick={clickEnterButton}
+                >
+                  상담 바로 입장하기
+                </button>
+              </div>
             </div>
             <div
               className="card info-card alignVertical"
               style={{ height: '47%', padding: '7% 7%', marginBottom: '0px' }}
             >
-              <span
-                style={{
-                  fontSize: '20px',
-                  fontWeight: '600',
-                  color: '#D7B863',
-                }}
-              >
-                PB
-              </span>
-              <div style={{ fontSize: '23px', fontWeight: '540' }}>
-                담당{' '}
-                <span style={{ fontSize: '26px', fontWeight: '750' }}>
-                  {pb.name}
-                </span>
-              </div>
-              <div
-                className="alignHorizontal"
-                style={{
-                  height: '70%',
-                  alignItems: 'center',
-                }}
-              >
-                <div>
+              <div className="d-flex">
+                <div className="w-50">
+                  <span
+                    style={{
+                      fontSize: '20px',
+                      fontWeight: '600',
+                      color: '#D7B863',
+                    }}
+                  >
+                    PB
+                  </span>
+                  <div style={{ fontSize: '23px', fontWeight: '540' }}>
+                    담당{' '}
+                    <span style={{ fontSize: '26px', fontWeight: '750' }}>
+                      {pb.name}
+                    </span>
+                  </div>
+                </div>
+                <div className="w-50 d-flex justify-content-center">
                   <img
                     src={process.env.PUBLIC_URL + '/assets/img/profile-img.jpg'}
                     alt="Profile"
                     className="rounded-circle"
                   />
                 </div>
+              </div>
+
+              <div
+                className="alignHorizontal"
+                style={{
+                  height: '70%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '100% !important',
+                }}
+              >
+                {/* <div>
+                  <img
+                    src={process.env.PUBLIC_URL + '/assets/img/profile-img.jpg'}
+                    alt="Profile"
+                    className="rounded-circle"
+                  />
+                </div> */}
                 <div
                   style={{
                     fontSize: '15px',
                     fontWeight: '550',
                     color: '#5F5F5F',
-                    marginLeft: 'auto',
-                    marginRight: 'auto 0px',
+                    // marginLeft: 'auto',
+                    // marginRight: 'auto 0px',
                   }}
                 >
                   <div>
-                    <span>{pb.email}</span>
-                    <div
-                      style={{
-                        marginTop: '0.5px',
-                      }}
-                    >
-                      {pb.phone}
-                    </div>{' '}
-                    <div
-                      style={{
-                        marginTop: '0.5px',
-                      }}
-                    >
-                      {pb.introduce}
+                    <div className="d-flex w-100">
+                      <div className="w-50">
+                        <span className="badge bg-success">E-Mail</span>
+                        <h6 className="m-2">{pb.email}</h6>
+                      </div>
+                      <div className="w-50">
+                        <span className="badge bg-success">Phone</span>
+                        <h6 className="m-2">{pb.phone}</h6>
+                      </div>
                     </div>
+
+                    <span className="badge bg-secondary">Introduce</span>
+                    <h6 className="m-2">{pb.introduce}</h6>
                   </div>
                 </div>
               </div>
@@ -212,7 +229,7 @@ function Main() {
                 상담 이력
               </span>
               {consult.map((item) => (
-                <ConsultCard consult={item} />
+                <ConsultCard consult={item} pb={pb} />
               ))}
             </div>
           </div>

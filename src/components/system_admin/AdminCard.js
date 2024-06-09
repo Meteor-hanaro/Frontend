@@ -3,6 +3,8 @@ import axios from 'axios';
 import AdminCardSub from './AdminCardSub';
 import FundList from '../pb/fund/fundList';
 import FundDetail from '../pb/fund/fundDetail';
+import Main from '../etc/Main';
+import VipRegsiter from './VipRegister';
 
 function AdminCard({ infoNumber }) {
   const [vipData, setVipData] = useState([]);
@@ -31,9 +33,11 @@ function AdminCard({ infoNumber }) {
   return (
     <>
       {/* data 뿌려주기 jumbotron */}
-      {infoNumber === 0 && <AdminCardSub data={vipData} type={'vip'} />}
-      {infoNumber === 1 && <AdminCardSub data={pbData} type={'pb'} />}
-      {infoNumber === 2 && (
+      {infoNumber === 0 && <Main />}
+      {/* {infoNumber === 1 && <AdminCardSub data={vipData} type={'vip'} />} */}
+      {infoNumber === 1 && <VipRegsiter />}
+      {infoNumber === 2 && <AdminCardSub data={pbData} type={'pb'} />}
+      {infoNumber === 3 && (
         <div className="main-content">
           <FundList onSelectFund={setSelectedFund} />
           <FundDetail selectedFund={selectedFund} />
