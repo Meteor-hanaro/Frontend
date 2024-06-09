@@ -14,7 +14,7 @@ const VideoPage = () => {
     // const vipId = query.get('vipId');
     
     const ws = new WebSocket(
-      `ws://${process.env.REACT_APP_WEBRTCWS}/${params.params}`
+      `${process.env.REACT_APP_WEBRTCWS}/${params.params}`
     );
     ws.onopen = () => {
       console.log('Connected to signaling server');
