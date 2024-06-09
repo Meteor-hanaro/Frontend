@@ -122,7 +122,7 @@ function Main() {
               </div>
               <div>
                 {localStorage.getItem('hasConsult') === 'true' ? (
-                  <p>담당 PB가 상담을 요청하였습니다.</p>
+                  <p>담당 PB가 상담을 요청하였습니다. 지금 입장해주세요!</p>
                 ) : null}
                 <button
                   type="button"
