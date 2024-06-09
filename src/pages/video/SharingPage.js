@@ -19,13 +19,18 @@ const SharingPage = ({ number, localVideoRef, rtcRoomNum }) => {
       ws.current.send(JSON.stringify({ type: 'getSuggestionList' }));
     };
 
-    ws.current.onmessage = (event) => {
-      const receivedData = event.data;
-      receivedData.text().then((text) => {
-        if (JSON.parse(text).type === 'updateSuggestionList') {
+    ws.current.onmessage = async (event) => {
+      try {
+        if (event.data instanceof Blob) {
+          const text = await event.data.text();
           setSuggestionItemList(JSON.parse(text).suggestionItemList);
+        } else {
+          console.error('Unsupported message format:', event.data);
+          return;
         }
-      });
+      } catch (error) {
+        console.error('Error parsing WebSocket message:', error);
+      }
     };
 
     return () => {
