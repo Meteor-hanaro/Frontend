@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 function SuggestionList({ id }) {
   const navigate = useNavigate();
 
-  const [suggestionItemList, setSuggestionItemList] = useState([]);
+  const [suggestionDto, setSuggestionDto] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const nameResizing = (data) => {
@@ -41,8 +41,9 @@ function SuggestionList({ id }) {
           id
       )
       .then((res) => {
-        // console.log(res.data);
-        setSuggestionItemList(res.data);
+        
+        setSuggestionDto(res.data);
+        console.log(res.data);
         setLoading(true);
       })
       .catch((e) => console.log(e));
@@ -55,9 +56,10 @@ function SuggestionList({ id }) {
   return (
     <div className='suggestion-list-page vertical-align'>
       <div id='main' className='d-flex'>
-        {suggestionItemList &&
-          suggestionItemList.suggestionItems.map((item, index) => (
+        {suggestionDto &&
+          suggestionDto.suggestionItems.map((item, index) => (
             <SuggestionCard
+              id={item.suggestionId}
               data={makingChartData(item)}
               name={item.suggestionName}
             />
