@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import SuggestionCard from './SuggestionCard';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function SuggestionAdd() {
@@ -10,7 +9,51 @@ function SuggestionAdd() {
   const [loading, setLoading] = useState(true);
   const [suggestionObtainDto, setSuggestionObtainDto] = useState({});
   const { suggestionId } = location.state || {}; // 전달된 상태에서 suggestionId 추출
+
   console.log(suggestionId);
+
+  const handleApplySuggestion = () => {
+    const suggestionItems = Array.from(
+      document.querySelectorAll('.suggestion-add-table tbody tr')
+    ).map((tr) => {
+      const suggestionItemId = tr.children[0].innerText;
+      let newValue = tr.querySelector('.newInput').value;
+
+      if (!newValue) {
+        newValue = tr
+          .querySelector('.suggestion-current-value')
+          .innerText.replace(/,/g, ''); // fundCurrentValue 값을 사용 (쉼표 제거)
+      }
+
+      return {
+        suggestionItemId: parseFloat(suggestionItemId),
+        newValue: parseFloat(newValue),
+      };
+    });
+
+    console.log({ suggestionApplyRequestItemDtoList: suggestionItems });
+    // axios 통신을 이용하여 controller에 데이터 전송
+    axios
+      .post(
+        'http://localhost:8080/api/suggestion/apply',
+        { suggestionApplyRequestItemDtoList: suggestionItems },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+        }
+      )
+      .then((response) => {
+        console.log('응답:', response.data);
+        alert('수정안이 성공적으로 적용되었습니다.');
+      })
+      .catch((error) => {
+        console.error('오류:', error);
+        alert('수정안 적용에 실패하였습니다.');
+      });
+  };
+
   useEffect(() => {
     axios
       .get(
@@ -42,6 +85,7 @@ function SuggestionAdd() {
         <table className='suggestion-add-table'>
           <thead>
             <tr>
+              <th style={{ display: 'none' }}></th>
               <th>번호</th>
               <th>종목명</th>
               <th>가입일</th>
@@ -53,21 +97,32 @@ function SuggestionAdd() {
           <tbody>
             {suggestionObtainDto.suggestionItems.map((item, index) => (
               <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{item.fundName}</td>
-                <td>
+                <td style={{ display: 'none' }}>{item.suggestionItemId}</td>
+                <td className='suggestion-item-idx'>{index + 1}</td>
+                <td className='suggestion-fund-name'>{item.fundName}</td>
+                <td className='suggestion-init-date'>
                   {item.fundInitDate[0]}-{item.fundInitDate[1]}-
                   {item.fundInitDate[2]}
                 </td>
-                <td>{item.fundInitValue.toLocaleString('ko-KR')}</td>
-                <td>{item.fundCurrentValue.toLocaleString('ko-KR')}</td>
-                <td>
+                <td className='suggestion-init-value'>
+                  {item.fundInitValue.toLocaleString('ko-KR')}
+                </td>
+                <td className='suggestion-current-value'>
+                  {item.fundCurrentValue.toLocaleString('ko-KR')}
+                </td>
+                <td className='suggestion-new-value'>
                   <input type='number' className='newInput' />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        <button
+          className='btn btn-primary modify-suggestion-btn'
+          onClick={handleApplySuggestion}
+        >
+          Apply suggestion
+        </button>
       </div>
     </div>
   );
