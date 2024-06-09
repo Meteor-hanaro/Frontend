@@ -19,19 +19,27 @@ function Router() {
       <LoginContextProvider>
         <Routes>
           {/* root */}
-          <Route path='/' element={<RootPage />} />
+          <Route path="/" element={<RootPage />} />
           {/* pb */}
-          <Route path='/pb' element={<PbLoginPage />} />
-          <Route path='/pb/main' element={<PbMainPage />} />
-          <Route path='/pb/fund' element={<PbFundPage />} />
-          <Route path='/pb/portfolio' element={<PbPortfolioPage />} />
-          <Route path='/pb/suggestion/:vipId' element={<SuggestionPage />} />
+          <Route path="/pb" element={<PbLoginPage />} />
+          <Route path="/pb/main" element={<PbMainPage />} />
+          <Route path="/pb/fund" element={<PbFundPage />} />
+          <Route path="/pb/portfolio" element={<PbPortfolioPage />} />
+          <Route path="/pb/suggestion/:vipId" element={<SuggestionPage />} />
           {/* vip */}
-          <Route path='/vip' element={<UserLoginPage />} />
-          <Route path='/vip/main' element={<UserMainPage />} />
+          <Route path="/vip" element={<UserLoginPage />} />
+          <Route path="/vip/main" element={<UserMainPage />} />
           {/* WebRTC */}
           <Route
-            path='/vip/videoPage/:params'
+            path="/vip/videoPage/:params"
+            element={
+              <PrivateRoute>
+                <VideoPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/pb/videoPage/:params"
             element={
               <PrivateRoute>
                 <VideoPage />

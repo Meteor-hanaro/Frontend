@@ -145,9 +145,7 @@ function Main() {
     const roomNumber = consultData.find((item) =>
       Object.is(data.vipId, item.vipId)
     ).consultId;
-    window.open(
-      `/vip/videoPage/${roomNumber}?pbId=${pbId}&vipId=${data.vipId}`
-    );
+    window.open(`/pb/videoPage/${roomNumber}?pbId=${pbId}&vipId=${data.vipId}`);
     localStorage.setItem('isPb', true);
     localStorage.setItem('pbVip', data.vipId);
     // console.log(pbId);
@@ -158,22 +156,22 @@ function Main() {
   return (
     <>
       <main
-        id='main'
-        className='main'
+        id="main"
+        className="main"
         style={{
           padding: '45px',
           height: `calc(100vh - 60px)`,
         }}
       >
-        <div className='pagetitle'>
+        <div className="pagetitle">
           <h1>사용자 목록</h1>
         </div>
         {/* Search Bar */}
         <div
-          className='alignHorizontal search-bar'
+          className="alignHorizontal search-bar"
           style={{ marginTop: '25px' }}
         >
-          <select className='datatable-selector'>
+          <select className="datatable-selector">
             <option>전체</option>
             <option>STABLE</option>
             <option>CONSERVATIVE</option>
@@ -182,41 +180,41 @@ function Main() {
             <option>AGGRESSIVE</option>
           </select>
           <input
-            className='search-form'
-            type='text'
-            name='query'
-            placeholder='Search'
-            title='Enter search keyword'
+            className="search-form"
+            type="text"
+            name="query"
+            placeholder="Search"
+            title="Enter search keyword"
           />
           <button
-            className='search-button'
-            type='submit'
-            title='Search'
+            className="search-button"
+            type="submit"
+            title="Search"
             onClick={() => searchUser()}
           >
-            <i className='bi bi-search' />
+            <i className="bi bi-search" />
           </button>
         </div>
         {/* End Search Bar */}
         {/* Recent Sales */}
-        <div className='col-12' style={{ marginTop: '25px' }}>
-          <div className='card recent-sales overflow-auto'>
-            <div className='card-body' style={{ padding: '20px' }}>
-              <table className='table table-borderless datatable'>
+        <div className="col-12" style={{ marginTop: '25px' }}>
+          <div className="card recent-sales overflow-auto">
+            <div className="card-body" style={{ padding: '20px' }}>
+              <table className="table table-borderless datatable">
                 <thead>
                   <tr>
-                    <th className='col-1'>No</th>
-                    <th className='col-1'>Status</th>
-                    <th className='col-1'>Name</th>
-                    <th className='col-2'>Risk Tolerance</th>
-                    <th className='col-3'>Final Consultation Date</th>
-                    <th className='col-5'>Portfolio</th>
+                    <th className="col-1">No</th>
+                    <th className="col-1">Status</th>
+                    <th className="col-1">Name</th>
+                    <th className="col-2">Risk Tolerance</th>
+                    <th className="col-3">Final Consultation Date</th>
+                    <th className="col-5">Portfolio</th>
                   </tr>
                 </thead>
                 <tbody>
                   {state.map((item, index) => (
                     <tr key={index}>
-                      <th scope='row'>
+                      <th scope="row">
                         <a
                           href={`#${vip[index].vipId}`}
                         >{`#${vip[index].vipId}`}</a>
@@ -235,21 +233,21 @@ function Main() {
                       <td>{vip[index].consultDate}</td>
                       <td>
                         <button
-                          type='button'
-                          className='pbBtn'
+                          type="button"
+                          className="pbBtn"
                           onClick={() => checkPortfolio(vip[index].vipId)}
                         >
-                          <i className='bi bi-clipboard2-data'></i>
-                          <i className='bi bi-clipboard2-data'></i>
+                          <i className="bi bi-clipboard2-data"></i>
+                          <i className="bi bi-clipboard2-data"></i>
                           포트폴리오
                         </button>
                         <Link to={`/pb/suggestion/${vip[index].vipId}`}>
                           <button
-                            type='button'
-                            className='pbBtn'
+                            type="button"
+                            className="pbBtn"
                             style={{ marginLeft: '20px' }}
                           >
-                            <i className='bi bi-clipboard2-check'></i>
+                            <i className="bi bi-clipboard2-check"></i>
                             &nbsp; 제안서
                           </button>
                         </Link>
@@ -257,22 +255,22 @@ function Main() {
                         {consultState.length > 0 &&
                         consultState[index].state === false ? (
                           <button
-                            type='button'
-                            className='pbBtn'
+                            type="button"
+                            className="pbBtn"
                             style={{ marginLeft: '20px' }}
                             onClick={() => registerConsult(vip[index], index)}
                           >
-                            <i className='bi bi-person-rolodex'></i>
+                            <i className="bi bi-person-rolodex"></i>
                             &nbsp; 상담 신청
                           </button>
                         ) : (
                           <button
-                            type='button'
-                            className='pbBtn btn btn-danger'
+                            type="button"
+                            className="pbBtn btn btn-danger"
                             style={{ marginLeft: '20px' }}
                             onClick={() => enterRtcRoom(vip[index], index)}
                           >
-                            <i className='bi bi-person-rolodex'></i>
+                            <i className="bi bi-person-rolodex"></i>
                             &nbsp; 상담 입장
                           </button>
                         )}
