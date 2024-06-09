@@ -66,7 +66,7 @@ function Main() {
   const searchUser = () => {
     setIsPause(true); // vip 접속 확인 비허용
 
-    const url = `http://${process.env.REACT_APP_BESERVERURI}:8080/api/pb/main/filter`;
+    const url = `http://${process.env.REACT_APP_BESERVERURI}/api/pb/main/filter`;
     const data = {
       riskType: document.querySelector('.datatable-selector').value,
       name: document.querySelector('.search-form').value,
@@ -145,14 +145,9 @@ function Main() {
     const roomNumber = consultData.find((item) =>
       Object.is(data.vipId, item.vipId)
     ).consultId;
-    window.open(
-      `/vip/videoPage/${roomNumber}?pbId=${pbId}&vipId=${data.vipId}`
-    );
+    window.open(`/pb/videoPage/${roomNumber}?pbId=${pbId}&vipId=${data.vipId}`);
     localStorage.setItem('isPb', true);
     localStorage.setItem('pbVip', data.vipId);
-    // console.log(pbId);
-    // console.log(localStorage.getItem('isVip'));
-    // console.log(localStorage.getItem('isPb'));
   };
 
   return (
@@ -239,7 +234,7 @@ function Main() {
                           className="pbBtn"
                           onClick={() => checkPortfolio(vip[index].vipId)}
                         >
-                          <i className='bi bi-clipboard2-data'></i>
+                          <i className="bi bi-clipboard2-data"></i>
                           포트폴리오
                         </button>
                         <Link to={`/pb/suggestion/${vip[index].vipId}`}>

@@ -16,7 +16,7 @@ function Card({
   return (
     <div className="col-xxl-4 col-md-6">
       <div className={`card info-card ${type}`}>
-        <div className="filter">
+        {/* <div className="filter">
           <a className="icon" href="index.html" data-bs-toggle="dropdown">
             <i className="bi bi-three-dots" />
           </a>
@@ -40,7 +40,7 @@ function Card({
               </a>
             </li>
           </ul>
-        </div>
+        </div> */}
         <div className="card-body">
           <h5 className="card-title">
             {cardTitle} <span>| {cardDrop}</span>
@@ -50,11 +50,11 @@ function Card({
               <i className={`bi ${icon}`} />
             </div>
             <div className="ps-3">
-              <h6>{cardContent}</h6>
-              <span className={`${perColor} small pt-1 fw-bold`}>
+              <h6 className={`${perColor}`}>{cardContent}</h6>
+              {/* <span className={`${perColor} small pt-1 fw-bold`}>
                 {cardPercentage}
-              </span>
-              <span className="text-muted small pt-2 ps-1">{cardInDe}</span>
+              </span> */}
+              {/* <span className="text-muted small pt-2 ps-1">{cardInDe}</span> */}
             </div>
           </div>
         </div>

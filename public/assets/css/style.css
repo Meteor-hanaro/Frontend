@@ -34,7 +34,8 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Nunito', sans-serif;
+  /* font-family: 'Nunito', sans-serif; */
+  font-family: 'Hana2-M';
 }
 
 /*--------------------------------------------------------------
@@ -42,6 +43,13 @@ h6 {
 --------------------------------------------------------------*/
 #main {
   margin-top: 60px;
+  padding: 20px 30px;
+  transition: all 0.3s;
+}
+
+#main-consult {
+  /* margin-top: 60px; */
+  margin-left: 100px;
   padding: 20px 30px;
   transition: all 0.3s;
 }
@@ -237,6 +245,14 @@ h6 {
   font-weight: 500;
   color: #012970;
   font-family: 'Poppins', sans-serif;
+}
+.card-title-consult {
+  padding: 20px 0 15px 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: #012970;
+  font-family: 'Poppins', Hana2-M;
+  /* font-family: 'Poppins', sans-serif; */
 }
 
 .card-title span {
@@ -1410,6 +1426,29 @@ input[type='text'].search-form input:hover {
   background: #dfe8ff;
 }
 
+/*--------------------------------------------------------------
+# Pb Suggestion
+--------------------------------------------------------------*/
+.add-suggestion-btn {
+  float: right;
+}
+
+.suggestion-add-table {
+  width: 100%;
+  margin-top: 2rem;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.modify-suggestion-btn {
+  float: right;
+  width: 20%;
+}
+
+.suggestion-name{
+  float: right;
+  width: 20%;
+}
 /*--------------------------------------------------------------
 # Pb Fund
 --------------------------------------------------------------*/

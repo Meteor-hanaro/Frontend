@@ -1,6 +1,7 @@
 import Header from '../../components/system_admin/Header';
 import Main from '../../components/system_admin/Main';
 import { useState, useEffect } from 'react';
+// import Main from '../../components/etc/Main';
 
 function AdminPage() {
   const [infoNumber, setInfoNumber] = useState(0);
@@ -12,6 +13,7 @@ function AdminPage() {
   return (
     <>
       <Header setInfoNumber={setInfoNumber} />
+      {/* <Main infoNumber={infoNumber} /> */}
       <Main infoNumber={infoNumber} />
     </>
   );

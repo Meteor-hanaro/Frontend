@@ -12,8 +12,10 @@ import PrivateRoute from './pages/video/PrivateRoute';
 import SuggestionPage from './pages/pb/SuggestionPage';
 import AdminPage from './pages/system_admin/AdminPage';
 import AdminPrivateRoute from './pages/system_admin/AdminPrivateRoute';
+import SuggestionAddPage from './pages/pb/SuggestionAddPage';
 import PbConsultEndingPage from './pages/pb/ConsultEndingPage';
 import UserConsultEndingPage from './pages/user/ConsultEndingPage';
+import ConsultDetailPage from './pages/user/ConsultDetailPage';
 
 function Router() {
   return (
@@ -27,15 +29,28 @@ function Router() {
           <Route path='/pb/main' element={<PbMainPage />} />
           <Route path='/pb/fund' element={<PbFundPage />} />
           <Route path='/pb/portfolio' element={<PbPortfolioPage />} />
-          <Route path='/pb/consult' element={<PbConsultEndingPage />} />
           <Route path='/pb/suggestion/:vipId' element={<SuggestionPage />} />
+          <Route path='/pb/suggestion/add' element={<SuggestionAddPage />} />
+          <Route path='/pb/consult' element={<PbConsultEndingPage />} />
           {/* vip */}
           <Route path='/vip' element={<UserLoginPage />} />
           <Route path='/vip/main' element={<UserMainPage />} />
           <Route path='/vip/consult' element={<UserConsultEndingPage />} />
+          <Route
+            path='/vip/consult/:consultId'
+            element={<ConsultDetailPage />}
+          />
           {/* WebRTC */}
           <Route
             path='/vip/videoPage/:params'
+            element={
+              <PrivateRoute>
+                <VideoPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path='/pb/videoPage/:params'
             element={
               <PrivateRoute>
                 <VideoPage />
