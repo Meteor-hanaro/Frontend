@@ -14,6 +14,7 @@ import AdminPage from './pages/system_admin/AdminPage';
 import AdminPrivateRoute from './pages/system_admin/AdminPrivateRoute';
 import PbConsultEndingPage from './pages/pb/ConsultEndingPage';
 import UserConsultEndingPage from './pages/user/ConsultEndingPage';
+import ConsultDetailPage from './pages/user/ConsultDetailPage';
 
 function Router() {
   return (
@@ -33,6 +34,10 @@ function Router() {
           <Route path="/vip" element={<UserLoginPage />} />
           <Route path="/vip/main" element={<UserMainPage />} />
           <Route path="/vip/consult" element={<UserConsultEndingPage />} />
+          <Route
+            path="/vip/consult/:consultId"
+            element={<ConsultDetailPage />}
+          />
           {/* WebRTC */}
           <Route
             path="/vip/videoPage/:params"

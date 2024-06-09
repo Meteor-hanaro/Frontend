@@ -7,7 +7,7 @@ const ProgressBarPage = ({ setPageNumber, rtcRoomNum }) => {
 
   useEffect(() => {
     ws.current = new WebSocket(
-      `ws://${process.env.REACT_APP_PROGRESSWS}/${rtcRoomNum}`
+      `wss://${process.env.REACT_APP_PROGRESSWS}/${rtcRoomNum}`
     );
 
     ws.current.onopen = () => {

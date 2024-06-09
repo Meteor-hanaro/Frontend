@@ -148,9 +148,6 @@ function Main() {
     window.open(`/pb/videoPage/${roomNumber}?pbId=${pbId}&vipId=${data.vipId}`);
     localStorage.setItem('isPb', true);
     localStorage.setItem('pbVip', data.vipId);
-    // console.log(pbId);
-    // console.log(localStorage.getItem('isVip'));
-    // console.log(localStorage.getItem('isPb'));
   };
 
   return (
