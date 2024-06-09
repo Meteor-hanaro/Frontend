@@ -51,7 +51,12 @@ const SharingPage = ({ number, localVideoRef, rtcRoomNum }) => {
       {number === 1 && (
         <RebalancingPage setSuggestionItemList={setSuggestionItemList} />
       )}
-      {number === 2 && <IdVerificationPage localVideoRef={localVideoRef} />}
+      {number === 2 && (
+        <IdVerificationPage
+          localVideoRef={localVideoRef}
+          rtcRoomNum={rtcRoomNum}
+        />
+      )}
       {number === 3 && <ConsentPage suggestionItemData={suggestionItemList} />}
       {number === 4 && <AuthPage />}
       {number === 5 && <Sign />}
