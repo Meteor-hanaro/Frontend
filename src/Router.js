@@ -14,6 +14,7 @@ import AdminPage from './pages/system_admin/AdminPage';
 import AdminPrivateRoute from './pages/system_admin/AdminPrivateRoute';
 import PbConsultEndingPage from './pages/pb/ConsultEndingPage';
 import UserConsultEndingPage from './pages/user/ConsultEndingPage';
+import ConsultDetailPage from './pages/user/ConsultDetailPage';
 
 function Router() {
   return (
@@ -21,21 +22,33 @@ function Router() {
       <LoginContextProvider>
         <Routes>
           {/* root */}
-          <Route path='/' element={<RootPage />} />
+          <Route path="/" element={<RootPage />} />
           {/* pb */}
-          <Route path='/pb' element={<PbLoginPage />} />
-          <Route path='/pb/main' element={<PbMainPage />} />
-          <Route path='/pb/fund' element={<PbFundPage />} />
-          <Route path='/pb/portfolio' element={<PbPortfolioPage />} />
-          <Route path='/pb/consult' element={<PbConsultEndingPage />} />
-          <Route path='/pb/suggestion/:vipId' element={<SuggestionPage />} />
+          <Route path="/pb" element={<PbLoginPage />} />
+          <Route path="/pb/main" element={<PbMainPage />} />
+          <Route path="/pb/fund" element={<PbFundPage />} />
+          <Route path="/pb/portfolio" element={<PbPortfolioPage />} />
+          <Route path="/pb/consult" element={<PbConsultEndingPage />} />
+          <Route path="/pb/suggestion/:vipId" element={<SuggestionPage />} />
           {/* vip */}
-          <Route path='/vip' element={<UserLoginPage />} />
-          <Route path='/vip/main' element={<UserMainPage />} />
-          <Route path='/vip/consult' element={<UserConsultEndingPage />} />
+          <Route path="/vip" element={<UserLoginPage />} />
+          <Route path="/vip/main" element={<UserMainPage />} />
+          <Route path="/vip/consult" element={<UserConsultEndingPage />} />
+          <Route
+            path="/vip/consult/:consultId"
+            element={<ConsultDetailPage />}
+          />
           {/* WebRTC */}
           <Route
-            path='/vip/videoPage/:params'
+            path="/vip/videoPage/:params"
+            element={
+              <PrivateRoute>
+                <VideoPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/pb/videoPage/:params"
             element={
               <PrivateRoute>
                 <VideoPage />
@@ -44,7 +57,7 @@ function Router() {
           />
           {/* System Admin */}
           <Route
-            path='/admin'
+            path="/admin"
             element={
               <AdminPrivateRoute>
                 <AdminPage />

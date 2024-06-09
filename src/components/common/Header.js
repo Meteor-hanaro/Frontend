@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import auth from '../../auth';
 
 function Header() {
@@ -39,10 +39,17 @@ function Header() {
         className="header fixed-top d-flex align-items-center"
       >
         <div className="d-flex align-items-center justify-content-between">
-          <a href="index.html" className="logo d-flex align-items-center">
+          <Link
+            to={`/${userType}/main`}
+            className="logo d-flex align-items-center"
+          >
             <img src={`${process.env.PUBLIC_URL}/assets/logo.png`} alt="" />
             <span className="d-none d-lg-block">Gold Lounge</span>
-          </a>
+          </Link>
+          {/* <a href="index.html" className="logo d-flex align-items-center">
+            <img src={`${process.env.PUBLIC_URL}/assets/logo.png`} alt="" />
+            <span className="d-none d-lg-block">Gold Lounge</span>
+          </a> */}
         </div>
         {/* End Logo */}
         <nav className="header-nav ms-auto">
