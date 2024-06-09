@@ -36,7 +36,10 @@ function SuggestionAdd() {
     axios
       .post(
         'http://localhost:8080/api/suggestion/apply',
-        { suggestionApplyRequestItemDtoList: suggestionItems },
+        { 
+          suggestionId: suggestionId,
+          suggestionName: document.getElementById('suggestion-name').value,
+          suggestionApplyRequestItemDtoList: suggestionItems },
         {
           headers: {
             'Content-Type': 'application/json',
@@ -52,6 +55,8 @@ function SuggestionAdd() {
         console.error('오류:', error);
         alert('수정안 적용에 실패하였습니다.');
       });
+
+    navigate('/pb/main');
   };
 
   useEffect(() => {
@@ -117,12 +122,20 @@ function SuggestionAdd() {
             ))}
           </tbody>
         </table>
-        <button
-          className='btn btn-primary modify-suggestion-btn'
-          onClick={handleApplySuggestion}
-        >
-          Apply suggestion
-        </button>
+        <div className='alignVertical'>
+          <input
+            id='suggestion-name'
+            type='text'
+            className='suggestion-name'
+            placeholder='제안안 이름'
+          />
+          <button
+            className='btn btn-primary modify-suggestion-btn'
+            onClick={handleApplySuggestion}
+          >
+            Apply suggestion
+          </button>
+        </div>
       </div>
     </div>
   );
