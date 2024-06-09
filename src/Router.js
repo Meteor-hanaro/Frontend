@@ -23,29 +23,26 @@ function Router() {
       <LoginContextProvider>
         <Routes>
           {/* root */}
-          <Route path="/" element={<RootPage />} />
+          <Route path='/' element={<RootPage />} />
           {/* pb */}
           <Route path='/pb' element={<PbLoginPage />} />
           <Route path='/pb/main' element={<PbMainPage />} />
           <Route path='/pb/fund' element={<PbFundPage />} />
           <Route path='/pb/portfolio' element={<PbPortfolioPage />} />
           <Route path='/pb/suggestion/:vipId' element={<SuggestionPage />} />
-          <Route
-            path='/pb/suggestion/add'
-            element={<SuggestionAddPage />}
-          />
-          <Route path="/pb/consult" element={<PbConsultEndingPage />} />
+          <Route path='/pb/suggestion/add' element={<SuggestionAddPage />} />
+          <Route path='/pb/consult' element={<PbConsultEndingPage />} />
           {/* vip */}
-          <Route path="/vip" element={<UserLoginPage />} />
-          <Route path="/vip/main" element={<UserMainPage />} />
-          <Route path="/vip/consult" element={<UserConsultEndingPage />} />
+          <Route path='/vip' element={<UserLoginPage />} />
+          <Route path='/vip/main' element={<UserMainPage />} />
+          <Route path='/vip/consult' element={<UserConsultEndingPage />} />
           <Route
-            path="/vip/consult/:consultId"
+            path='/vip/consult/:consultId'
             element={<ConsultDetailPage />}
           />
           {/* WebRTC */}
           <Route
-            path="/vip/videoPage/:params"
+            path='/vip/videoPage/:params'
             element={
               <PrivateRoute>
                 <VideoPage />
@@ -53,7 +50,7 @@ function Router() {
             }
           />
           <Route
-            path="/pb/videoPage/:params"
+            path='/pb/videoPage/:params'
             element={
               <PrivateRoute>
                 <VideoPage />
