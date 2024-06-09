@@ -1427,6 +1427,29 @@ input[type='text'].search-form input:hover {
 }
 
 /*--------------------------------------------------------------
+# Pb Suggestion
+--------------------------------------------------------------*/
+.add-suggestion-btn {
+  float: right;
+}
+
+.suggestion-add-table {
+  width: 100%;
+  margin-top: 2rem;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.modify-suggestion-btn {
+  float: right;
+  width: 20%;
+}
+
+.suggestion-name{
+  float: right;
+  width: 20%;
+}
+/*--------------------------------------------------------------
 # Pb Fund
 --------------------------------------------------------------*/
 
