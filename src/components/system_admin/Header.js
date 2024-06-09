@@ -19,7 +19,7 @@ function Header({ setInfoNumber }) {
               className="nav-item nav-link"
               onClick={() => {
                 setTimeout(() => {
-                  setInfoNumber(0);
+                  setInfoNumber(1);
                 }, 0);
               }}
             >
@@ -29,7 +29,7 @@ function Header({ setInfoNumber }) {
               className="nav-item nav-link"
               onClick={() => {
                 setTimeout(() => {
-                  setInfoNumber(1);
+                  setInfoNumber(2);
                 }, 0);
               }}
             >
@@ -39,7 +39,7 @@ function Header({ setInfoNumber }) {
               className="nav-item nav-link"
               onClick={() => {
                 setTimeout(() => {
-                  setInfoNumber(2);
+                  setInfoNumber(3);
                 }, 0);
               }}
             >
@@ -49,7 +49,14 @@ function Header({ setInfoNumber }) {
           <ul className="d-flex align-items-center">
             <li className="nav-item dropdown pe-3">
               <div className="nav-link nav-profile d-flex align-items-center pe-0">
-                <span className="d-none d-md-block ps-2 badge bg-danger">
+                <span
+                  className="d-none d-md-block ps-2 badge bg-danger"
+                  onClick={() => {
+                    setTimeout(() => {
+                      setInfoNumber(0);
+                    }, 0);
+                  }}
+                >
                   System Admin
                 </span>
               </div>
