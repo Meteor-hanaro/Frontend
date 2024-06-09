@@ -148,6 +148,10 @@ const PrivateRoute = ({ children }) => {
   return isAuthenticated ? (
     <WebRTCContext
       signaling={new WebSocket(`ws://${process.env.REACT_APP_WEBRTCWS}`)}
+      isVip={isVip}
+      isPb={isPb}
+      vipId={vipId}
+      pbId={pbId}
     >
       {children}
     </WebRTCContext>

@@ -10,37 +10,65 @@ const WebRTCContext = createContext(null);
 
 export const useWebRTC = () => useContext(WebRTCContext);
 
-const WebRTCProvider = ({ signaling, children }) => {
+const WebRTCProvider = ({ signaling, children, isVip, isPb, vipId, pbId }) => {
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const [pc, setPc] = useState(null);
   const [dataChannel, setDataChannel] = useState(null);
   const [participants, setParticipants] = useState(0);
   const [ws, setWs] = useState(null);
-  const maxParticipants = 3;
+  let isOpen = false;
+
   useEffect(() => {
     const websocket = new WebSocket(`ws://${process.env.REACT_APP_WEBRTCWS}`);
     
+    websocket.onopen = () => {
+      isOpen = true;
+      const message = JSON.stringify({ isOpen, isVip, isPb, vipId, pbId });
+      websocket.send(message);
+    }
 
     websocket.onmessage = (message) => {
+      // alert(message.data);
+      let msg = message.data;
       const data = JSON.parse(message.data);
       if (data.type === 'participants') {
         setParticipants(data.count);
+      }
+      let isVipOverflow = JSON.parse(msg).vipOverflow;
+      let isPbOverflow = JSON.parse(msg).pbOverflow;
+      if(isVipOverflow || isPbOverflow) {
+        alert('이미 진행 중인 상담입니다.')
+        window.close();
       }
     };
 
     setWs(websocket);
 
+
+    const handleBeforeUnload = () => {
+      if (signaling.readyState === WebSocket.OPEN) {
+        const message = JSON.stringify({ isOpen: false, isVip, isPb, vipId, pbId });
+        signaling.send(message);
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+
     return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      if (signaling.readyState === WebSocket.OPEN) {
+        const message = JSON.stringify({ isOpen: false, isVip, isPb, vipId, pbId });
+        signaling.send(message);
+        signaling.close();
+      }
       websocket.close();
     };
-  }, []);
+  }, [isVip, isPb, vipId, pbId]);
+
 
   useEffect(() => {
-    if (participants >= maxParticipants) {
-      alert('Participant limit reached');
-      return;
-    }
 
     // STUN 서버 설정
     const configuration = {
@@ -115,71 +143,14 @@ const WebRTCProvider = ({ signaling, children }) => {
   }, [pc]);
 
   const createOffer = async () => {
-    try {
-      if (participants < maxParticipants) {
-        if (pc) {
-          const offer = await pc.createOffer();
-          await pc.setLocalDescription(offer);
-          signaling.send(JSON.stringify({ offer: pc.localDescription }));
-        } else {
-          console.error('PeerConnection not initialized.');
-        }
-      } else {
-        alert('Participant limit reached');
-      }
-    } catch (error) {
-      console.error('Error creating offer:', error);
+    if (pc) {
+      const offer = await pc.createOffer();
+      await pc.setLocalDescription(offer);
+      signaling.send(JSON.stringify({ offer: pc.localDescription }));
+    } else {
+      console.error('PeerConnection not initialized.');
     }
   };
-
-  const handleSignalingData = async (data) => {
-    if (!pc) return;
-
-    try {
-      if (data.offer) {
-        if (participants < maxParticipants) {
-          await pc.setRemoteDescription(new RTCSessionDescription(data.offer));
-          const stream = await navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: true,
-          });
-
-          if (localVideoRef.current) {
-            localVideoRef.current.srcObject = stream;
-          }
-
-          stream.getTracks().forEach((track) => {
-            if (pc) {
-              pc.addTrack(track, stream);
-            }
-          });
-
-          const answer = await pc.createAnswer();
-          await pc.setLocalDescription(answer);
-          signaling.send(JSON.stringify({ answer }));
-        } else {
-          alert('Participant limit reached');
-        }
-      } else if (data.answer) {
-        await pc.setRemoteDescription(new RTCSessionDescription(data.answer));
-      } else if (data['new-ice-candidate']) {
-        await pc.addIceCandidate(
-          new RTCIceCandidate(data['new-ice-candidate'])
-        );
-      }
-    } catch (error) {
-      console.error('Error handling signaling data', error);
-    }
-  };
-
-  useEffect(() => {
-    signaling.onmessage = (message) => {
-      message &&
-        message.data.text().then((text) => {
-          handleSignalingData(JSON.parse(text));
-        });
-    };
-  }, [handleSignalingData, signaling, pc]);
 
   const sendMessage = (message) => {
     if (dataChannel && dataChannel.readyState === 'open') {
