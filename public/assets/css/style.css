@@ -1426,6 +1426,12 @@ input[type='text'].search-form input:hover {
 
 .modify-suggestion-btn {
   float: right;
+  width: 20%;
+}
+
+.suggestion-name{
+  float: right;
+  width: 20%;
 }
 /*--------------------------------------------------------------
 # Pb Fund
