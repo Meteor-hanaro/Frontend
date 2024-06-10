@@ -6,12 +6,11 @@ function Header({ rtcRoomNum }) {
   const navigate = useNavigate();
 
   const exit = () => {
-    closeConsult(rtcRoomNum);
-
     const path = location.pathname;
     const role = path.split('/')[1];
     switch (role) {
       case 'pb':
+        closeConsult(rtcRoomNum);
         navigate(`/pb/consult/${rtcRoomNum}`);
         break;
       case 'vip':
