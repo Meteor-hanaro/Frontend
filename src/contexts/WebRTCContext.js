@@ -117,7 +117,7 @@ const WebRTCProvider = ({
     };
 
     peerConnection.ontrack = (event) => {
-      if (remoteVideoRef.current) {
+      if (event.streams && event.streams[0] && remoteVideoRef.current) {
         remoteVideoRef.current.srcObject = event.streams[0];
       }
     };
@@ -218,7 +218,7 @@ const WebRTCProvider = ({
   useEffect(() => {
     signaling.onmessage = (message) => {
       console.log(message.data);
-      message &&
+      message.data &&
         message.data.text().then((text) => {
           handleSignalingData(JSON.parse(text));
         });
