@@ -29,6 +29,10 @@ function Router() {
           <Route path='/pb/main' element={<PbMainPage />} />
           <Route path='/pb/fund' element={<PbFundPage />} />
           <Route path='/pb/portfolio' element={<PbPortfolioPage />} />
+          <Route
+            path='/pb/consult/:consultId'
+            element={<PbConsultEndingPage />}
+          />
           <Route path='/pb/suggestion/:vipId' element={<SuggestionPage />} />
           <Route path='/pb/suggestion/add' element={<SuggestionAddPage />} />
           <Route path='/pb/consult' element={<PbConsultEndingPage />} />

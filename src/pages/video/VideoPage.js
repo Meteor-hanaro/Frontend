@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import WebRTC from './WebRTC';
+import Header from '../../components/consult/Header';
 
 const VideoPage = () => {
   const [signaling, setSignaling] = useState(null);
@@ -36,17 +37,20 @@ const VideoPage = () => {
   };
 
   return (
-    <div className="VideoPage">
-      <div id="videoContainer">
-        {signaling && (
-          <WebRTC
-            signaling={signaling}
-            onSendMessage={handleSendMessage}
-            rtcRoomNum={params.params}
-          />
-        )}
+    <>
+      <Header rtcRoomNum={params.params} />
+      <div className='VideoPage' style={{ marginTop: '60px' }}>
+        <div id='videoContainer'>
+          {signaling && (
+            <WebRTC
+              signaling={signaling}
+              onSendMessage={handleSendMessage}
+              rtcRoomNum={params.params}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
