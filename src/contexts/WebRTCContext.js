@@ -28,6 +28,7 @@ const WebRTCProvider = ({
   let isOpen = false;
 
   useEffect(() => {
+    console.log(signaling);
     const websocket = new WebSocket(
       `${process.env.REACT_APP_WEBRTCWS}/${consultId}`
     );
@@ -47,23 +48,23 @@ const WebRTCProvider = ({
 
     websocket.onmessage = (message) => {
       // alert(message.data);
-      let msg = message.data;
+      // let msg = message.data;
       const data = JSON.parse(message.data);
       if (data.type === 'participants') {
         setParticipants(data.count);
       }
-      let isVipOverflow = JSON.parse(msg).vipOverflow;
-      let isPbOverflow = JSON.parse(msg).pbOverflow;
-      if (isVipOverflow || isPbOverflow) {
+      // let isVipOverflow = JSON.parse(msg).vipOverflow;
+      // let isPbOverflow = JSON.parse(msg).pbOverflow;
+      if (data.vipOverflow || data.pbOverflow) {
         alert('이미 진행 중인 상담입니다.');
         window.close();
       }
     };
 
-    setWs(websocket);
+    // setWs(websocket);
 
     const handleBeforeUnload = () => {
-      if (signaling.readyState === WebSocket.OPEN) {
+      if (websocket.readyState === WebSocket.OPEN) {
         const message = JSON.stringify({
           isOpen: false,
           isVip,
@@ -71,7 +72,7 @@ const WebRTCProvider = ({
           vipId,
           pbId,
         });
-        signaling.send(message);
+        websocket.send(message);
       }
     };
 
@@ -79,7 +80,7 @@ const WebRTCProvider = ({
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
-      if (signaling.readyState === WebSocket.OPEN) {
+      if (websocket.readyState === WebSocket.OPEN) {
         const message = JSON.stringify({
           isOpen: false,
           isVip,
@@ -87,8 +88,8 @@ const WebRTCProvider = ({
           vipId,
           pbId,
         });
-        signaling.send(message);
-        signaling.close();
+        websocket.send(message);
+        websocket.close();
       }
       websocket.close();
     };
@@ -155,7 +156,7 @@ const WebRTCProvider = ({
         }
 
         stream.getTracks().forEach((track) => {
-          if (pc) {
+          if (pc && pc.signalingState !== 'closed') {
             pc.addTrack(track, stream);
           }
         });
@@ -176,6 +177,53 @@ const WebRTCProvider = ({
       console.error('PeerConnection not initialized.');
     }
   };
+
+  const handleSignalingData = async (data) => {
+    console.log(pc);
+    if (!pc) return;
+
+    try {
+      if (data.offer) {
+        await pc.setRemoteDescription(new RTCSessionDescription(data.offer));
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true,
+        });
+
+        if (localVideoRef.current) {
+          localVideoRef.current.srcObject = stream;
+        }
+
+        stream.getTracks().forEach((track) => {
+          if (pc && pc.signalingState !== 'closed') {
+            pc.addTrack(track, stream);
+          }
+        });
+
+        const answer = await pc.createAnswer();
+        await pc.setLocalDescription(answer);
+        signaling.send(JSON.stringify({ answer }));
+      } else if (data.answer) {
+        await pc.setRemoteDescription(new RTCSessionDescription(data.answer));
+      } else if (data['new-ice-candidate']) {
+        await pc.addIceCandidate(
+          new RTCIceCandidate(data['new-ice-candidate'])
+        );
+      }
+    } catch (error) {
+      console.error('Error handling signaling data', error);
+    }
+  };
+
+  useEffect(() => {
+    signaling.onmessage = (message) => {
+      console.log(message.data);
+      message &&
+        message.data.text().then((text) => {
+          handleSignalingData(JSON.parse(text));
+        });
+    };
+  }, [handleSignalingData, signaling, pc]);
 
   const sendMessage = (message) => {
     if (dataChannel && dataChannel.readyState === 'open') {

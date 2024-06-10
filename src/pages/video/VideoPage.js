@@ -7,14 +7,10 @@ const VideoPage = () => {
   const sendMessageRef = useRef(null);
 
   const params = useParams();
-  // const query = new URLSearchParams(useLocation().search);
 
-  useEffect(() => {  
-    // const pbId = query.get('pbId');
-    // const vipId = query.get('vipId');
-    
+  useEffect(() => {
     const ws = new WebSocket(
-      `${process.env.REACT_APP_WEBRTCWS}/${params.params}`
+      `${process.env.REACT_APP_SIGNALINGWS}/${params.params}`
     );
     ws.onopen = () => {
       console.log('Connected to signaling server');

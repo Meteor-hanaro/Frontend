@@ -14,7 +14,7 @@ const SharingPage = ({ number, localVideoRef, rtcRoomNum }) => {
 
   useEffect(() => {
     ws.current = new WebSocket(
-      `ws://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`
+      `${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`
     );
 
     ws.current.onopen = () => {
@@ -52,7 +52,11 @@ const SharingPage = ({ number, localVideoRef, rtcRoomNum }) => {
   return (
     <div id="divSharing">
       {number === 1 && (
-        <RebalancingPage setSuggestionItemList={setSuggestionItemList} setSuggestionItemNumber={setSuggestionItemNumber} setSuggestionId={setSuggestionId}/>
+        <RebalancingPage
+          setSuggestionItemList={setSuggestionItemList}
+          setSuggestionItemNumber={setSuggestionItemNumber}
+          setSuggestionId={setSuggestionId}
+        />
       )}
       {number === 2 && (
         <IdVerificationPage
@@ -62,7 +66,14 @@ const SharingPage = ({ number, localVideoRef, rtcRoomNum }) => {
       )}
       {number === 3 && <ConsentPage suggestionItemData={suggestionItemList} />}
       {number === 4 && <AuthPage rtcRoomNum={rtcRoomNum} />}
-      {number === 5 && <Sign suggestionItemData={suggestionItemList} suggestionItemNumber={suggestionItemNumber} suggestionId={suggestionId} rtcRoomNum={rtcRoomNum}/>}
+      {number === 5 && (
+        <Sign
+          suggestionItemData={suggestionItemList}
+          suggestionItemNumber={suggestionItemNumber}
+          suggestionId={suggestionId}
+          rtcRoomNum={rtcRoomNum}
+        />
+      )}
     </div>
   );
 };
