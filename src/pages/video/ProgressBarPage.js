@@ -15,7 +15,6 @@ const ProgressBarPage = ({ setPageNumber, rtcRoomNum }) => {
       ws.current.send(JSON.stringify({ type: 'getCurrentStep' }));
     };
 
-    // 페이지 번호 데이터 수신
     ws.current.onmessage = (event) => {
       const receivedData = event.data;
       receivedData.text().then((text) => {
@@ -25,45 +24,50 @@ const ProgressBarPage = ({ setPageNumber, rtcRoomNum }) => {
         }
       });
     };
+
     return () => {
       ws.current.close();
     };
-  }, []);
+  }, [setPageNumber]);
 
   const updateProgress = (step) => {
-    console.log('click');
-    setPageNumber(step); // 페이지 변경용 useState
-    setCurrentStep(step); // 동시성 유지를 위한 useState
-    // 페이지 번호 변경할 때마다 데이터 전송
+    setPageNumber(step);
+    setCurrentStep(step);
     if (ws.current && ws.current.readyState === WebSocket.OPEN) {
       ws.current.send(JSON.stringify({ type: 'updateStep', step }));
     }
   };
 
+  const stepLabels = ['리밸런싱', '신분증확인', '계약서동의', '간편인증', '최종가입'];
+
   return (
     <div id="divProgressBar">
-      <div id="progressContainer">
-        <div
-          id="progress"
-          style={{
-            width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%`,
-          }}
-        ></div>
-        {[...Array(totalSteps)].map((_, index) => (
-          <div
-            key={index}
-            className="progressCircle"
-            onClick={() => updateProgress(index + 1)}
-            style={{
-              backgroundColor: index < currentStep ? '#316df4' : '#ffffff',
-              color: index < currentStep ? 'white' : '#316df4',
-            }}
-          >
-            {index + 1}
+      <div id="progressContainer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '80%', margin: '0 auto' }}>
+        {stepLabels.map((label, index) => (
+          <div key={index} style={{ textAlign: 'center', display: 'flex', alignItems: 'center' }}>
+            <div
+              className="progressCircle"
+              onClick={() => updateProgress(index + 1)}
+              style={{
+                backgroundColor: index < currentStep ? '#e0c886' : '#E0E0E0',
+                color: index < currentStep ? 'white' : 'black',
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                margin: '0 auto',
+              }}
+            >
+              {index + 1}
+            </div>
+            <div style={{ marginLeft: '10px', color: index < currentStep ? '#e0c886' : 'black' }}>{label}</div>
           </div>
         ))}
       </div>
-      <div id="progressButtons">
+      <div id="progressButtons" style={{ textAlign: 'center', marginTop: '20px' }}>
         <button
           type="button"
           className="btn btn-primary btn-lg"
@@ -77,6 +81,7 @@ const ProgressBarPage = ({ setPageNumber, rtcRoomNum }) => {
           className="btn btn-primary btn-lg"
           onClick={() => updateProgress(currentStep + 1)}
           disabled={currentStep === totalSteps}
+          style={{ marginLeft: '10px' }}
         >
           Next
         </button>

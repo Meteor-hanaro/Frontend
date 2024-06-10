@@ -15,7 +15,7 @@ function Main() {
 
   useEffect(() => {
     // web socket
-    ws.current = new WebSocket(`ws://${process.env.REACT_APP_CONSULTREQUEST}`);
+    ws.current = new WebSocket(`${process.env.REACT_APP_CONSULTREQUEST}`);
 
     // 1. /pb/main 최초 진입 시, vip 목록 가져오기
     async function fetchData() {
@@ -66,7 +66,7 @@ function Main() {
   const searchUser = () => {
     setIsPause(true); // vip 접속 확인 비허용
 
-    const url = `http://${process.env.REACT_APP_BESERVERURI}:8080/api/pb/main/filter`;
+    const url = `http://${process.env.REACT_APP_BESERVERURI}/api/pb/main/filter`;
     const data = {
       riskType: document.querySelector('.datatable-selector').value,
       name: document.querySelector('.search-form').value,

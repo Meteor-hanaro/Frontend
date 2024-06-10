@@ -1,29 +1,53 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import useScript from "../etc/useScript";
 import { useParams } from 'react-router-dom';
-function AuthPage() {
+import { Button, Modal } from "react-bootstrap";
+
+function AuthPage({rtcRoomNum}) {
+  const ws = useRef(null);
   const { params } = useParams();
   const queryParams = new URLSearchParams(params);
   const vipId = queryParams.get('vipId');
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
   useScript("https://code.jquery.com/jquery-1.12.4.min.js");
   useScript("https://cdn.iamport.kr/js/iamport.payment-1.2.0.js");
+  useEffect(() => {
+    ws.current = new WebSocket(`ws://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
+    ws.current.onopen = () => {
+      console.log('WebSocket connection opened');
+    };
+
+    ws.current.onmessage = (event) => {
+      const receivedData = event.data;
+      receivedData.text().then((text) => {
+        if (JSON.parse(text).type === 'authResult') {
+          alert(JSON.parse(text).authResult);
+        }
+      });
+    };
+    return () => {
+      ws.current.close();
+    };
+  }, []);
   const certify = () => {
     const { IMP } = window;
     IMP.init("imp74352341");
     IMP.certification(
       {
-        // param
-        // pg: "inicis_unified.{CPID}", //본인인증 설정이 2개이상 되어 있는 경우 필수
         merchant_uid: vipId,
         popup: true,
       },
       (rsp) => {
         if (rsp.success) {
-          alert("인증되었습니다.");
+          setShow(true);
           console.log(rsp);
+          ws.current.send(JSON.stringify({ type: 'authResult', authResult:'인증성공' }));
         } else {
           alert(`인증에 실패했습니다. 에러: ${rsp.error_msg}`);
+          ws.current.send(JSON.stringify({ type: 'authResult', authResult:'인증실패' }));
         }
+        
       }
     );
   };
@@ -52,6 +76,31 @@ function AuthPage() {
           <button className="btn btn-auth" onClick={certify}>간편인증</button>
         </div>
       </div>
+      <Modal show={show} onHide={handleClose} centered>
+        <Modal.Body className="modal-body">
+          <div className="modal-content">
+          <div className="modal-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="64"
+                height="64"
+                fill="currentColor"
+                className="bi bi-check-circle-fill"
+                viewBox="0 0 16 16"
+              >8
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.78 11.03a.75.75 0 0 0 1.06-1.06L6.525 8.7l.455-.455 1.3 1.3a.75.75 0 0 0 1.06-1.06L7.03 7.22a.75.75 0 0 0-1.06 0L5.06 8.13l-.265-.264a.75.75 0 1 0-1.06 1.06l1 1z" />
+              </svg>
+            </div>
+            <h2 className="modal-title">본인인증 완료!</h2>
+            <p className="modal-message">본인 인증이 완료되었습니다.</p>
+          </div>
+        </Modal.Body> 
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleClose} className="close-modal-button">
+            확인
+          </Button>
+        </Modal.Footer>
+      </Modal>  
     </div>
   );
 }
