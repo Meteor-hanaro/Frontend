@@ -87,13 +87,13 @@ const RebalancingPage = ({ setSuggestionItemList }) => {
 
   // 수정안 버튼 클릭시 작성해야할 계약서 리스트 전달
   const suggestionAccept = () => {
-    suggestionData.suggestionItems[suggestionNumber].suggestionItems.map(
-      (item) => {
-        if (existCheckInPortfolio(item.suggestionItemId)) {
-          setSuggestionItemList((prev) => [...prev, item.suggestionItemId]);
-        }
-      }
-    );
+    const newSuggestionList = suggestionData.suggestionItems[
+      suggestionNumber
+    ].suggestionItems
+      .filter((item) => existCheckInPortfolio(item.suggestionItemId))
+      .map((item) => item.suggestionItemId);
+
+    setSuggestionItemList(newSuggestionList);
   };
 
   // 수정안 중 새로 가입하는 펀드 확인
