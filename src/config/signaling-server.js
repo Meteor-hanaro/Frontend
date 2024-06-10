@@ -4,6 +4,7 @@ const wsscr = new WebSocket.Server({ port: 8887 }); // consult request
 const wss = new WebSocket.Server({ port: 8888 }); // videopage - WebRTC
 const wsssl = new WebSocket.Server({ port: 8889 }); // suggestion list
 const wsspb = new WebSocket.Server({ port: 8890 }); // progress bar
+const wsssg = new WebSocket.Server({ port: 8891 }); // Signaling-server ws
 
 let participants = 0;
 // let usingVip = null;
@@ -31,11 +32,11 @@ let pbId = '';
 let vipId = '';
 let isVip = false;
 let isPb = false;
-let isOpen = false;
-let usingVip = false;
-let usingPb = false;
-let vipOverflow = false;
-let pbOverflow = false;
+// let isOpen = false;
+// let usingVip = false;
+// let usingPb = false;
+// let vipOverflow = false;
+// let pbOverflow = false;
 
 const channels = {};
 
@@ -101,32 +102,17 @@ wss.on('connection', (ws, req) => {
 
   console.log('channel', channel, vipId, pbId, isVip, isPb);
 
-  // console.log("url:", req.url);
-
-  // broadcastParticipants();
-  // console.log('New connection. Participants:', participants, vipId, pbId, isVip, isPb, usingVip, usingPb);
-
   ws.send(
     JSON.stringify({
       type: 'participants',
       count: channels[ws.channel].participants,
     })
   );
-  // console.log("send msg");
-
-  // wss.clients.forEach((client) => {
-  //   if (client.readyState === WebSocket.OPEN && client.channel === channel) {
-  //     try {
-  //       client.send(JSON.stringify({ type: 'participants', count: participants }));
-  //     } catch (error) {
-  //       console.error('Error broadcasting participants count:', error);
-  //     }
-  //   }
-  // });
 
   ws.on('close', () => {
     console.log(
       'Connection closed. Participants:',
+      ws.channel,
       channels[ws.channel].participants
     );
 
@@ -144,6 +130,23 @@ wss.on('connection', (ws, req) => {
         );
 
         // client.send(message);
+
+        // console.log("send msg");
+
+        // wss.clients.forEach((client) => {
+        //   if (client.readyState === WebSocket.OPEN && client.channel === channel) {
+        //     try {
+        //       client.send(JSON.stringify({ type: 'participants', count: participants }));
+        //     } catch (error) {
+        //       console.error('Error broadcasting participants count:', error);
+        //     }
+        //   }
+        // });
+
+        // console.log("url:", req.url);
+
+        // broadcastParticipants();
+        // console.log('New connection. Participants:', participants, vipId, pbId, isVip, isPb, usingVip, usingPb);
       }
     });
   });
@@ -206,5 +209,27 @@ wsspb.on('connection', (ws, req) => {
 
   ws.on('close', () => {
     console.log('port 8890 Connection closed');
+  });
+});
+
+wsssg.on('connection', (ws, req) => {
+  const channel = req.url.split('/').pop();
+
+  ws.channel = channel;
+
+  ws.on('message', (message) => {
+    wsssg.clients.forEach((client) => {
+      if (
+        client !== ws &&
+        client.readyState === WebSocket.OPEN &&
+        client.channel === channel
+      ) {
+        client.send(message);
+      }
+    });
+  });
+
+  ws.on('close', () => {
+    console.log('port 8891 Connection closed');
   });
 });
