@@ -5,7 +5,11 @@ import SuggestionList from '../../components/common/SuggestionList';
 import TrafficChart from '../../components/common/chart/TrafficChart';
 import { use } from 'echarts';
 
-const RebalancingPage = ({ setSuggestionItemList, setSuggestionItemNumber, setSuggestionId }) => {
+const RebalancingPage = ({
+  setSuggestionItemList,
+  setSuggestionItemNumber,
+  setSuggestionId,
+}) => {
   const [suggestionData, setSuggestionData] = useState([]);
   const [transferSGData, setTransferSGData] = useState([]);
   const [portfolioData, setPortfolioData] = useState([]);
@@ -67,10 +71,10 @@ const RebalancingPage = ({ setSuggestionItemList, setSuggestionItemNumber, setSu
 
   useEffect(() => {
     //suggestionData가 로드되었고, suggestionNumber가 유효한 값인 경우에만 차트 데이터 업데이트
-    if (loading && portfolioData.portfolioItems) {
+    if (!loading && portfolioData.portfolioItems) {
       setTransferPFData(portfolioDetailData());
     }
-    if (loading && suggestionData.suggestionItems[suggestionNumber]) {
+    if (!loading && suggestionData.suggestionItems[suggestionNumber]) {
       setTransferSGData(
         suggestionDetailData(
           suggestionData.suggestionItems[suggestionNumber].suggestionItems
@@ -83,7 +87,7 @@ const RebalancingPage = ({ setSuggestionItemList, setSuggestionItemNumber, setSu
   }, [loading, suggestionNumber]);
 
   if (loading) {
-    return <div id='main'>Loading...</div>;
+    return <div id="main">Loading...</div>;
   }
 
   // 수정안 버튼 클릭시 작성해야할 계약서 리스트 전달
