@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import FundCheckItem from '../../components/common/FundCheckItem';
 import Pdf from '../../components/common/Pdf';
 import FundContract from '../../components/common/FundContract';
 
-const ConsentPage = ({ suggestionItemData }) => {
-  const [data, setData] = useState();
+const ConsentPage = ({ suggestionItemData, rtcRoomNum }) => {
+  const [data, setData] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const ws = useRef(null);
 
   useEffect(() => {
     getData();
@@ -23,6 +24,53 @@ const ConsentPage = ({ suggestionItemData }) => {
       );
       setData(addCheckInContract(data));
     } catch {}
+  };
+
+  useEffect(() => {
+    if (!data.length) return;
+
+    ws.current = new WebSocket(
+      `ws://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`
+    );
+
+    ws.current.onopen = () => {
+      console.log('WebSocket connection opened');
+    };
+
+    ws.current.onmessage = async (event) => {
+      try {
+        if (event.data instanceof Blob) {
+          const text = await event.data.text();
+          handleWebSocketMessage(JSON.parse(text));
+        } else {
+          console.error('Unsupported message format:', event.data);
+          return;
+        }
+      } catch (error) {
+        console.error('Error parsing WebSocket message:', error);
+      }
+    };
+
+    return () => {
+      ws.current.close();
+    };
+  }, [data, rtcRoomNum]); // data가 로드된 후에 WebSocket을 설정
+
+  const handleWebSocketMessage = (message) => {
+    switch (message.type) {
+      case 'itemClick':
+        setSelectedItem(message.item);
+        setModalVisible(true);
+        break;
+      case 'modalClose':
+        setModalVisible(false);
+        break;
+      case 'itemAgree':
+        handleAgree(message.item);
+        break;
+      default:
+        break;
+    }
   };
 
   // 각 계약동의서에 프로퍼티 추가
@@ -41,12 +89,25 @@ const ConsentPage = ({ suggestionItemData }) => {
   const handleItemClick = (item) => {
     setSelectedItem(item);
     setModalVisible(true);
+    ws.current.send(JSON.stringify({ type: 'itemClick', item }));
   };
 
-  const handleAgree = () => {
+  const handleModalClose = () => {
+    setModalVisible(false);
+    ws.current.send(JSON.stringify({ type: 'modalClose' }));
+  };
+
+  const handleAgreeClick = (item) => {
+    handleAgree(item);
+    sendItemAgreeSocket(item);
+  };
+
+  const handleAgree = (item) => {
+    if (!data) return;
+
     const updatedData = data.map((fund) => {
       const updatedContracts = fund.fundContracts.map((contract) => {
-        if (contract.id === selectedItem.id) {
+        if (contract.id === item.id) {
           return { ...contract, isChecked: !contract.isChecked };
         }
         return contract;
@@ -57,10 +118,16 @@ const ConsentPage = ({ suggestionItemData }) => {
     setData(updatedData);
 
     const updatedSelectedItem = {
-      ...selectedItem,
-      isChecked: !selectedItem.isChecked,
+      ...item,
+      isChecked: !item.isChecked,
     };
     setSelectedItem(updatedSelectedItem);
+  };
+
+  const sendItemAgreeSocket = (item) => {
+    if (ws.current) {
+      ws.current.send(JSON.stringify({ type: 'itemAgree', item }));
+    }
   };
 
   return (
@@ -76,7 +143,7 @@ const ConsentPage = ({ suggestionItemData }) => {
         <div className="modal">
           <div className="modal-dialog">
             <div className="modal-content">
-              <span className="close" onClick={() => setModalVisible(false)}>
+              <span className="close" onClick={handleModalClose}>
                 &times;
               </span>
               <p className="card-title">{selectedItem.title}</p>
@@ -89,7 +156,7 @@ const ConsentPage = ({ suggestionItemData }) => {
                   <input
                     type="checkbox"
                     checked={selectedItem.isChecked}
-                    onChange={handleAgree}
+                    onChange={() => handleAgreeClick(selectedItem)}
                   />
                   <span className="checkmark"></span>
                 </label>
