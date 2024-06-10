@@ -36,10 +36,11 @@ function SuggestionAdd() {
     axios
       .post(
         'http://localhost:8080/api/suggestion/apply',
-        { 
+        {
           suggestionId: suggestionId,
           suggestionName: document.getElementById('suggestion-name').value,
-          suggestionApplyRequestItemDtoList: suggestionItems },
+          suggestionApplyRequestItemDtoList: suggestionItems,
+        },
         {
           headers: {
             'Content-Type': 'application/json',
@@ -57,6 +58,10 @@ function SuggestionAdd() {
       });
 
     navigate('/pb/main');
+  };
+
+  const handleAddFund = () => {
+    navigate('/pb/suggestion/fund/add', { state: { suggestionId: suggestionId } });
   };
 
   useEffect(() => {
@@ -123,6 +128,12 @@ function SuggestionAdd() {
           </tbody>
         </table>
         <div className='alignVertical'>
+          <button
+            className='btn btn-primary add-fund-btn'
+            onClick={handleAddFund}
+          >
+            Add Fund
+          </button>
           <input
             id='suggestion-name'
             type='text'
