@@ -12,12 +12,15 @@ function ProfileCard({ consult, pb }) {
   };
 
   return (
-    <div className="card" onClick={() => moveToConsultDetail(consult)}>
-      <div className="card-body">
-        <h5 className="card-title" style={{ padding: '20px 0 5px 0' }}>
+    <div className='card' onClick={() => moveToConsultDetail(consult)}>
+      <div className='card-body'>
+        <h5 className='card-title' style={{ padding: '20px 0 5px 0' }}>
           {LocalDateTime2String}
         </h5>
-        <div className="card-content">{consult.content}</div>
+        <div
+          className='card-content'
+          dangerouslySetInnerHTML={{ __html: consult.content }}
+        />
       </div>
     </div>
   );

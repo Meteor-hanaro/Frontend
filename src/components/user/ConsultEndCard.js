@@ -1,8 +1,4 @@
-import { useNavigate } from 'react-router-dom';
-
 function ConsultRegister() {
-  const navigate = useNavigate();
-
   return (
     <main
       id='main'
@@ -20,7 +16,7 @@ function ConsultRegister() {
       <div
         className='select-box'
         style={{ marginLeft: 'auto', marginRight: 'auto' }}
-        onClick={() => navigate('/vip/main')}
+        onClick={() => window.close()}
       >
         <div className='select-box-wrapper'>
           <div>

@@ -1,7 +1,30 @@
-import React, { useEffect, useRef } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
 
 function ConsultRegister() {
   const editorRef = useRef(null);
+  const params = useParams();
+  const [consultId, setConsultId] = useState(params.consultId);
+  const [content, setContent] = useState('');
+
+  const register = () => {
+    const url = `http://${process.env.REACT_APP_BESERVERURI}/api/consult/write`;
+    const data = {
+      consultId: params.consultId,
+      content: content,
+    };
+
+    axios
+      .post(url, data)
+      .then((res) => {
+        console.log(res);
+        window.close();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -10,6 +33,11 @@ function ConsultRegister() {
     script.onload = () => {
       window.CKEDITOR.replace(editorRef.current, {
         height: '40vh',
+        on: {
+          change: (event) => {
+            setContent(event.editor.getData());
+          },
+        },
       });
     };
     document.body.appendChild(script);
@@ -55,6 +83,7 @@ function ConsultRegister() {
           type='button'
           className='pbBtn'
           style={{ width: '100px', marginLeft: 'calc(100% - 100px)' }}
+          onClick={register}
         >
           <i className='bi bi-save'></i> 저장하기
         </button>
