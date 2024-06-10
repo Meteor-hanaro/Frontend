@@ -142,7 +142,7 @@ const PrivateRoute = ({ children }) => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div id='main'>Loading...</div>;
   }
 
   return isAuthenticated ? (

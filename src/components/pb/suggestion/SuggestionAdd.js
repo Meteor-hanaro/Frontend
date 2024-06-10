@@ -100,7 +100,7 @@ function SuggestionAdd() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div id='main'>Loading...</div>;
   }
 
   return (

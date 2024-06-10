@@ -46,8 +46,7 @@ function PortfolioTable(vipId) {
   }, []);
 
   if (loading) {
-    console.log(loading);
-    return <div>Loading...</div>; // 로딩 중일 때 표시
+    return <div id='main'>Loading...</div>; // 로딩 중일 때 표시
   }
 
   return (
