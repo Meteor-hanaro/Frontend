@@ -7,7 +7,7 @@ function SuggestionList({ id }) {
   const navigate = useNavigate();
 
   const [suggestionDto, setSuggestionDto] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const nameResizing = (data) => {
     return data.length > 10 ? data.substring(0, 10) + '...' : data;
@@ -44,13 +44,13 @@ function SuggestionList({ id }) {
         
         setSuggestionDto(res.data);
         console.log(res.data);
-        setLoading(true);
+        setLoading(false);
       })
       .catch((e) => console.log(e));
   }, []);
 
-  if (!loading) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return <div id='main'>Loading...</div>;
   }
 
   return (

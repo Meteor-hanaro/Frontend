@@ -1442,13 +1442,20 @@ input[type='text'].search-form input:hover {
 
 .modify-suggestion-btn {
   float: right;
-  width: 20%;
 }
 
 .suggestion-name{
   float: right;
-  width: 20%;
 }
+
+.apply-suggestion-container{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  margin-top : 1rem;
+}
+
 /*--------------------------------------------------------------
 # Pb Fund
 --------------------------------------------------------------*/
@@ -1488,6 +1495,10 @@ input[type='text'].search-form input:hover {
 .fund-item:hover {
   background-color: #bdc3c7;
   background-color: #bdc3c7;
+}
+
+.new-value-input {
+  float: right;
 }
 
 /*--------------------------------------------------------------

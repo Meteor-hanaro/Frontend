@@ -36,7 +36,7 @@ function SuggestionCard({ id, data, name }) {
       <div className='card-body mt-3'>
         {/* <h4 className="card-title">John Doe</h4> */}
         <p className='card-text'>
-          2024년 06월 03일 13시 40분 35초에 저장한 포트폴리오 수정안입니다
+          
         </p>
         <button onClick={handleSeeDetail} className='btn btn-secondary'>
           See Detail

@@ -36,10 +36,11 @@ function SuggestionAdd() {
     axios
       .post(
         'http://localhost:8080/api/suggestion/apply',
-        { 
+        {
           suggestionId: suggestionId,
           suggestionName: document.getElementById('suggestion-name').value,
-          suggestionApplyRequestItemDtoList: suggestionItems },
+          suggestionApplyRequestItemDtoList: suggestionItems,
+        },
         {
           headers: {
             'Content-Type': 'application/json',
@@ -57,6 +58,25 @@ function SuggestionAdd() {
       });
 
     navigate('/pb/main');
+  };
+
+  const handleRemoveFund = (suggestionItemId) => {
+    axios
+      .get(
+        'http://localhost:8080/api/suggestion/fund/remove?suggestion_item_id=' +
+          suggestionItemId
+      )
+      .then((res) => {
+        alert('Removed');
+        window.location.reload();
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const handleAddFund = () => {
+    navigate('/pb/suggestion/fund/add', {
+      state: { suggestionId: suggestionId },
+    });
   };
 
   useEffect(() => {
@@ -80,7 +100,7 @@ function SuggestionAdd() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div id='main'>Loading...</div>;
   }
 
   return (
@@ -97,6 +117,7 @@ function SuggestionAdd() {
               <th>투입금액</th>
               <th>현재가치</th>
               <th>신규투입</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -118,23 +139,34 @@ function SuggestionAdd() {
                 <td className='suggestion-new-value'>
                   <input type='number' className='newInput' />
                 </td>
+                <td onClick={() => handleRemoveFund(item.suggestionItemId)}>
+                  삭제
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div className='alignVertical'>
-          <input
-            id='suggestion-name'
-            type='text'
-            className='suggestion-name'
-            placeholder='제안안 이름'
-          />
+        <div className='alignVertical container'>
           <button
-            className='btn btn-primary modify-suggestion-btn'
-            onClick={handleApplySuggestion}
+            className='btn btn-primary add-fund-btn'
+            onClick={handleAddFund}
           >
-            Apply suggestion
+            Add Fund
           </button>
+          <div className='apply-suggestion-container'>
+            <input
+              id='suggestion-name'
+              type='text'
+              className='suggestion-name'
+              placeholder='제안안 이름'
+            />
+            <button
+              className='btn btn-primary modify-suggestion-btn'
+              onClick={handleApplySuggestion}
+            >
+              Apply suggestion
+            </button>
+          </div>
         </div>
       </div>
     </div>

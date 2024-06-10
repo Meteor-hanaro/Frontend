@@ -16,6 +16,7 @@ import SuggestionAddPage from './pages/pb/SuggestionAddPage';
 import PbConsultEndingPage from './pages/pb/ConsultEndingPage';
 import UserConsultEndingPage from './pages/user/ConsultEndingPage';
 import ConsultDetailPage from './pages/user/ConsultDetailPage';
+import FundAddPage from './pages/pb/FundAddPage';
 
 function Router() {
   return (
@@ -35,6 +36,7 @@ function Router() {
           />
           <Route path='/pb/suggestion/:vipId' element={<SuggestionPage />} />
           <Route path='/pb/suggestion/add' element={<SuggestionAddPage />} />
+          <Route path='/pb/suggestion/fund/add' element={<FundAddPage />} />
           <Route path='/pb/consult' element={<PbConsultEndingPage />} />
           {/* vip */}
           <Route path='/vip' element={<UserLoginPage />} />

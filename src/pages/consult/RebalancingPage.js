@@ -13,7 +13,7 @@ const RebalancingPage = ({ setSuggestionItemList, setSuggestionItemNumber, setSu
   const [suggestionName, setSuggestionName] = useState('');
 
   const [suggestionNumber, setSuggestionNumber] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -58,7 +58,7 @@ const RebalancingPage = ({ setSuggestionItemList, setSuggestionItemNumber, setSu
       )
       .then((res) => {
         setSuggestionData(res.data);
-        setLoading(true);
+        setLoading(false);
       })
       .catch((e) => console.log(e));
 
@@ -82,8 +82,8 @@ const RebalancingPage = ({ setSuggestionItemList, setSuggestionItemNumber, setSu
     }
   }, [loading, suggestionNumber]);
 
-  if (!loading) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return <div id='main'>Loading...</div>;
   }
 
   // 수정안 버튼 클릭시 작성해야할 계약서 리스트 전달
