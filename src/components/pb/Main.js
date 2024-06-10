@@ -15,7 +15,7 @@ function Main() {
 
   useEffect(() => {
     // web socket
-    ws.current = new WebSocket(`ws://${process.env.REACT_APP_CONSULTREQUEST}`);
+    ws.current = new WebSocket(`${process.env.REACT_APP_CONSULTREQUEST}`);
 
     // 1. /pb/main 최초 진입 시, vip 목록 가져오기
     async function fetchData() {

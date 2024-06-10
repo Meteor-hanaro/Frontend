@@ -11,7 +11,7 @@ function Main() {
 
   useEffect(() => {
     // web socket
-    ws.current = new WebSocket(`ws://${process.env.REACT_APP_CONSULTREQUEST}`);
+    ws.current = new WebSocket(`${process.env.REACT_APP_CONSULTREQUEST}`);
     ws.current.onmessage = (event) => {
       event.data
         .text()
@@ -35,7 +35,7 @@ function Main() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [requestVipId]);
 
   const clickEnterButton = () => {
     window.open(`./videoPage/:params`, '_blank', 'noopener,noreferrer');

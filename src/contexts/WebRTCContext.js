@@ -10,7 +10,15 @@ const WebRTCContext = createContext(null);
 
 export const useWebRTC = () => useContext(WebRTCContext);
 
-const WebRTCProvider = ({ signaling, children, isVip, isPb, vipId, pbId }) => {
+const WebRTCProvider = ({
+  signaling,
+  children,
+  isVip,
+  isPb,
+  vipId,
+  pbId,
+  consultId,
+}) => {
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const [pc, setPc] = useState(null);
@@ -20,13 +28,22 @@ const WebRTCProvider = ({ signaling, children, isVip, isPb, vipId, pbId }) => {
   let isOpen = false;
 
   useEffect(() => {
-    const websocket = new WebSocket(`ws://${process.env.REACT_APP_WEBRTCWS}`);
-    
+    const websocket = new WebSocket(
+      `${process.env.REACT_APP_WEBRTCWS}/${consultId}`
+    );
+
     websocket.onopen = () => {
       isOpen = true;
-      const message = JSON.stringify({ isOpen, isVip, isPb, vipId, pbId });
+      const message = JSON.stringify({
+        isOpen,
+        isVip,
+        isPb,
+        vipId,
+        pbId,
+        consultId,
+      });
       websocket.send(message);
-    }
+    };
 
     websocket.onmessage = (message) => {
       // alert(message.data);
@@ -37,29 +54,39 @@ const WebRTCProvider = ({ signaling, children, isVip, isPb, vipId, pbId }) => {
       }
       let isVipOverflow = JSON.parse(msg).vipOverflow;
       let isPbOverflow = JSON.parse(msg).pbOverflow;
-      if(isVipOverflow || isPbOverflow) {
-        alert('이미 진행 중인 상담입니다.')
+      if (isVipOverflow || isPbOverflow) {
+        alert('이미 진행 중인 상담입니다.');
         window.close();
       }
     };
 
     setWs(websocket);
 
-
     const handleBeforeUnload = () => {
       if (signaling.readyState === WebSocket.OPEN) {
-        const message = JSON.stringify({ isOpen: false, isVip, isPb, vipId, pbId });
+        const message = JSON.stringify({
+          isOpen: false,
+          isVip,
+          isPb,
+          vipId,
+          pbId,
+        });
         signaling.send(message);
       }
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
 
-
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
       if (signaling.readyState === WebSocket.OPEN) {
-        const message = JSON.stringify({ isOpen: false, isVip, isPb, vipId, pbId });
+        const message = JSON.stringify({
+          isOpen: false,
+          isVip,
+          isPb,
+          vipId,
+          pbId,
+        });
         signaling.send(message);
         signaling.close();
       }
@@ -67,9 +94,7 @@ const WebRTCProvider = ({ signaling, children, isVip, isPb, vipId, pbId }) => {
     };
   }, [isVip, isPb, vipId, pbId]);
 
-
   useEffect(() => {
-
     // STUN 서버 설정
     const configuration = {
       iceServers: [
