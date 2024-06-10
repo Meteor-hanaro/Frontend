@@ -23,10 +23,9 @@ wsscr.on('connection', (ws) => {
   });
 });
 
-console.log(
-  'WebSocket server for consult request is running on ws://localhost:8887'
-);
-
+// console.log(
+//   'WebSocket server for consult request is running on ws://localhost:8887'
+// );
 
 let pbId = '';
 let vipId = '';
@@ -37,67 +36,84 @@ let usingVip = false;
 let usingPb = false;
 let vipOverflow = false;
 let pbOverflow = false;
-wss.on('connection', (ws, req) => {
 
-  ws.on('message', message => {
+const channels = {};
+
+wss.on('connection', (ws, req) => {
+  const channel = req.url.split('/').pop();
+  ws.channel = channel;
+
+  // 채널이 존재하지 않는다면 초기화
+  if (!channels[ws.channel]) {
+    channels[channel] = {
+      participants: 0,
+      usingVip: false,
+      usingPb: false,
+      vipOverflow: false,
+      pbOverflow: false,
+    };
+  }
+
+  const channelData = channels[ws.channel];
+
+  ws.on('message', (message) => {
     const jsonString = message.toString();
     const parsedObject = JSON.parse(jsonString);
     console.log(parsedObject);
 
-    isOpen = parsedObject.isOpen;
-    isVip = parsedObject.isVip;
-    isPb = parsedObject.isPb;
-    vipId = parsedObject.vipId;
-    pbId = parsedObject.pbId;
+    const { isOpen, isVip, isPb, vipId, pbId } = parsedObject;
 
-    if(isOpen && isVip) {
-      if(!usingVip) {
-        usingVip = true;
-        participants++;
+    if (isOpen && isVip) {
+      if (!channelData.usingVip) {
+        channelData.usingVip = true;
+        channelData.participants++;
       } else {
-        vipOverflow = true;
+        channelData.vipOverflow = true;
       }
-    }
-    else if(isOpen && isPb) {
-      if(!usingPb) {
-        usingPb = true;
-        participants++;
+    } else if (isOpen && isPb) {
+      if (!channelData.usingPb) {
+        channelData.usingPb = true;
+        channelData.participants++;
       } else {
-        pbOverflow = true;
+        channelData.pbOverflow = true;
       }
-    }
-    else if(!isOpen) {
-      if(!vipOverflow && !pbOverflow) {
-        participants--;
-        usingVip = false;
-        usingPb = false;
+    } else if (!isOpen) {
+      if (!channelData.vipOverflow && !channelData.pbOverflow) {
+        channelData.participants--;
+        channelData.usingVip = false;
+        channelData.usingPb = false;
       }
-      participants = participants < 0 ? 0 : participants;
-      vipOverflow = false;
-      pbOverflow = false;
+      channelData.participants = Math.max(0, channelData.participants);
+      channelData.vipOverflow = false;
+      channelData.pbOverflow = false;
     }
 
-    ws.send(JSON.stringify({ count: participants, isVip, isPb, vipOverflow, pbOverflow })); 
-  }) 
+    ws.send(
+      JSON.stringify({
+        count: channelData.participants,
+        isVip,
+        isPb,
+        vipOverflow: channelData.vipOverflow,
+        pbOverflow: channelData.pbOverflow,
+      })
+    );
+  });
 
-  const channel = req.url.split('/').pop();
-  
-  console.log("channel", channel, vipId, pbId, isVip, isPb);
+  console.log('channel', channel, vipId, pbId, isVip, isPb);
 
-  ws.channel = channel;
+  // console.log("url:", req.url);
 
-  console.log("url:", req.url);
-  
-  
   // broadcastParticipants();
-  console.log('New connection. Participants:', participants, vipId, pbId, isVip, isPb, usingVip, usingPb);
+  // console.log('New connection. Participants:', participants, vipId, pbId, isVip, isPb, usingVip, usingPb);
 
-  
-  ws.send(JSON.stringify({ type: 'participants', count: participants }));
-  console.log("send msg");
-  
+  ws.send(
+    JSON.stringify({
+      type: 'participants',
+      count: channels[ws.channel].participants,
+    })
+  );
+  // console.log("send msg");
 
-  
   // wss.clients.forEach((client) => {
   //   if (client.readyState === WebSocket.OPEN && client.channel === channel) {
   //     try {
@@ -109,7 +125,10 @@ wss.on('connection', (ws, req) => {
   // });
 
   ws.on('close', () => {
-    console.log('Connection closed. Participants:', participants);
+    console.log(
+      'Connection closed. Participants:',
+      channels[ws.channel].participants
+    );
 
     wss.clients.forEach((client) => {
       if (
@@ -117,7 +136,12 @@ wss.on('connection', (ws, req) => {
         client.readyState === WebSocket.OPEN &&
         client.channel === channel
       ) {
-        client.send(JSON.stringify({ type: 'participants', count: participants }));
+        client.send(
+          JSON.stringify({
+            type: 'participants',
+            count: channels[ws.channel].participants,
+          })
+        );
 
         // client.send(message);
       }
@@ -125,19 +149,19 @@ wss.on('connection', (ws, req) => {
   });
 });
 
-
 function broadcastParticipants() {
   wss.clients.forEach((client) => {
     if (client.readyState === WebSocket.OPEN) {
       try {
-        client.send(JSON.stringify({ type: 'participants', count: participants }));
+        client.send(
+          JSON.stringify({ type: 'participants', count: participants })
+        );
       } catch (error) {
         console.error('Error broadcasting participants count:', error);
       }
     }
   });
 }
-
 
 wsssl.on('connection', (ws, req) => {
   const channel = req.url.split('/').pop();

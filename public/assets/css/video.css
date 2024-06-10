@@ -120,13 +120,25 @@ video {
   transition: background-color 0.4s ease, color 0.4s ease;
   cursor: pointer;
 }
+.btn-outline-primary{
+  --bs-btn-color: #e0c886;
+  --bs-btn-border-color: #e0c886;
+  --bs-btn-disabled-color: #e0c886;
+  --bs-btn-disabled-border-color: #e0c886;
 
+  --bs-btn-hover-bg: #dbbf75;
+  --bs-btn-hover-border-color: #dbbf75;
+  --bs-btn-active-bg: #dbbf75;
+  --bs-btn-active-border-color: #dbbf75;
+}
 #progressButtons {
   display: flex;
   justify-content: center;
   gap: 1.25rem;
 }
-
+#progressContainer::before {
+  display:none;
+}
 #divSharing {
   /* background-color: rgb(34, 34, 34); */
   width: 100%;
@@ -259,7 +271,7 @@ video {
   align-items: center;
 }
 .AuthPage{
-  width:100%;
+  width:50%;
   height: 100%;
   display: flex;
 }
