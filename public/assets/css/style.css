@@ -1490,6 +1490,10 @@ input[type='text'].search-form input:hover {
   background-color: #bdc3c7;
 }
 
+.new-value-input {
+  float: right;
+}
+
 /*--------------------------------------------------------------
 # Pb Fund Detail
 --------------------------------------------------------------*/
