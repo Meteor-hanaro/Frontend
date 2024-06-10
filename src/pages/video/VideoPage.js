@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import WebRTC from './WebRTC';
 import Header from '../../components/consult/Header';
 
@@ -8,9 +8,12 @@ const VideoPage = () => {
   const sendMessageRef = useRef(null);
 
   const params = useParams();
+  // const query = new URLSearchParams(useLocation().search);
 
-  useEffect(() => {
-    // console.log(params.params);
+  useEffect(() => {  
+    // const pbId = query.get('pbId');
+    // const vipId = query.get('vipId');
+    
     const ws = new WebSocket(
       `${process.env.REACT_APP_WEBRTCWS}/${params.params}`
     );

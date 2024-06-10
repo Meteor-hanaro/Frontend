@@ -12,6 +12,7 @@ import PrivateRoute from './pages/video/PrivateRoute';
 import SuggestionPage from './pages/pb/SuggestionPage';
 import AdminPage from './pages/system_admin/AdminPage';
 import AdminPrivateRoute from './pages/system_admin/AdminPrivateRoute';
+import SuggestionAddPage from './pages/pb/SuggestionAddPage';
 import PbConsultEndingPage from './pages/pb/ConsultEndingPage';
 import UserConsultEndingPage from './pages/user/ConsultEndingPage';
 import ConsultDetailPage from './pages/user/ConsultDetailPage';
@@ -33,6 +34,8 @@ function Router() {
             element={<PbConsultEndingPage />}
           />
           <Route path='/pb/suggestion/:vipId' element={<SuggestionPage />} />
+          <Route path='/pb/suggestion/add' element={<SuggestionAddPage />} />
+          <Route path='/pb/consult' element={<PbConsultEndingPage />} />
           {/* vip */}
           <Route path='/vip' element={<UserLoginPage />} />
           <Route path='/vip/main' element={<UserMainPage />} />

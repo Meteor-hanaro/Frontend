@@ -1,6 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { PDFDocument, rgb } from 'pdf-lib';
+import { useLocation } from 'react-router-dom';
 import Pdf from '../../components/common/Pdf';
+import axios from 'axios';
+import TrafficChart from '../../components/common/chart/TrafficChart';
+import { Buffer } from 'buffer';
 
 const defaultStyle = {
   border: '1px solid gray',
@@ -42,20 +46,61 @@ function Modal({ show, handleClose, children }) {
   );
 }
 
-function Sign() {
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomNum}) {
+  const ws = useRef(null);
+  const [signatureCoordinates, setSignatureCoordinates] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [imageURL, setImageURL] = useState('');
-  const [pdfUrl, setPdfUrl] = useState(
-    'https://hanaro-meteor.s3.ap-northeast-2.amazonaws.com/contract/pdf/7a2337f9-724b-4a2b-8cc8-649983056768.pdf'
-  );
-  const [pdfFile, setPdfFile] = useState(null);
-  const [signatureCoordinates, setSignatureCoordinates] = useState(null);
+  const [pdfUrls, setPdfUrls] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [receivedPdfs, setReceivedPdfs] = useState([]);
   const canvasRef = useRef(null);
   const array = useRef([]).current;
   const ctxRef = useRef(null);
 
+  const query = useQuery();
+  const pbId = query.get('pbId');
+  const vipId = query.get('vipId');
   useEffect(() => {
+    ws.current = new WebSocket(`ws://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
+    ws.current.onopen = () => {
+      console.log('WebSocket connection opened');
+    };
+
+    ws.current.onmessage = (event) => {
+      try {
+        console.log('Message from server:', event);
+        const message = JSON.parse(event.data);
+        if (message.type === 'signedPdfs') {
+          setReceivedPdfs(message.data);
+        } else if (event.data instanceof Blob) {
+          const reader = new FileReader();
+          reader.onload = function(loadEvent) {
+            const imageDataUrl = loadEvent.target.result;
+            const img = document.createElement('img');
+            img.src = imageDataUrl;
+            document.getElementById('capturedScreen').innerHTML = '';
+            document.getElementById('capturedScreen').appendChild(img);
+          };
+          reader.readAsDataURL(event.data);
+        }
+      } catch (error) {
+        console.error('Error parsing WebSocket message:', error);
+      }
+    };
+
+    return () => {
+      if (ws.current) {
+        ws.current.close();
+      }
+    };
+  }, [rtcRoomNum]);
+  useEffect(() => {
+    getPdf();
     const canvas = canvasRef.current;
     if (canvas) {
       const context = canvas.getContext('2d');
@@ -64,14 +109,27 @@ function Sign() {
       context.strokeStyle = 'black';
       ctxRef.current = context;
     }
+  }, []);
 
-    // Load PDF file
-    fetch(pdfUrl)
-      .then((res) => res.arrayBuffer())
-      .then((data) => {
-        setPdfFile(data);
-      });
-  }, [pdfUrl]);
+  const getPdf = () => {
+    axios.post(
+      `http://${process.env.REACT_APP_BESERVERURI}/api/contract/finalcontract`,
+      {
+        fundIds: suggestionItemData
+      }
+    )
+    .then((response) => {
+      const tmp = response.data.map((item, index) => ({
+        ...item.fundContracts[0],
+        id: index // assuming each fundContracts has a unique index
+      }));
+      setPdfUrls(tmp);
+      console.log('tmp확인', tmp);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }
 
   const canvasEventListener = (event, type) => {
     if (!ctxRef.current) {
@@ -118,7 +176,9 @@ function Sign() {
     const image = canvas.toDataURL('image/png');
     setImageURL(image);
 
-    if (pdfFile) {
+    const updatedPdfUrls = await Promise.all(pdfUrls.map(async (pdfUrl) => {
+      const response = await fetch(pdfUrl.pdfUrl);
+      const pdfFile = await response.arrayBuffer();
       const pdfDoc = await PDFDocument.load(pdfFile);
       const page = pdfDoc.getPages()[0];
 
@@ -128,6 +188,7 @@ function Sign() {
       const { width, height } = page.getSize();
       const x = width - 150;
       const y = height / 8 - 75;
+
       if (signatureCoordinates) {
         page.drawRectangle({
           x: signatureCoordinates.x,
@@ -138,26 +199,67 @@ function Sign() {
           opacity: 1,
         });
       }
+
       page.drawImage(pngImage, {
         x,
         y,
         width: 150,
         height: 70,
       });
-
       setSignatureCoordinates({ x, y });
-
       const pdfBytes = await pdfDoc.save();
+      const base64pdf = Buffer.from(pdfBytes).toString('base64');
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
-      setPdfUrl(url);
-      clearCanvas();
-      setShowModal(false); // 모달을 닫음
+      console.log("url확인", url);
+
+      return { ...pdfUrl, pdfUrl: url, signedContract: base64pdf };
+    }));
+
+    setPdfUrls(updatedPdfUrls);
+    clearCanvas();
+    setShowModal(false);
+    // WebSocket을 통해 싸인된 PDF 목록을 전송
+    if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+      const signedPdfs = updatedPdfUrls.map(pdf => ({
+        id: pdf.id,
+        signedContract: pdf.signedContract,
+      }));
+      ws.current.send(JSON.stringify({ type: 'signedPdfs', data: signedPdfs }));
     }
   };
 
   const signNow = () => {
     setShowModal(true);
+  };
+
+  const givePdf = () => {
+    if (signatureCoordinates == null) {
+      alert('서명을 해주세요');
+      return;
+    }
+    const contracts = [];
+    for (let i = 0; i < suggestionItemData.length; i++) {
+      let pushItem = {
+        "fundId": suggestionItemData[i],
+        "signedContract": pdfUrls[i].signedContract
+      };
+      contracts.push(pushItem);
+    }
+    axios.post(`http://${process.env.REACT_APP_BESERVERURI}:8080/api/contract/signedcontract`,
+      {
+        suggestionId: suggestionId,
+        vipId: vipId,
+        pbId: pbId,
+        contracts: contracts
+      })
+      .then((response) => {
+        alert('상품 가입이 완료되었습니다.');
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
 
   return (
@@ -186,14 +288,30 @@ function Sign() {
           확인
         </button>
       </Modal>
-
+      <div id="finalPortfolio">
+        <div id="portfolioContainer">
+          <TrafficChart data={suggestionItemNumber} name='최종수정안' />
+        </div>
+      </div>
       <div id="finalContract">
         <div>
           <h3 className="final-title">최종계약서</h3>
         </div>
-        <Pdf pdfFile={pdfUrl} />
+        <div id="finalPdf">
+          {
+            pdfUrls.map((data, index) => (
+              <div key={index}>
+                <h5 id="final-title">{data.title}</h5>
+                <Pdf pdfFile={data.pdfUrl} />
+              </div>
+            ))
+          }
+        </div>
         <button onClick={signNow} className="btn-sign btn btn-primary">
           서명
+        </button>
+        <button onClick={givePdf} className="btn-sign btn btn-primary">
+          최종가입
         </button>
       </div>
     </div>

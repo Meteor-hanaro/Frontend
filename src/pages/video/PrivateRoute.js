@@ -35,7 +35,7 @@ const PrivateRoute = ({ children }) => {
       window.close();
       alert('접근 권한이 없습니다.');
     }
-  }, []);
+  }, [isVip]);
 
   // vip 비밀번호 체크를 위한 정보 호출
   useEffect(() => {
@@ -147,7 +147,14 @@ const PrivateRoute = ({ children }) => {
 
   return isAuthenticated ? (
     <WebRTCContext
-      signaling={new WebSocket(`${process.env.REACT_APP_WEBRTCWS}`)}
+      signaling={
+        new WebSocket(`${process.env.REACT_APP_WEBRTCWS}/${consultId}`)
+      }
+      isPb={isPb}
+      isVip={isVip}
+      vipId={vipId}
+      pbId={pbId}
+      consultId={consultId}
     >
       {children}
     </WebRTCContext>
