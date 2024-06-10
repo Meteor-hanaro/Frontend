@@ -26,14 +26,11 @@ function Main() {
     auth
       .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/main`)
       .then((res) => {
+        localStorage.setItem('vipId', res.data.vipInfo.vipId);
         console.log(res.data.vipInfo.hasConsult);
         setPb(res.data.pbInfo);
         setVip(res.data.vipInfo);
         setConsult(res.data.consultList);
-
-        // "상담방 입장하기" button
-        localStorage.setItem('hasConsult', res.data.vipInfo.hasConsult);
-        localStorage.setItem('vipId', res.data.vipInfo.vipId);
       })
       .catch((error) => {
         console.log(error);

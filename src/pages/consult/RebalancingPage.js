@@ -5,7 +5,7 @@ import SuggestionList from '../../components/common/SuggestionList';
 import TrafficChart from '../../components/common/chart/TrafficChart';
 import { use } from 'echarts';
 
-const RebalancingPage = ({ setSuggestionItemList }) => {
+const RebalancingPage = ({ setSuggestionItemList, setSuggestionItemNumber, setSuggestionId }) => {
   const [suggestionData, setSuggestionData] = useState([]);
   const [transferSGData, setTransferSGData] = useState([]);
   const [portfolioData, setPortfolioData] = useState([]);
@@ -46,6 +46,7 @@ const RebalancingPage = ({ setSuggestionItemList }) => {
       )
       .then((res) => {
         setPortfolioData(res.data);
+        setSuggestionId(res.data.id);
       })
       .catch((e) => console.log(e));
 
