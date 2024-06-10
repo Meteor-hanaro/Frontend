@@ -60,6 +60,19 @@ function SuggestionAdd() {
     navigate('/pb/main');
   };
 
+  const handleRemoveFund = (suggestionItemId) => {
+    axios
+      .get(
+        'http://localhost:8080/api/suggestion/fund/remove?suggestion_item_id=' +
+          suggestionItemId
+      )
+      .then((res) => {
+        alert('Removed');
+        window.location.reload();
+      })
+      .catch((e) => console.log(e));
+  };
+
   const handleAddFund = () => {
     navigate('/pb/suggestion/fund/add', {
       state: { suggestionId: suggestionId },
@@ -104,6 +117,7 @@ function SuggestionAdd() {
               <th>투입금액</th>
               <th>현재가치</th>
               <th>신규투입</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -124,6 +138,9 @@ function SuggestionAdd() {
                 </td>
                 <td className='suggestion-new-value'>
                   <input type='number' className='newInput' />
+                </td>
+                <td onClick={() => handleRemoveFund(item.suggestionItemId)}>
+                  삭제
                 </td>
               </tr>
             ))}
