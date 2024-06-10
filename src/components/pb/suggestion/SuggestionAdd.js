@@ -61,7 +61,9 @@ function SuggestionAdd() {
   };
 
   const handleAddFund = () => {
-    navigate('/pb/suggestion/fund/add', { state: { suggestionId: suggestionId } });
+    navigate('/pb/suggestion/fund/add', {
+      state: { suggestionId: suggestionId },
+    });
   };
 
   useEffect(() => {
@@ -127,25 +129,27 @@ function SuggestionAdd() {
             ))}
           </tbody>
         </table>
-        <div className='alignVertical'>
+        <div className='alignVertical container'>
           <button
             className='btn btn-primary add-fund-btn'
             onClick={handleAddFund}
           >
             Add Fund
           </button>
-          <input
-            id='suggestion-name'
-            type='text'
-            className='suggestion-name'
-            placeholder='제안안 이름'
-          />
-          <button
-            className='btn btn-primary modify-suggestion-btn'
-            onClick={handleApplySuggestion}
-          >
-            Apply suggestion
-          </button>
+          <div className='apply-suggestion-container'>
+            <input
+              id='suggestion-name'
+              type='text'
+              className='suggestion-name'
+              placeholder='제안안 이름'
+            />
+            <button
+              className='btn btn-primary modify-suggestion-btn'
+              onClick={handleApplySuggestion}
+            >
+              Apply suggestion
+            </button>
+          </div>
         </div>
       </div>
     </div>
