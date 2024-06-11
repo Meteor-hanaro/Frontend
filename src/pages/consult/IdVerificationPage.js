@@ -14,7 +14,8 @@ const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
   const vipId = query.get('vipId');
 
   useEffect(() => {
-    ws.current = new WebSocket(`ws://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
+    
+    ws.current = new WebSocket(`${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
     ws.current.onopen = () => {
       console.log('WebSocket connection opened');
     };
@@ -43,7 +44,7 @@ const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
         ws.current.close();
       }
     };
-  }, [rtcRoomNum]);
+  }, []);
 
   const captureNow = () => {
     if (localVideoRef.current) {

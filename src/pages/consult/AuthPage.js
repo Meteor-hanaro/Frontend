@@ -13,7 +13,7 @@ function AuthPage({rtcRoomNum}) {
   useScript("https://code.jquery.com/jquery-1.12.4.min.js");
   useScript("https://cdn.iamport.kr/js/iamport.payment-1.2.0.js");
   useEffect(() => {
-    ws.current = new WebSocket(`ws://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
+    ws.current = new WebSocket(`${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
     ws.current.onopen = () => {
       console.log('WebSocket connection opened');
     };

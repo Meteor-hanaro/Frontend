@@ -1,9 +1,9 @@
-import IdVerificationPage from '../consult/IdVerificationPage';
-import { useEffect, useState, useRef } from 'react';
-import RebalancingPage from '../consult/RebalancingPage';
-import Sign from '../consult/Sign';
-import AuthPage from '../consult/AuthPage';
-import ConsentPage from '../consult/ConsentPage';
+import IdVerificationPage from "../consult/IdVerificationPage";
+import { useEffect, useState, useRef } from "react"; 
+import RebalancingPage from "../consult/RebalancingPage";
+import Sign from "../consult/Sign";
+import AuthPage from "../consult/AuthPage";
+import ConsentPage from "../consult/ConsentPage";
 
 const SharingPage = ({ number, localVideoRef, rtcRoomNum }) => {
   // RebalancingPage -> ConsentPage
@@ -26,10 +26,12 @@ const SharingPage = ({ number, localVideoRef, rtcRoomNum }) => {
       try {
         if (event.data instanceof Blob) {
           const text = await event.data.text();
-          setSuggestionItemList(JSON.parse(text).suggestionItemList);
+          const parsedData = JSON.parse(text);
+          setSuggestionItemList(parsedData.suggestionItemList || []);
+          setSuggestionItemNumber(parsedData.suggestionItemNumber || []);
+          setSuggestionId(parsedData.suggestionId || null);
         } else {
           console.error('Unsupported message format:', event.data);
-          return;
         }
       } catch (error) {
         console.error('Error parsing WebSocket message:', error);
@@ -37,33 +39,40 @@ const SharingPage = ({ number, localVideoRef, rtcRoomNum }) => {
     };
 
     return () => {
-      ws.current.close();
+      if (ws.current) {
+        ws.current.close();
+      }
     };
-  }, [rtcRoomNum]);
+  }, [rtcRoomNum]); // rtcRoomNum이 변경될 때마다 useEffect 재실행
 
-  useEffect(() => {
+  const updateSuggestionList = (item, number, id) => {
+    setSuggestionItemList(item);
+    setSuggestionItemNumber(number);
+    setSuggestionId(id);
+
     if (ws.current && ws.current.readyState === WebSocket.OPEN) {
       ws.current.send(
-        JSON.stringify({ type: 'updateSuggestionList', suggestionItemList })
+        JSON.stringify({
+          type: 'updateSuggestionList',
+          suggestionItemList: item,
+          suggestionItemNumber: number,
+          suggestionId: id,
+        })
       );
     }
-  }, [suggestionItemList]);
+  };
 
   return (
     <div id="divSharing">
       {number === 1 && (
         <RebalancingPage
-          setSuggestionItemList={setSuggestionItemList}
-          setSuggestionItemNumber={setSuggestionItemNumber}
-          setSuggestionId={setSuggestionId}
-        />
-      )}
-      {number === 2 && (
-        <IdVerificationPage
-          localVideoRef={localVideoRef}
+          setSuggestionItemList={updateSuggestionList}
+          // setSuggestionItemNumber={setSuggestionItemNumber}
+          // setSuggestionId={setSuggestionId}
           rtcRoomNum={rtcRoomNum}
         />
       )}
+      {number === 2 && <IdVerificationPage localVideoRef={localVideoRef} rtcRoomNum={rtcRoomNum} />}
       {number === 3 && <ConsentPage suggestionItemData={suggestionItemList} />}
       {number === 4 && <AuthPage rtcRoomNum={rtcRoomNum} />}
       {number === 5 && (
