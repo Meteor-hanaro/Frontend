@@ -269,7 +269,7 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
       contracts.push(pushItem);
     }
     axios
-      .post(`http://${process.env.REACT_APP_BESERVERURI}/api/contract/signedcontract`, {
+      .post(`http://${process.env.REACT_APP_BESERVERURI}/api/contract`, {
         suggestionId: suggestionId,
         vipId: vipId,
         pbId: pbId,
@@ -323,15 +323,15 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
           {pdfUrls.map((data, index) => (
             <div key={index}>
               <h5 id="final-title">{data.title}</h5>
-              <Pdf pdfFile={data.pdfUrl} />
+              <Pdf pdfFile={receivedPdfUrl? receivedPdfUrl:data.pdfUrl} />
             </div>
           ))}
-          {receivedPdfUrl && (
+          {/* {receivedPdfUrl && (
             <div>
               <h5 id="final-title">서명된 계약서</h5>
-              <Pdf pdfFile={receivedPdfUrl} />
+              
             </div>
-          )}
+          )} */}
         </div>
         <button onClick={signNow} className="btn-sign btn btn-primary">
           서명
