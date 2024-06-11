@@ -1,19 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
-import useScript from "../etc/useScript";
+import React, { useState, useEffect, useRef } from 'react';
+import useScript from '../etc/useScript';
 import { useParams } from 'react-router-dom';
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal } from 'react-bootstrap';
 
-function AuthPage({rtcRoomNum}) {
+function AuthPage({ rtcRoomNum }) {
   const ws = useRef(null);
   const { params } = useParams();
   const queryParams = new URLSearchParams(params);
   const vipId = queryParams.get('vipId');
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  useScript("https://code.jquery.com/jquery-1.12.4.min.js");
-  useScript("https://cdn.iamport.kr/js/iamport.payment-1.2.0.js");
+  useScript('https://code.jquery.com/jquery-1.12.4.min.js');
+  useScript('https://cdn.iamport.kr/js/iamport.payment-1.2.0.js');
   useEffect(() => {
-    ws.current = new WebSocket(`${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
+    ws.current = new WebSocket(
+      `${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`
+    );
     ws.current.onopen = () => {
       console.log('WebSocket connection opened');
     };
@@ -32,7 +34,7 @@ function AuthPage({rtcRoomNum}) {
   }, []);
   const certify = () => {
     const { IMP } = window;
-    IMP.init("imp74352341");
+    IMP.init('imp74352341');
     IMP.certification(
       {
         merchant_uid: vipId,
@@ -42,12 +44,15 @@ function AuthPage({rtcRoomNum}) {
         if (rsp.success) {
           setShow(true);
           console.log(rsp);
-          ws.current.send(JSON.stringify({ type: 'authResult', authResult:'인증성공' }));
+          ws.current.send(
+            JSON.stringify({ type: 'authResult', authResult: '인증성공' })
+          );
         } else {
           alert(`인증에 실패했습니다. 에러: ${rsp.error_msg}`);
-          ws.current.send(JSON.stringify({ type: 'authResult', authResult:'인증실패' }));
+          ws.current.send(
+            JSON.stringify({ type: 'authResult', authResult: '인증실패' })
+          );
         }
-        
       }
     );
   };
@@ -55,31 +60,88 @@ function AuthPage({rtcRoomNum}) {
   return (
     <div className="AuthPage justify-content-center">
       <div id="auth-box" className="d-flex align-items-center">
-        <div id="icons-box">   
-          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_KB.png?v=20240122" /></div>
-          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_NAVER.png?v=20240122" /></div>
-          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_KAKAOBANK.png?v=20240122" /></div>
-          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_KAKAO.png?v=20240122" /></div>
+        <div id="icons-box">
+          <div>
+            <img
+              id="autn-img"
+              src="https://kssa.inicis.com/resources/images/app_KB.png?v=20240122"
+            />
+          </div>
+          <div>
+            <img
+              id="autn-img"
+              src="https://kssa.inicis.com/resources/images/app_NAVER.png?v=20240122"
+            />
+          </div>
+          <div>
+            <img
+              id="autn-img"
+              src="https://kssa.inicis.com/resources/images/app_KAKAOBANK.png?v=20240122"
+            />
+          </div>
+          <div>
+            <img
+              id="autn-img"
+              src="https://kssa.inicis.com/resources/images/app_KAKAO.png?v=20240122"
+            />
+          </div>
         </div>
-        <div id="icons-box">   
-          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_PASS.png?v=20240122" /></div>
-          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_HANA.png?v=20240122" /></div>
-          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_SAMSUNG.png?v=20240122" /></div>
-          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_SHINHAN.png?v=20240122" /></div>
+        <div id="icons-box">
+          <div>
+            <img
+              id="autn-img"
+              src="https://kssa.inicis.com/resources/images/app_PASS.png?v=20240122"
+            />
+          </div>
+          <div>
+            <img
+              id="autn-img"
+              src="https://kssa.inicis.com/resources/images/app_HANA.png?v=20240122"
+            />
+          </div>
+          <div>
+            <img
+              id="autn-img"
+              src="https://kssa.inicis.com/resources/images/app_SAMSUNG.png?v=20240122"
+            />
+          </div>
+          <div>
+            <img
+              id="autn-img"
+              src="https://kssa.inicis.com/resources/images/app_SHINHAN.png?v=20240122"
+            />
+          </div>
         </div>
-        <div id="icons-box">   
-          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_TOSS.png?v=20240122" /></div>
-          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_PAYCO.png?v=20240122" /></div>
-          <div><img id="autn-img" src="https://kssa.inicis.com/resources/images/app_KFTC.png?v=20240122" /></div>
+        <div id="icons-box">
+          <div>
+            <img
+              id="autn-img"
+              src="https://kssa.inicis.com/resources/images/app_TOSS.png?v=20240122"
+            />
+          </div>
+          <div>
+            <img
+              id="autn-img"
+              src="https://kssa.inicis.com/resources/images/app_PAYCO.png?v=20240122"
+            />
+          </div>
+          <div>
+            <img
+              id="autn-img"
+              src="https://kssa.inicis.com/resources/images/app_KFTC.png?v=20240122"
+            />
+          </div>
         </div>
         <div id="middle-box">
-          <button className="btn btn-auth" onClick={certify}>간편인증</button>
+          <button className="btn btn-auth" onClick={certify}>
+            간편인증
+          </button>
         </div>
       </div>
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Body className="modal-body">
           <div className="modal-content">
-          <div className="modal-icon">
+            <div className="modal-icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="64"
@@ -94,13 +156,17 @@ function AuthPage({rtcRoomNum}) {
             <h2 className="modal-title">본인인증 완료!</h2>
             <p className="modal-message">본인 인증이 완료되었습니다.</p>
           </div>
-        </Modal.Body> 
+        </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleClose} className="close-modal-button">
+          <Button
+            variant="primary"
+            onClick={handleClose}
+            className="close-modal-button"
+          >
             확인
           </Button>
         </Modal.Footer>
-      </Modal>  
+      </Modal>
     </div>
   );
 }

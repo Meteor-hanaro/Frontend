@@ -5,6 +5,7 @@ import Pdf from '../../components/common/Pdf';
 import axios from 'axios';
 import TrafficChart from '../../components/common/chart/TrafficChart';
 import { Buffer } from 'buffer';
+import finalImage from '../../assets/final.png';
 
 const defaultStyle = {
   border: '1px solid gray',
@@ -50,7 +51,12 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomNum }) {
+function Sign({
+  suggestionItemData,
+  suggestionItemNumber,
+  suggestionId,
+  rtcRoomNum,
+}) {
   console.log(suggestionItemNumber);
   const ws = useRef(null);
   const [signatureCoordinates, setSignatureCoordinates] = useState(null);
@@ -63,13 +69,16 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
   const array = useRef([]).current;
   const ctxRef = useRef(null);
   const isWsOpen = useRef(false); // Track WebSocket connection state
+  const [showFinalImage, setShowFinalImage] = useState(false);
 
   const query = useQuery();
   const pbId = query.get('pbId');
   const vipId = query.get('vipId');
 
   useEffect(() => {
-    ws.current = new WebSocket(`${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
+    ws.current = new WebSocket(
+      `${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`
+    );
     ws.current.onopen = () => {
       console.log('WebSocket connection opened');
       isWsOpen.current = true; // Set the WebSocket connection state to true
@@ -114,9 +123,12 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
 
   const getPdf = () => {
     axios
-      .post(`http://${process.env.REACT_APP_BESERVERURI}/api/contract/finalcontract`, {
-        fundIds: suggestionItemData,
-      })
+      .post(
+        `http://${process.env.REACT_APP_BESERVERURI}/api/contract/finalcontract`,
+        {
+          fundIds: suggestionItemData,
+        }
+      )
       .then((response) => {
         const tmp = response.data.map((item, index) => ({
           ...item.fundContracts[0],
@@ -204,7 +216,9 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
           return pdfUrl; // Return the original pdfUrl without changes
         }
 
-        const pngImageBytes = await fetch(image).then((res) => res.arrayBuffer());
+        const pngImageBytes = await fetch(image).then((res) =>
+          res.arrayBuffer()
+        );
         const pngImage = await pdfDoc.embedPng(pngImageBytes);
 
         const { width, height } = page.getSize();
@@ -277,6 +291,7 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
       })
       .then((response) => {
         alert('상품 가입이 완료되었습니다.');
+        setShowFinalImage(true);
         console.log(response);
       })
       .catch((error) => {
@@ -286,54 +301,64 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
 
   return (
     <div id="signDiv">
-      <Modal show={showModal} handleClose={() => setShowModal(false)}>
-        <canvas
-          ref={canvasRef}
-          style={defaultStyle}
-          onMouseDown={(event) => {
-            canvasEventListener(event, 'down');
-          }}
-          onMouseMove={(event) => {
-            canvasEventListener(event, 'move');
-          }}
-          onMouseLeave={(event) => {
-            canvasEventListener(event, 'leave');
-          }}
-          onMouseUp={(event) => {
-            canvasEventListener(event, 'up');
-          }}
-        />
-        <button onClick={clearCanvas} className="btn btn-primary">
-          초기화
-        </button>
-        <button onClick={saveCanvas} className="btn btn-primary">
-          확인
-        </button>
-      </Modal>
-      <div id="finalPortfolio">
-        <div id="portfolioContainer">
-          <TrafficChart data={suggestionItemNumber} name="최종수정안" />
+      {showFinalImage ? (
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <img src={finalImage} alt="Final" style={{ maxWidth: '60%' }} />
         </div>
-      </div>
-      <div id="finalContract">
-        <div>
-          <h3 className="final-title">최종계약서</h3>
-        </div>
-        <div id="finalPdf">
-          {pdfUrls.map((data, index) => (
-            <div key={index}>
-              <h5 id="final-title">{data.title}</h5>
-              <Pdf pdfFile={receivedPdfUrl? receivedPdfUrl:data.pdfUrl} />
+      ) : (
+        <>
+          <Modal show={showModal} handleClose={() => setShowModal(false)}>
+            <canvas
+              ref={canvasRef}
+              style={defaultStyle}
+              onMouseDown={(event) => {
+                canvasEventListener(event, 'down');
+              }}
+              onMouseMove={(event) => {
+                canvasEventListener(event, 'move');
+              }}
+              onMouseLeave={(event) => {
+                canvasEventListener(event, 'leave');
+              }}
+              onMouseUp={(event) => {
+                canvasEventListener(event, 'up');
+              }}
+            />
+            <button onClick={clearCanvas} className="btn btn-primary">
+              초기화
+            </button>
+            <button onClick={saveCanvas} className="btn btn-primary">
+              확인
+            </button>
+          </Modal>
+          <div id="finalPortfolio">
+            <div id="portfolioContainer">
+              <TrafficChart data={suggestionItemNumber} name="최종수정안" />
             </div>
-          ))}
-        </div>
-        <button onClick={signNow} className="btn-sign btn btn-primary">
-          서명
-        </button>
-        <button onClick={givePdf} className="btn-sign btn btn-primary">
-          최종가입
-        </button>
-      </div>
+          </div>
+          <div id="finalContract">
+            <div>
+              <h3 className="final-title">최종계약서</h3>
+            </div>
+            <div id="finalPdf">
+              {pdfUrls.map((data, index) => (
+                <div key={index}>
+                  <h5 id="final-title">{data.title}</h5>
+                  <Pdf
+                    pdfFile={receivedPdfUrl ? receivedPdfUrl : data.pdfUrl}
+                  />
+                </div>
+              ))}
+            </div>
+            <button onClick={signNow} className="btn-sign btn btn-primary">
+              서명
+            </button>
+            <button onClick={givePdf} className="btn-sign btn btn-primary">
+              최종가입
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -18,17 +18,17 @@ function PortfolioPage() {
   };
 
   return (
-    <div className='fund-page'>
+    <div className="fund-page">
       <Header />
       <SideBar />
-      <main className='main' id='main' style={{ width: '100%' }}>
+      <main className="main" id="main" style={{ width: '100%' }}>
         <button
           onClick={toggleView}
-          className='toggle-button graph-table-button btn btn-success'
+          className="toggle-button graph-table-button btn btn-success"
         >
           {showGraph ? 'Show Table' : 'Show Graph'}
         </button>
-        <div className='main-content'>
+        <div className="main-content">
           {showGraph ? (
             <PortfolioGraph vipId={vipId} />
           ) : (
@@ -36,9 +36,6 @@ function PortfolioPage() {
           )}
           {/* <AmountInput /> */}
         </div>
-        <button className='graph-table-button btn btn-success'>
-          포트폴리오 추가
-        </button>
       </main>
     </div>
   );

@@ -17,8 +17,10 @@ const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
   const vipId = query.get('vipId');
 
   useEffect(() => {
-    
-    ws.current = new WebSocket(`${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
+    ws.current = new WebSocket(
+      `${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`
+    );
+
     ws.current.onopen = () => {
       console.log('WebSocket connection opened');
     };
@@ -28,7 +30,7 @@ const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
         console.log('Message from server:', event);
         if (event.data instanceof Blob) {
           const reader = new FileReader();
-          reader.onload = function(loadEvent) {
+          reader.onload = function (loadEvent) {
             const imageDataUrl = loadEvent.target.result;
             const img = document.createElement('img');
             img.src = imageDataUrl;
@@ -81,9 +83,9 @@ const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
           )
           .then((response) => {
             console.log('Success:', response.data);
-            if(response.data=="인증에 성공했습니다."){
+            if (response.data == '인증에 성공했습니다.') {
               setAuthResult(true);
-            }else{
+            } else {
               setAuthResult(false);
             }
             setShowModal(true);
@@ -93,15 +95,16 @@ const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
             setAuthResult(false);
             setShowModal(true);
           });
-          if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-              const arrayBuffer = event.target.result;
-              ws.current.send(arrayBuffer);
-              console.log('Image sent via WebSocket');
-            };
-            reader.readAsArrayBuffer(blob);
-          }
+
+        if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            const arrayBuffer = event.target.result;
+            ws.current.send(arrayBuffer);
+            console.log('Image sent via WebSocket');
+          };
+          reader.readAsArrayBuffer(blob);
+        }
       }, 'image/png');
     } else {
       alert('local video is not available.');
@@ -120,7 +123,11 @@ const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
       <br />
       <br />
       <div id="capturedScreen">신분증을 카메라에 가져다 대주세요.</div>
-      <AuthModal show={showModal} handleClose={handleClose} authResult={authResult} />
+      <AuthModal
+        show={showModal}
+        handleClose={handleClose}
+        authResult={authResult}
+      />
     </div>
   );
 };
