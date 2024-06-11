@@ -1,10 +1,13 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import AuthModal from '../../components/common/AuthModal';
+import { Button, Modal } from 'react-bootstrap';
 
 const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
   const ws = useRef(null);
-
+  const [showModal, setShowModal] = useState(false);
+  const [authResult, setAuthResult] = useState(null);
   function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
@@ -14,7 +17,8 @@ const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
   const vipId = query.get('vipId');
 
   useEffect(() => {
-    ws.current = new WebSocket(`ws://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
+    
+    ws.current = new WebSocket(`${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
     ws.current.onopen = () => {
       console.log('WebSocket connection opened');
     };
@@ -43,8 +47,8 @@ const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
         ws.current.close();
       }
     };
-  }, [rtcRoomNum]);
-
+  }, []);
+  const handleClose = () => setShowModal(false);
   const captureNow = () => {
     if (localVideoRef.current) {
       const video = localVideoRef.current;
@@ -77,13 +81,18 @@ const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
           )
           .then((response) => {
             console.log('Success:', response.data);
-            alert(response.data);
+            if(response.data=="인증에 성공했습니다."){
+              setAuthResult(true);
+            }else{
+              setAuthResult(false);
+            }
+            setShowModal(true);
           })
           .catch((error) => {
             console.error('Error:', error);
-            alert('신분증 인식에 실패했습니다.');
+            setAuthResult(false);
+            setShowModal(true);
           });
-          
           if (ws.current && ws.current.readyState === WebSocket.OPEN) {
             const reader = new FileReader();
             reader.onload = function(event) {
@@ -111,6 +120,7 @@ const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
       <br />
       <br />
       <div id="capturedScreen">신분증을 카메라에 가져다 대주세요.</div>
+      <AuthModal show={showModal} handleClose={handleClose} authResult={authResult} />
     </div>
   );
 };

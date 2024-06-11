@@ -13,7 +13,7 @@ function AuthPage({rtcRoomNum}) {
   useScript("https://code.jquery.com/jquery-1.12.4.min.js");
   useScript("https://cdn.iamport.kr/js/iamport.payment-1.2.0.js");
   useEffect(() => {
-    ws.current = new WebSocket(`ws://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
+    ws.current = new WebSocket(`${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
     ws.current.onopen = () => {
       console.log('WebSocket connection opened');
     };
@@ -87,7 +87,7 @@ function AuthPage({rtcRoomNum}) {
                 fill="currentColor"
                 className="bi bi-check-circle-fill"
                 viewBox="0 0 16 16"
-              >8
+              >
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.78 11.03a.75.75 0 0 0 1.06-1.06L6.525 8.7l.455-.455 1.3 1.3a.75.75 0 0 0 1.06-1.06L7.03 7.22a.75.75 0 0 0-1.06 0L5.06 8.13l-.265-.264a.75.75 0 1 0-1.06 1.06l1 1z" />
               </svg>
             </div>

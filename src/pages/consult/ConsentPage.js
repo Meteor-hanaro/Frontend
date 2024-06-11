@@ -30,7 +30,7 @@ const ConsentPage = ({ suggestionItemData, rtcRoomNum }) => {
     if (!data.length) return;
 
     ws.current = new WebSocket(
-      `ws://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`
+      `${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`
     );
 
     ws.current.onopen = () => {
