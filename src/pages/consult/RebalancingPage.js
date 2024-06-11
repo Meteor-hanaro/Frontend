@@ -5,7 +5,7 @@ import SuggestionList from '../../components/common/SuggestionList';
 import TrafficChart from '../../components/common/chart/TrafficChart';
 import { use } from 'echarts';
 
-const RebalancingPage = ({ setSuggestionItemList, setSuggestionItemNumber, setSuggestionId }) => {
+const RebalancingPage = ({ setSuggestionItemList, setSuggestionItemNumber}) => {
   const ws = useRef(null);
   const [suggestionData, setSuggestionData] = useState([]);
   const [transferSGData, setTransferSGData] = useState([]);
@@ -46,7 +46,6 @@ const RebalancingPage = ({ setSuggestionItemList, setSuggestionItemNumber, setSu
       )
       .then((res) => {
         setPortfolioData(res.data);
-        setSuggestionId(res.data.id);
         setTmpSuggesgtionId(res.data.id);
       })
       .catch((e) => console.log(e));
@@ -95,6 +94,7 @@ const RebalancingPage = ({ setSuggestionItemList, setSuggestionItemNumber, setSu
       .filter((item) => existCheckInPortfolio(item.suggestionItemId))
       .map((item) => item.suggestionItemId);
       setSuggestionItemList(newSuggestionList, transferSGData, tmpSuggestionId);
+      setSuggestionItemNumber(transferSGData);
   };
 
   // 수정안 중 새로 가입하는 펀드 확인

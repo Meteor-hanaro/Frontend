@@ -51,6 +51,7 @@ function useQuery() {
 }
 
 function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomNum }) {
+  console.log(suggestionItemNumber);
   const ws = useRef(null);
   const [signatureCoordinates, setSignatureCoordinates] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -97,7 +98,7 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
         ws.current.close();
       }
     };
-  }, [rtcRoomNum]);
+  }, []);
 
   useEffect(() => {
     getPdf();
@@ -122,7 +123,6 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
           id: index,
         }));
         setPdfUrls(tmp);
-        console.log('tmp확인', tmp);
       })
       .catch((error) => {
         console.error('Error:', error);

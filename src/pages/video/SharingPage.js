@@ -49,7 +49,6 @@ const SharingPage = ({ number, localVideoRef, rtcRoomNum }) => {
     setSuggestionItemList(item);
     setSuggestionItemNumber(number);
     setSuggestionId(id);
-
     if (ws.current && ws.current.readyState === WebSocket.OPEN) {
       ws.current.send(
         JSON.stringify({
@@ -67,7 +66,7 @@ const SharingPage = ({ number, localVideoRef, rtcRoomNum }) => {
       {number === 1 && (
         <RebalancingPage
           setSuggestionItemList={updateSuggestionList}
-          // setSuggestionItemNumber={setSuggestionItemNumber}
+          setSuggestionItemNumber={setSuggestionItemNumber}
           // setSuggestionId={setSuggestionId}
           rtcRoomNum={rtcRoomNum}
         />

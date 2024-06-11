@@ -1758,10 +1758,8 @@ input[type='text'].search-form input:hover {
 
 .modal-dialog {
   background: white;
-  width: 80%;
-  max-width: 800px;
-  max-height: 80%;
-  /* overflow-y: auto; */
+  width: 60%;
+  max-height: 60%;
   border-radius: 8px;
 }
 
@@ -1956,4 +1954,10 @@ input[type='text'].search-form input:hover {
   font-size: 15px;
   line-height: 25px;
   color: #4a4a4a;
+}
+
+
+.modal-dialog-centered{
+ min-height: 40% !important;
+ margin-top: 15% !important;
 }
