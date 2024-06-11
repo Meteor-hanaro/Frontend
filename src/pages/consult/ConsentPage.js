@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import axios from 'axios';
+import axios from '../../config/AxiosConfig';
 import FundCheckItem from '../../components/common/FundCheckItem';
 import Pdf from '../../components/common/Pdf';
 import FundContract from '../../components/common/FundContract';
@@ -16,12 +16,9 @@ const ConsentPage = ({ suggestionItemData, rtcRoomNum }) => {
 
   const getData = async () => {
     try {
-      const { data } = await axios.post(
-        `http://${process.env.REACT_APP_BESERVERURI}/api/contract/join`,
-        {
-          fundIds: suggestionItemData,
-        }
-      );
+      const { data } = await axios.post(`/api/contract/join`, {
+        fundIds: suggestionItemData,
+      });
       setData(addCheckInContract(data));
     } catch {}
   };

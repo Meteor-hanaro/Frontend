@@ -24,7 +24,7 @@ function Main() {
     };
 
     auth
-      .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/main`)
+      .get(`/api/vip/main`)
       .then((res) => {
         localStorage.setItem('vipId', res.data.vipInfo.vipId);
         console.log(res.data.vipInfo.hasConsult);
@@ -45,8 +45,8 @@ function Main() {
   return (
     <>
       <main
-        id='main'
-        className='main'
+        id="main"
+        className="main"
         style={{
           padding: '45px',
           marginLeft: '5%',
@@ -55,19 +55,19 @@ function Main() {
         }}
       >
         <div
-          className='pagetitle alignHorizontal'
+          className="pagetitle alignHorizontal"
           style={{
             height: '100%',
           }}
         >
           <div
-            className='alignVertical'
+            className="alignVertical"
             style={{
               width: '35%',
             }}
           >
             <div
-              className='card info-card alignVertical'
+              className="card info-card alignVertical"
               style={{ height: '47%', padding: '7% 7%' }}
             >
               <span
@@ -80,7 +80,7 @@ function Main() {
                 VIP
               </span>
               <div
-                className='alignHorizontal'
+                className="alignHorizontal"
                 // style={{
                 //   marginTop: '5%',
                 // }}
@@ -122,8 +122,8 @@ function Main() {
                   <p>담당 PB가 상담을 요청하였습니다.</p>
                 ) : null}
                 <button
-                  type='button'
-                  className='enterButton'
+                  type="button"
+                  className="enterButton"
                   style={{ marginBottom: '0px' }}
                   disabled={
                     localStorage.getItem('hasConsult') !== 'true' &&
@@ -136,11 +136,11 @@ function Main() {
               </div>
             </div>
             <div
-              className='card info-card alignVertical'
+              className="card info-card alignVertical"
               style={{ height: '47%', padding: '7% 7%', marginBottom: '0px' }}
             >
-              <div className='d-flex'>
-                <div className='w-50'>
+              <div className="d-flex">
+                <div className="w-50">
                   <span
                     style={{
                       fontSize: '20px',
@@ -157,17 +157,17 @@ function Main() {
                     </span>
                   </div>
                 </div>
-                <div className='w-50 d-flex justify-content-center'>
+                <div className="w-50 d-flex justify-content-center">
                   <img
                     src={process.env.PUBLIC_URL + '/assets/img/profile-img.jpg'}
-                    alt='Profile'
-                    className='rounded-circle'
+                    alt="Profile"
+                    className="rounded-circle"
                   />
                 </div>
               </div>
 
               <div
-                className='alignHorizontal'
+                className="alignHorizontal"
                 style={{
                   height: '70%',
                   alignItems: 'center',
@@ -192,19 +192,19 @@ function Main() {
                   }}
                 >
                   <div>
-                    <div className='d-flex w-100'>
-                      <div className='w-50'>
-                        <span className='badge bg-success'>E-Mail</span>
-                        <h6 className='m-2'>{pb.email}</h6>
+                    <div className="d-flex w-100">
+                      <div className="w-50">
+                        <span className="badge bg-success">E-Mail</span>
+                        <h6 className="m-2">{pb.email}</h6>
                       </div>
-                      <div className='w-50'>
-                        <span className='badge bg-success'>Phone</span>
-                        <h6 className='m-2'>{pb.phone}</h6>
+                      <div className="w-50">
+                        <span className="badge bg-success">Phone</span>
+                        <h6 className="m-2">{pb.phone}</h6>
                       </div>
                     </div>
 
-                    <span className='badge bg-secondary'>Introduce</span>
-                    <h6 className='m-2'>{pb.introduce}</h6>
+                    <span className="badge bg-secondary">Introduce</span>
+                    <h6 className="m-2">{pb.introduce}</h6>
                   </div>
                 </div>
               </div>
@@ -212,7 +212,7 @@ function Main() {
           </div>
           <div style={{ marginLeft: '5%', width: '60%', height: '100%' }}>
             <div
-              className='card info-card'
+              className="card info-card"
               style={{ height: '100%', padding: '4% 4%', overflowY: 'auto' }}
             >
               <span

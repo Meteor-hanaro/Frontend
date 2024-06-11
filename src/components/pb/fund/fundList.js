@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../../config/AxiosConfig';
 
 function FundList({ onSelectFund }) {
   const [funds, setFunds] = useState([]);
@@ -7,11 +7,9 @@ function FundList({ onSelectFund }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        axios
-          .get(`http://${process.env.REACT_APP_BESERVERURI}/api/fund/get`)
-          .then((res) => {
-            setFunds(res.data);
-          });
+        axios.get(`/api/fund/get`).then((res) => {
+          setFunds(res.data);
+        });
       } catch (error) {
         console.log(error);
       }

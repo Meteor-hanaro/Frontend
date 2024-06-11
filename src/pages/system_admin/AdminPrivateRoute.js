@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
-import axios from 'axios';
+import axios from '../../config/AxiosConfig';
 import AdminPage from './AdminPage';
 
 Modal.setAppElement('#root');
@@ -16,7 +16,7 @@ const AdminPrivateRoute = ({ children }) => {
   // 사용자가 입력한 비밀번호가 일치하는지 확인
   const handleAuthentication = () => {
     axios
-      .get(`http://${process.env.REACT_APP_BESERVERURI}/api/admin/pwdCheck`, {
+      .get(`/api/admin/pwdCheck`, {
         params: { inputPwd: inputPassword },
       })
       .then((response) => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../../config/AxiosConfig';
 import auth from '../../../auth';
 
 function PortfolioTable(vipId) {
@@ -11,14 +11,11 @@ function PortfolioTable(vipId) {
     const fetchData = async () => {
       try {
         axios
-          .get(
-            `http://${process.env.REACT_APP_BESERVERURI}/api/portfolio/itemValue`,
-            {
-              params: {
-                vipId: vipId.vipId,
-              },
-            }
-          )
+          .get(`/api/portfolio/itemValue`, {
+            params: {
+              vipId: vipId.vipId,
+            },
+          })
           .then((res) => {
             setLoading(false); // 데이터를 모두 받아오면 로딩 상태 변경
             setPortfolioItems(res.data);
@@ -30,7 +27,7 @@ function PortfolioTable(vipId) {
 
       try {
         auth
-          .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/name`, {
+          .get(`/api/vip/name`, {
             params: {
               vipId: vipId.vipId,
             },
@@ -46,13 +43,13 @@ function PortfolioTable(vipId) {
   }, []);
 
   if (loading) {
-    return <div id='main'>Loading...</div>; // 로딩 중일 때 표시
+    return <div id="main">Loading...</div>; // 로딩 중일 때 표시
   }
 
   return (
-    <div className='portfolio-status'>
+    <div className="portfolio-status">
       <h2>{vipName}님의 포트폴리오</h2>
-      <table className='table port fund-table'>
+      <table className="table port fund-table">
         <thead>
           <tr>
             <th>펀드명</th>

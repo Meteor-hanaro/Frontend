@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../../../config/AxiosConfig';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function SuggestionAdd() {
@@ -35,7 +35,7 @@ function SuggestionAdd() {
     // axios 통신을 이용하여 controller에 데이터 전송
     axios
       .post(
-        'http://localhost:8080/api/suggestion/apply',
+        '/api/suggestion/apply',
         {
           suggestionId: suggestionId,
           suggestionName: document.getElementById('suggestion-name').value,
@@ -62,10 +62,7 @@ function SuggestionAdd() {
 
   const handleRemoveFund = (suggestionItemId) => {
     axios
-      .get(
-        'http://localhost:8080/api/suggestion/fund/remove?suggestion_item_id=' +
-          suggestionItemId
-      )
+      .get('/api/suggestion/fund/remove?suggestion_item_id=' + suggestionItemId)
       .then((res) => {
         alert('Removed');
         window.location.reload();
@@ -81,16 +78,12 @@ function SuggestionAdd() {
 
   useEffect(() => {
     axios
-      .get(
-        `http://${process.env.REACT_APP_BESERVERURI}/api/suggestion/obtain?suggestion_id=` +
-          suggestionId,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json', // 서버가 JSON 형식으로 응답하도록 요청
-          },
-        }
-      )
+      .get(`/api/suggestion/obtain?suggestion_id=` + suggestionId, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json', // 서버가 JSON 형식으로 응답하도록 요청
+        },
+      })
       .then((res) => {
         console.log(res.data);
         setSuggestionObtainDto(res.data);
@@ -100,14 +93,14 @@ function SuggestionAdd() {
   }, []);
 
   if (loading) {
-    return <div id='main'>Loading...</div>;
+    return <div id="main">Loading...</div>;
   }
 
   return (
     <div>
-      <div id='main'>
+      <div id="main">
         <h3>{suggestionObtainDto.vipName}님에게 드릴 제안입니다.</h3>
-        <table className='suggestion-add-table'>
+        <table className="suggestion-add-table">
           <thead>
             <tr>
               <th style={{ display: 'none' }}></th>
@@ -124,20 +117,20 @@ function SuggestionAdd() {
             {suggestionObtainDto.suggestionItems.map((item, index) => (
               <tr key={index}>
                 <td style={{ display: 'none' }}>{item.suggestionItemId}</td>
-                <td className='suggestion-item-idx'>{index + 1}</td>
-                <td className='suggestion-fund-name'>{item.fundName}</td>
-                <td className='suggestion-init-date'>
+                <td className="suggestion-item-idx">{index + 1}</td>
+                <td className="suggestion-fund-name">{item.fundName}</td>
+                <td className="suggestion-init-date">
                   {item.fundInitDate[0]}-{item.fundInitDate[1]}-
                   {item.fundInitDate[2]}
                 </td>
-                <td className='suggestion-init-value'>
+                <td className="suggestion-init-value">
                   {item.fundInitValue.toLocaleString('ko-KR')}
                 </td>
-                <td className='suggestion-current-value'>
+                <td className="suggestion-current-value">
                   {item.fundCurrentValue.toLocaleString('ko-KR')}
                 </td>
-                <td className='suggestion-new-value'>
-                  <input type='number' className='newInput' />
+                <td className="suggestion-new-value">
+                  <input type="number" className="newInput" />
                 </td>
                 <td onClick={() => handleRemoveFund(item.suggestionItemId)}>
                   삭제
@@ -146,22 +139,22 @@ function SuggestionAdd() {
             ))}
           </tbody>
         </table>
-        <div className='alignVertical container'>
+        <div className="alignVertical container">
           <button
-            className='btn btn-primary add-fund-btn'
+            className="btn btn-primary add-fund-btn"
             onClick={handleAddFund}
           >
             Add Fund
           </button>
-          <div className='apply-suggestion-container'>
+          <div className="apply-suggestion-container">
             <input
-              id='suggestion-name'
-              type='text'
-              className='suggestion-name'
-              placeholder='제안안 이름'
+              id="suggestion-name"
+              type="text"
+              className="suggestion-name"
+              placeholder="제안안 이름"
             />
             <button
-              className='btn btn-primary modify-suggestion-btn'
+              className="btn btn-primary modify-suggestion-btn"
               onClick={handleApplySuggestion}
             >
               Apply suggestion

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import auth from '../../auth';
-import axios from 'axios';
+import axios from '../../config/AxiosConfig';
 import WebRTCContext from '../../contexts/WebRTCContext';
 
 Modal.setAppElement('#root');
@@ -42,7 +42,7 @@ const PrivateRoute = ({ children }) => {
     // vip
     if (isVip === 'true') {
       auth
-        .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/main`)
+        .get(`/api/vip/main`)
         .then((res) => {
           setVipId(res.data.vipInfo.vipId);
           setVipPwd(res.data.vipInfo.password);
@@ -58,7 +58,7 @@ const PrivateRoute = ({ children }) => {
     // pb
     else if (isPb === 'true') {
       auth
-        .get(`http://${process.env.REACT_APP_BESERVERURI}/api/pb/main`)
+        .get(`/api/pb/main`)
         .then((res) => {
           console.log(res.data);
           setVipId(localStorage.getItem('pbVip'));
@@ -75,9 +75,7 @@ const PrivateRoute = ({ children }) => {
   // 화상상담방 번호 확인
   useEffect(() => {
     axios
-      .get(
-        `http://${process.env.REACT_APP_BESERVERURI}/api/consult/extractRTCRoom?vipId=${vipId}`
-      )
+      .get(`/api/consult/extractRTCRoom?vipId=${vipId}`)
       .then((res) => {
         setConsultId(res.data.consultId);
       })
@@ -87,13 +85,10 @@ const PrivateRoute = ({ children }) => {
   // 사용자가 입력한 비밀번호가 일치하는지 확인
   const handleVipAuthentication = () => {
     auth
-      .post(
-        `http://${process.env.REACT_APP_BESERVERURI}/api/vip/main/pwdcheck`,
-        {
-          pwd: vipPwd,
-          writtenPwd: inputPassword,
-        }
-      )
+      .post(`/api/vip/main/pwdcheck`, {
+        pwd: vipPwd,
+        writtenPwd: inputPassword,
+      })
       .then((response) => {
         if (response.data) {
           setIsAuthenticated(true);
@@ -115,13 +110,10 @@ const PrivateRoute = ({ children }) => {
   // pb가 입장했을 때 비밀번호 입력 후 검증하는 로직
   const handlePbAuthentication = () => {
     auth
-      .post(
-        `http://${process.env.REACT_APP_BESERVERURI}/api/pb/main/pwdcheck`,
-        {
-          pbId: pbId,
-          inputPwd: inputPassword,
-        }
-      )
+      .post(`/api/pb/main/pwdcheck`, {
+        pbId: pbId,
+        inputPwd: inputPassword,
+      })
       .then((response) => {
         console.log(response.data);
         if (response.data) {
@@ -142,7 +134,7 @@ const PrivateRoute = ({ children }) => {
   };
 
   if (isLoading) {
-    return <div id='main'>Loading...</div>;
+    return <div id="main">Loading...</div>;
   }
 
   return isAuthenticated ? (

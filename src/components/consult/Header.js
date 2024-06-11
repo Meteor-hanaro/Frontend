@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../config/AxiosConfig';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function Header({ rtcRoomNum }) {
@@ -20,7 +20,7 @@ function Header({ rtcRoomNum }) {
   };
 
   const closeConsult = (rtcRoomNum) => {
-    const url = `http://${process.env.REACT_APP_BESERVERURI}/api/consult/close`;
+    const url = `/api/consult/close`;
     const data = {
       consultId: rtcRoomNum,
     };
@@ -41,22 +41,22 @@ function Header({ rtcRoomNum }) {
     <>
       {/* ======= Header ======= */}
       <header
-        id='header'
-        className='header fixed-top d-flex align-items-center'
+        id="header"
+        className="header fixed-top d-flex align-items-center"
       >
-        <div className='d-flex align-items-center justify-content-between'>
-          <div className='logo d-flex align-items-center'>
-            <img src={`${process.env.PUBLIC_URL}/assets/logo.png`} alt='' />
-            <span className='d-none d-lg-block'>Gold Lounge</span>
+        <div className="d-flex align-items-center justify-content-between">
+          <div className="logo d-flex align-items-center">
+            <img src={`${process.env.PUBLIC_URL}/assets/logo.png`} alt="" />
+            <span className="d-none d-lg-block">Gold Lounge</span>
           </div>
         </div>
         {/* End Logo */}
-        <nav className='header-nav ms-auto'>
-          <ul className='d-flex align-items-center'>
-            <li className='nav-item dropdown pe-3'>
-              <div className='nav-link nav-profile d-flex align-items-center pe-0'>
-                <button type='button' className='signOutBtn' onClick={exit}>
-                  <i className='bi bi-box-arrow-right' /> 상담 종료
+        <nav className="header-nav ms-auto">
+          <ul className="d-flex align-items-center">
+            <li className="nav-item dropdown pe-3">
+              <div className="nav-link nav-profile d-flex align-items-center pe-0">
+                <button type="button" className="signOutBtn" onClick={exit}>
+                  <i className="bi bi-box-arrow-right" /> 상담 종료
                 </button>
               </div>
               {/* End Profile Iamge Icon */}

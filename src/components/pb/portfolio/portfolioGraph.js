@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../../config/AxiosConfig';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -44,14 +44,11 @@ function PortfolioGraph({ vipId }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          `http://${process.env.REACT_APP_BESERVERURI}/api/portfolio/graphData`,
-          {
-            params: {
-              vipId: vipId,
-            },
-          }
-        );
+        const res = await axios.get(`/api/portfolio/graphData`, {
+          params: {
+            vipId: vipId,
+          },
+        });
 
         let keys = Object.keys(res.data);
         let k = keys[0];

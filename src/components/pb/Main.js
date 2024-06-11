@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../../config/AxiosConfig';
 import auth from '../../auth';
 
 function Main() {
@@ -20,9 +20,8 @@ function Main() {
     // 1. /pb/main 최초 진입 시, vip 목록 가져오기
     async function fetchData() {
       try {
-        const res = await auth.get(
-          `http://${process.env.REACT_APP_BESERVERURI}/api/pb/main`
-        );
+        const res = await auth.get(`/api/pb/main`);
+        console.log(res);
         setVip(res.data.vip);
         setState(res.data.state);
         setPbId(res.data.vip[0].pbId);
@@ -44,9 +43,7 @@ function Main() {
       setConsultState(vip.map((item) => ({ vipId: item.vipId, state: false })));
 
       axios
-        .get(
-          `http://${process.env.REACT_APP_BESERVERURI}/api/consult/searchPbVipConsult?pbId=${pbId}`
-        )
+        .get(`/api/consult/searchPbVipConsult?pbId=${pbId}`)
         .then((res) => {
           setConsultData(res.data.isExistConsult);
         })
@@ -66,7 +63,7 @@ function Main() {
   const searchUser = () => {
     setIsPause(true); // vip 접속 확인 비허용
 
-    const url = `http://${process.env.REACT_APP_BESERVERURI}/api/pb/main/filter`;
+    const url = `/api/pb/main/filter`;
     const data = {
       riskType: document.querySelector('.datatable-selector').value,
       name: document.querySelector('.search-form').value,
@@ -96,7 +93,7 @@ function Main() {
   // redis에서 고객 입장여부 실시간 확인
   const getUserState = () => {
     auth
-      .get(`http://${process.env.REACT_APP_BESERVERURI}/api/pb/main/state`)
+      .get(`/api/pb/main/state`)
       .then((res) => {
         setState(res.data.state);
       })
@@ -119,14 +116,11 @@ function Main() {
   // 고객과의 상담 생성
   const registerConsult = (data, index) => {
     axios
-      .post(
-        `http://${process.env.REACT_APP_BESERVERURI}/api/consult/registerConsult`,
-        {
-          pbId: data.pbId,
-          vipId: data.vipId,
-          content: '상담',
-        }
-      )
+      .post(`/api/consult/registerConsult`, {
+        pbId: data.pbId,
+        vipId: data.vipId,
+        content: '상담',
+      })
       .then((res) => {
         setConsultState((prev) => {
           const changeConsultState = [...prev];

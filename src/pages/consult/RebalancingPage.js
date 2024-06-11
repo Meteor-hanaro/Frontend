@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../config/AxiosConfig';
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SuggestionList from '../../components/common/SuggestionList';
@@ -44,10 +44,7 @@ const RebalancingPage = ({
   useEffect(() => {
     // 현재 포트폴리오 불러오기
     axios
-      .get(
-        `http://${process.env.REACT_APP_BESERVERURI}/api/portfolio/extract?vipId=` +
-          searchParams.get('vipId')
-      )
+      .get(`/api/portfolio/extract?vipId=` + searchParams.get('vipId'))
       .then((res) => {
         setPortfolioData(res.data);
         setSuggestionId(res.data.id);
@@ -56,10 +53,7 @@ const RebalancingPage = ({
 
     // 수정안 데이터 불러오기
     axios
-      .get(
-        `http://${process.env.REACT_APP_BESERVERURI}/api/suggestion/extract?userId=` +
-          searchParams.get('vipId')
-      )
+      .get(`/api/suggestion/extract?userId=` + searchParams.get('vipId'))
       .then((res) => {
         setSuggestionData(res.data);
         setLoading(false);

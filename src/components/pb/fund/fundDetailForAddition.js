@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../../config/AxiosConfig';
 import { Pie } from 'react-chartjs-2';
 import { Chart, ArcElement } from 'chart.js';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +16,7 @@ function FundDetailForAddition({ selectedFund, suggestionId }) {
 
   const handleAddFund = () => {
     axios.post(
-      `http://${process.env.REACT_APP_BESERVERURI}/api/suggestion/fund/add`,
+      `/api/suggestion/fund/add`,
       {
         suggestionId: suggestionId,
         fundId: selectedFund.id,
@@ -39,14 +39,11 @@ function FundDetailForAddition({ selectedFund, suggestionId }) {
     const fetchData = async () => {
       try {
         axios
-          .get(
-            `http://${process.env.REACT_APP_BESERVERURI}/api/fund/securities/get`,
-            {
-              params: {
-                id: selectedFund.id,
-              },
-            }
-          )
+          .get(`/api/fund/securities/get`, {
+            params: {
+              id: selectedFund.id,
+            },
+          })
           .then((res) => {
             let stockPercentage = 0;
             let bondPercentage = 0;
@@ -104,7 +101,7 @@ function FundDetailForAddition({ selectedFund, suggestionId }) {
   }, [selectedFund]);
 
   if (!selectedFund) {
-    return <div className='fund-detail'>펀드를 선택하세요</div>;
+    return <div className="fund-detail">펀드를 선택하세요</div>;
   }
 
   const options = {
@@ -125,17 +122,17 @@ function FundDetailForAddition({ selectedFund, suggestionId }) {
   };
 
   return (
-    <div className='fund-detail'>
+    <div className="fund-detail">
       <h2>{selectedFund.name}</h2>
       <h3>포트폴리오 현황</h3>
-      <div className='portfolio-status alignHorizontal'>
-        <div className='fund-chart'>
+      <div className="portfolio-status alignHorizontal">
+        <div className="fund-chart">
           {chartData && (
-            <Pie data={chartData} id='fundPieChart' options={options} />
+            <Pie data={chartData} id="fundPieChart" options={options} />
           )}
           {/* 차트 컴포넌트를 여기에 포함할 수 있습니다 */}
         </div>
-        <table className='table stock-bond-table'>
+        <table className="table stock-bond-table">
           <thead>
             <tr>
               <th>자산구분</th>
@@ -155,7 +152,7 @@ function FundDetailForAddition({ selectedFund, suggestionId }) {
         </table>
       </div>
       <h3>펀드 상세정보</h3>
-      <table className='fund-table'>
+      <table className="fund-table">
         <thead>
           <tr>
             <th>순위</th>
@@ -176,9 +173,13 @@ function FundDetailForAddition({ selectedFund, suggestionId }) {
           {/* 추가 데이터 행들 */}
         </tbody>
       </table>
-      <div className='new-value-input'>
-        <input type='number' placeholder='투입 금액 입력' className='fund-value-input'></input>
-        <button className='add-fund-btn' onClick={handleAddFund}>
+      <div className="new-value-input">
+        <input
+          type="number"
+          placeholder="투입 금액 입력"
+          className="fund-value-input"
+        ></input>
+        <button className="add-fund-btn" onClick={handleAddFund}>
           ADD
         </button>
       </div>

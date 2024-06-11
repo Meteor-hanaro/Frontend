@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../../../config/AxiosConfig';
 import SuggestionCard from './SuggestionCard';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,10 +23,7 @@ function SuggestionList({ id }) {
   const handleAddSuggestion = () => {
     // 현재 user의 포트폴리오를 복붙해서 새로운 suggestion을 만들어준다.
     axios
-      .post(
-        `http://${process.env.REACT_APP_BESERVERURI}/api/suggestion/append?vipId=` +
-          id
-      )
+      .post(`/api/suggestion/append?vipId=` + id)
       .then((res) => {
         console.log(res.data);
         navigate(`/pb/suggestion/add`, { state: { suggestionId: res.data } });
@@ -36,12 +33,8 @@ function SuggestionList({ id }) {
 
   useEffect(() => {
     axios
-      .get(
-        `http://${process.env.REACT_APP_BESERVERURI}/api/suggestion/extract?userId=` +
-          id
-      )
+      .get(`/api/suggestion/extract?userId=` + id)
       .then((res) => {
-        
         setSuggestionDto(res.data);
         console.log(res.data);
         setLoading(false);
@@ -50,12 +43,12 @@ function SuggestionList({ id }) {
   }, []);
 
   if (loading) {
-    return <div id='main'>Loading...</div>;
+    return <div id="main">Loading...</div>;
   }
 
   return (
-    <div className='suggestion-list-page vertical-align'>
-      <div id='main' className='d-flex'>
+    <div className="suggestion-list-page vertical-align">
+      <div id="main" className="d-flex">
         {suggestionDto &&
           suggestionDto.suggestionItems.map((item, index) => (
             <SuggestionCard
@@ -66,7 +59,7 @@ function SuggestionList({ id }) {
           ))}
       </div>
       <button
-        className='btn btn-success add-suggestion-btn'
+        className="btn btn-success add-suggestion-btn"
         onClick={handleAddSuggestion}
       >
         Add suggestion

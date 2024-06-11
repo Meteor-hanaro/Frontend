@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../../config/AxiosConfig';
 import { Pie } from 'react-chartjs-2';
 import { Chart, ArcElement } from 'chart.js';
 
@@ -18,14 +18,11 @@ function FundDetail({ selectedFund }) {
     const fetchData = async () => {
       try {
         axios
-          .get(
-            `http://${process.env.REACT_APP_BESERVERURI}/api/fund/securities/get`,
-            {
-              params: {
-                id: selectedFund.id,
-              },
-            }
-          )
+          .get(`/api/fund/securities/get`, {
+            params: {
+              id: selectedFund.id,
+            },
+          })
           .then((res) => {
             let stockPercentage = 0;
             let bondPercentage = 0;

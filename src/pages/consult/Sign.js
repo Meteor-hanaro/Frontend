@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { PDFDocument, rgb } from 'pdf-lib';
 import { useLocation } from 'react-router-dom';
 import Pdf from '../../components/common/Pdf';
-import axios from 'axios';
+import axios from '../../config/AxiosConfig';
 import TrafficChart from '../../components/common/chart/TrafficChart';
 import { Buffer } from 'buffer';
 
@@ -50,7 +50,12 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomNum}) {
+function Sign({
+  suggestionItemData,
+  suggestionItemNumber,
+  suggestionId,
+  rtcRoomNum,
+}) {
   const ws = useRef(null);
   const [signatureCoordinates, setSignatureCoordinates] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -66,7 +71,9 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
   const pbId = query.get('pbId');
   const vipId = query.get('vipId');
   useEffect(() => {
-    ws.current = new WebSocket(`ws://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
+    ws.current = new WebSocket(
+      `ws://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`
+    );
     ws.current.onopen = () => {
       console.log('WebSocket connection opened');
     };
@@ -79,7 +86,7 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
           setReceivedPdfs(message.data);
         } else if (event.data instanceof Blob) {
           const reader = new FileReader();
-          reader.onload = function(loadEvent) {
+          reader.onload = function (loadEvent) {
             const imageDataUrl = loadEvent.target.result;
             const img = document.createElement('img');
             img.src = imageDataUrl;
@@ -112,24 +119,22 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
   }, []);
 
   const getPdf = () => {
-    axios.post(
-      `http://${process.env.REACT_APP_BESERVERURI}/api/contract/finalcontract`,
-      {
-        fundIds: suggestionItemData
-      }
-    )
-    .then((response) => {
-      const tmp = response.data.map((item, index) => ({
-        ...item.fundContracts[0],
-        id: index // assuming each fundContracts has a unique index
-      }));
-      setPdfUrls(tmp);
-      console.log('tmp확인', tmp);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-  }
+    axios
+      .post(`/api/contract/finalcontract`, {
+        fundIds: suggestionItemData,
+      })
+      .then((response) => {
+        const tmp = response.data.map((item, index) => ({
+          ...item.fundContracts[0],
+          id: index, // assuming each fundContracts has a unique index
+        }));
+        setPdfUrls(tmp);
+        console.log('tmp확인', tmp);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
 
   const canvasEventListener = (event, type) => {
     if (!ctxRef.current) {
@@ -176,52 +181,56 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
     const image = canvas.toDataURL('image/png');
     setImageURL(image);
 
-    const updatedPdfUrls = await Promise.all(pdfUrls.map(async (pdfUrl) => {
-      const response = await fetch(pdfUrl.pdfUrl);
-      const pdfFile = await response.arrayBuffer();
-      const pdfDoc = await PDFDocument.load(pdfFile);
-      const page = pdfDoc.getPages()[0];
+    const updatedPdfUrls = await Promise.all(
+      pdfUrls.map(async (pdfUrl) => {
+        const response = await fetch(pdfUrl.pdfUrl);
+        const pdfFile = await response.arrayBuffer();
+        const pdfDoc = await PDFDocument.load(pdfFile);
+        const page = pdfDoc.getPages()[0];
 
-      const pngImageBytes = await fetch(image).then((res) => res.arrayBuffer());
-      const pngImage = await pdfDoc.embedPng(pngImageBytes);
+        const pngImageBytes = await fetch(image).then((res) =>
+          res.arrayBuffer()
+        );
+        const pngImage = await pdfDoc.embedPng(pngImageBytes);
 
-      const { width, height } = page.getSize();
-      const x = width - 150;
-      const y = height / 8 - 75;
+        const { width, height } = page.getSize();
+        const x = width - 150;
+        const y = height / 8 - 75;
 
-      if (signatureCoordinates) {
-        page.drawRectangle({
-          x: signatureCoordinates.x,
-          y: signatureCoordinates.y,
+        if (signatureCoordinates) {
+          page.drawRectangle({
+            x: signatureCoordinates.x,
+            y: signatureCoordinates.y,
+            width: 150,
+            height: 70,
+            color: rgb(1, 1, 1),
+            opacity: 1,
+          });
+        }
+
+        page.drawImage(pngImage, {
+          x,
+          y,
           width: 150,
           height: 70,
-          color: rgb(1, 1, 1),
-          opacity: 1,
         });
-      }
+        setSignatureCoordinates({ x, y });
+        const pdfBytes = await pdfDoc.save();
+        const base64pdf = Buffer.from(pdfBytes).toString('base64');
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        console.log('url확인', url);
 
-      page.drawImage(pngImage, {
-        x,
-        y,
-        width: 150,
-        height: 70,
-      });
-      setSignatureCoordinates({ x, y });
-      const pdfBytes = await pdfDoc.save();
-      const base64pdf = Buffer.from(pdfBytes).toString('base64');
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-      const url = URL.createObjectURL(blob);
-      console.log("url확인", url);
-
-      return { ...pdfUrl, pdfUrl: url, signedContract: base64pdf };
-    }));
+        return { ...pdfUrl, pdfUrl: url, signedContract: base64pdf };
+      })
+    );
 
     setPdfUrls(updatedPdfUrls);
     clearCanvas();
     setShowModal(false);
     // WebSocket을 통해 싸인된 PDF 목록을 전송
     if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-      const signedPdfs = updatedPdfUrls.map(pdf => ({
+      const signedPdfs = updatedPdfUrls.map((pdf) => ({
         id: pdf.id,
         signedContract: pdf.signedContract,
       }));
@@ -241,17 +250,17 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
     const contracts = [];
     for (let i = 0; i < suggestionItemData.length; i++) {
       let pushItem = {
-        "fundId": suggestionItemData[i],
-        "signedContract": pdfUrls[i].signedContract
+        fundId: suggestionItemData[i],
+        signedContract: pdfUrls[i].signedContract,
       };
       contracts.push(pushItem);
     }
-    axios.post(`http://${process.env.REACT_APP_BESERVERURI}:8080/api/contract/signedcontract`,
-      {
+    axios
+      .post(`/api/contract/signedcontract`, {
         suggestionId: suggestionId,
         vipId: vipId,
         pbId: pbId,
-        contracts: contracts
+        contracts: contracts,
       })
       .then((response) => {
         alert('상품 가입이 완료되었습니다.');
@@ -290,7 +299,7 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
       </Modal>
       <div id="finalPortfolio">
         <div id="portfolioContainer">
-          <TrafficChart data={suggestionItemNumber} name='최종수정안' />
+          <TrafficChart data={suggestionItemNumber} name="최종수정안" />
         </div>
       </div>
       <div id="finalContract">
@@ -298,14 +307,12 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
           <h3 className="final-title">최종계약서</h3>
         </div>
         <div id="finalPdf">
-          {
-            pdfUrls.map((data, index) => (
-              <div key={index}>
-                <h5 id="final-title">{data.title}</h5>
-                <Pdf pdfFile={data.pdfUrl} />
-              </div>
-            ))
-          }
+          {pdfUrls.map((data, index) => (
+            <div key={index}>
+              <h5 id="final-title">{data.title}</h5>
+              <Pdf pdfFile={data.pdfUrl} />
+            </div>
+          ))}
         </div>
         <button onClick={signNow} className="btn-sign btn btn-primary">
           서명

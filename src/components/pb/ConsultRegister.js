@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../config/AxiosConfig';
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -9,7 +9,7 @@ function ConsultRegister() {
   const [content, setContent] = useState('');
 
   const register = () => {
-    const url = `http://${process.env.REACT_APP_BESERVERURI}/api/consult/write`;
+    const url = `/api/consult/write`;
     const data = {
       consultId: params.consultId,
       content: content,
@@ -49,15 +49,15 @@ function ConsultRegister() {
 
   return (
     <main
-      id='main'
-      className='main'
+      id="main"
+      className="main"
       style={{
         padding: '45px',
         height: `calc(100vh - 60px)`,
       }}
     >
       <div
-        className='card info-card'
+        className="card info-card"
         style={{
           height: '100%',
           padding: '4% 4%',
@@ -80,12 +80,12 @@ function ConsultRegister() {
         </div>
         <br />
         <button
-          type='button'
-          className='pbBtn'
+          type="button"
+          className="pbBtn"
           style={{ width: '100px', marginLeft: 'calc(100% - 100px)' }}
           onClick={register}
         >
-          <i className='bi bi-save'></i> 저장하기
+          <i className="bi bi-save"></i> 저장하기
         </button>
       </div>
     </main>

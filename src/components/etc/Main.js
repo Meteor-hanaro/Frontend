@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../../config/AxiosConfig';
 import ReportChart from '../common/chart/ReportChart';
 import EChart from '../common/chart/EChart';
 import TrafficChart from '../common/chart/TrafficChart';
@@ -11,9 +11,7 @@ function Main() {
 
   useEffect(() => {
     axios
-      .get(
-        `http://${process.env.REACT_APP_BESERVERURI}/api/consult/admin/allConsultInfo`
-      )
+      .get(`/api/consult/admin/allConsultInfo`)
       .then((res) => {
         console.log(res.data);
         setData(res.data);
@@ -21,9 +19,7 @@ function Main() {
       .catch((e) => console.log(e));
 
     axios
-      .get(
-        `http://${process.env.REACT_APP_BESERVERURI}/api/security/admin/allSecurities`
-      )
+      .get(`/api/security/admin/allSecurities`)
       .then((res) => {
         console.log(res.data);
         setSecurityData(res.data);

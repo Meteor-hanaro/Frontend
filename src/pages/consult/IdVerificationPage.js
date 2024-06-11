@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../../config/AxiosConfig';
 import { useLocation } from 'react-router-dom';
 
 const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
@@ -14,7 +14,9 @@ const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
   const vipId = query.get('vipId');
 
   useEffect(() => {
-    ws.current = new WebSocket(`ws://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`);
+    ws.current = new WebSocket(
+      `ws://${process.env.REACT_APP_SUGGESTIONLISTWS}/${rtcRoomNum}`
+    );
     ws.current.onopen = () => {
       console.log('WebSocket connection opened');
     };
@@ -24,7 +26,7 @@ const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
         console.log('Message from server:', event);
         if (event.data instanceof Blob) {
           const reader = new FileReader();
-          reader.onload = function(loadEvent) {
+          reader.onload = function (loadEvent) {
             const imageDataUrl = loadEvent.target.result;
             const img = document.createElement('img');
             img.src = imageDataUrl;
@@ -66,15 +68,11 @@ const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
         formData.append('vipId', vipId);
 
         axios
-          .post(
-            `http://${process.env.REACT_APP_BESERVERURI}/api/id/ocr`,
-            formData,
-            {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            }
-          )
+          .post(`api/id/ocr`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
           .then((response) => {
             console.log('Success:', response.data);
             alert(response.data);
@@ -83,16 +81,16 @@ const IdVerificationPage = ({ localVideoRef, rtcRoomNum }) => {
             console.error('Error:', error);
             alert('신분증 인식에 실패했습니다.');
           });
-          
-          if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-              const arrayBuffer = event.target.result;
-              ws.current.send(arrayBuffer);
-              console.log('Image sent via WebSocket');
-            };
-            reader.readAsArrayBuffer(blob);
-          }
+
+        if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            const arrayBuffer = event.target.result;
+            ws.current.send(arrayBuffer);
+            console.log('Image sent via WebSocket');
+          };
+          reader.readAsArrayBuffer(blob);
+        }
       }, 'image/png');
     } else {
       alert('local video is not available.');

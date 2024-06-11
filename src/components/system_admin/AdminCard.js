@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../../config/AxiosConfig';
 import AdminCardSub from './AdminCardSub';
 import FundList from '../pb/fund/fundList';
 import FundDetail from '../pb/fund/fundDetail';
@@ -15,14 +15,14 @@ function AdminCard({ infoNumber }) {
   useEffect(() => {
     // vip info
     axios
-      .get(`http://${process.env.REACT_APP_BESERVERURI}/api/vip/admin/findAll`)
+      .get(`/api/vip/admin/findAll`)
       .then((res) => {
         setVipData(res.data);
       })
       .catch((e) => console.log(e));
     // pb info
     axios
-      .get(`http://${process.env.REACT_APP_BESERVERURI}/api/pb/admin/findAll`)
+      .get(`/api/pb/admin/findAll`)
       .then((res) => {
         setPbData(res.data);
       })

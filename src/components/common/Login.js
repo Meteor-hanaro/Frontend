@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../../config/AxiosConfig';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -19,8 +19,7 @@ function Login() {
   };
 
   const handleLogin = () => {
-    const url =
-      `http://${process.env.REACT_APP_BESERVERURI}/api/` + userType + '/login';
+    const url = `/api/` + userType + '/login';
     const data = {
       email: email,
       password: password,
