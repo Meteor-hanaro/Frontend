@@ -1444,16 +1444,16 @@ input[type='text'].search-form input:hover {
   float: right;
 }
 
-.suggestion-name{
+.suggestion-name {
   float: right;
 }
 
-.apply-suggestion-container{
+.apply-suggestion-container {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   width: 100%;
-  margin-top : 1rem;
+  margin-top: 1rem;
 }
 
 /*--------------------------------------------------------------
@@ -1613,9 +1613,9 @@ input[type='text'].search-form input:hover {
   background: #f6f6fe;
   /*스크롤바 뒷 배경 색상*/
 }
-#finalPdf{
+#finalPdf {
   overflow-y: scroll;
-  height:70%;
+  height: 70%;
 }
 #finalPdf::-webkit-scrollbar {
   width: 1rem;
@@ -1638,7 +1638,6 @@ input[type='text'].search-form input:hover {
 #finalPdf::-webkit-scrollbar-track {
   background: #f6f6fe;
   /*스크롤바 뒷 배경 색상*/
-
 }
 
 /*--------------------------------------------------------------
@@ -1789,19 +1788,19 @@ input[type='text'].search-form input:hover {
   margin-bottom: 10px;
   box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
 }
-#final-title{
+#final-title {
   text-align: center;
 }
-#finalPortfolio{
-  display:flex;
+#finalPortfolio {
+  display: flex;
   justify-content: space-between;
-  width:100%;
+  width: 100%;
 }
 .btn:hover {
   background-color: #e0c886;
   border-color: #dbbf75;
 }
-.btn-primary{
+.btn-primary {
   --bs-btn-bg: #e0c886;
   --bs-btn-border-color: #e0c886;
   --bs-btn-disabled-bg: #e0c886;
@@ -1956,8 +1955,7 @@ input[type='text'].search-form input:hover {
   color: #4a4a4a;
 }
 
-
-.modal-dialog-centered{
- min-height: 40% !important;
- margin-top: 15% !important;
+.modal-dialog-centered {
+  min-height: 40% !important;
+  margin-top: 15% !important;
 }
