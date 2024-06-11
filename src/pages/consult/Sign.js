@@ -326,12 +326,6 @@ function Sign({ suggestionItemData, suggestionItemNumber, suggestionId, rtcRoomN
               <Pdf pdfFile={receivedPdfUrl? receivedPdfUrl:data.pdfUrl} />
             </div>
           ))}
-          {/* {receivedPdfUrl && (
-            <div>
-              <h5 id="final-title">서명된 계약서</h5>
-              
-            </div>
-          )} */}
         </div>
         <button onClick={signNow} className="btn-sign btn btn-primary">
           서명

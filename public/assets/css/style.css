@@ -1596,14 +1596,14 @@ input[type='text'].search-form input:hover {
 }
 
 .react-pdf__Document::-webkit-scrollbar-thumb {
-  background: #717ff5; /* 스크롤바 색상 */
+  background: #d7b863; /* 스크롤바 색상 */
   border-radius: 1rem; /* 스크롤바 둥근 테두리 */
 }
 
 .react-pdf__Document::-webkit-scrollbar-track {
   background: #f6f6fe; /*스크롤바 뒷 배경 색상*/
 
-  background: #717ff5;
+  background: #d7b863;
   /* 스크롤바 색상 */
   border-radius: 1rem;
   /* 스크롤바 둥근 테두리 */
@@ -1622,14 +1622,14 @@ input[type='text'].search-form input:hover {
 }
 
 #finalPdf::-webkit-scrollbar-thumb {
-  background: #717ff5; /* 스크롤바 색상 */
+  background: #d7b863; /* 스크롤바 색상 */
   border-radius: 1rem; /* 스크롤바 둥근 테두리 */
 }
 
 #finalPdf::-webkit-scrollbar-track {
   background: #f6f6fe; /*스크롤바 뒷 배경 색상*/
 
-  background: #717ff5;
+  background: #d7b863;
   /* 스크롤바 색상 */
   border-radius: 1rem;
   /* 스크롤바 둥근 테두리 */
@@ -1673,7 +1673,7 @@ input[type='text'].search-form input:hover {
 .fund-header-left {
   align-self: flex-start;
   font-size: 1.3em;
-  color: #212dd2;
+  color: #d7b863;
   margin-bottom: 10px;
 }
 
