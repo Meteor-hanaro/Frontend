@@ -360,56 +360,6 @@ function Sign({
         </>
       )}
     </div>
-    // <div id="signDiv">
-    //   <Modal show={showModal} handleClose={() => setShowModal(false)}>
-    //     <canvas
-    //       ref={canvasRef}
-    //       style={defaultStyle}
-    //       onMouseDown={(event) => {
-    //         canvasEventListener(event, 'down');
-    //       }}
-    //       onMouseMove={(event) => {
-    //         canvasEventListener(event, 'move');
-    //       }}
-    //       onMouseLeave={(event) => {
-    //         canvasEventListener(event, 'leave');
-    //       }}
-    //       onMouseUp={(event) => {
-    //         canvasEventListener(event, 'up');
-    //       }}
-    //     />
-    //     <button onClick={clearCanvas} className="btn btn-primary">
-    //       초기화
-    //     </button>
-    //     <button onClick={saveCanvas} className="btn btn-primary">
-    //       확인
-    //     </button>
-    //   </Modal>
-    //   <div id="finalPortfolio">
-    //     <div id="portfolioContainer">
-    //       <TrafficChart data={suggestionItemNumber} name="최종수정안" />
-    //     </div>
-    //   </div>
-    //   <div id="finalContract">
-    //     <div>
-    //       <h3 className="final-title">최종계약서</h3>
-    //     </div>
-    //     <div id="finalPdf">
-    //       {pdfUrls.map((data, index) => (
-    //         <div key={index}>
-    //           <h5 id="final-title">{data.title}</h5>
-    //           <Pdf pdfFile={receivedPdfUrl ? receivedPdfUrl : data.pdfUrl} />
-    //         </div>
-    //       ))}
-    //     </div>
-    //     <button onClick={signNow} className="btn-sign btn btn-primary">
-    //       서명
-    //     </button>
-    //     <button onClick={givePdf} className="btn-sign btn btn-primary">
-    //       최종가입
-    //     </button>
-    //   </div>
-    // </div>
   );
 }
 
