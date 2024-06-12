@@ -636,7 +636,7 @@ h6 {
   transition: all 0.3s;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #aab7cf transparent;
+  scrollbar-color: #8b8b8b transparent;
   box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
   background-color: #fff;
 }
@@ -647,13 +647,13 @@ h6 {
   }
 }
 
-.sidebar::-webkit-scrollbar {
+.sidebar::-webkit-scrollbar{
   width: 5px;
   height: 8px;
   background-color: #fff;
 }
 
-.sidebar::-webkit-scrollbar-thumb {
+.sidebar::-webkit-scrollbar-thumb{
   background-color: #aab7cf;
 }
 
@@ -1548,12 +1548,6 @@ input[type='text'].search-form input:hover {
   border: 1px solid black;
 }
 
-.pdf-container {
-  width: 100%;
-  height: 30rem;
-  overflow: hidden;
-}
-
 /* pdf css */
 .react-pdf__Page {
   display: flex;
@@ -1572,6 +1566,7 @@ input[type='text'].search-form input:hover {
 
 .react-pdf__Page__canvas {
   border: 1px solid #ccc;
+  width: 800px !important;
 }
 
 .react-pdf__Page__textContent,
@@ -1591,25 +1586,25 @@ input[type='text'].search-form input:hover {
 }
 
 /* 스크롤바의 폭 너비 */
-.react-pdf__Document::-webkit-scrollbar {
+.react-pdf__Document::-webkit-scrollbar{
   width: 1rem;
 }
 
-.react-pdf__Document::-webkit-scrollbar-thumb {
-  background: #d7b863; /* 스크롤바 색상 */
+.react-pdf__Document::-webkit-scrollbar-thumb{
+  background: #8b8b8b; /* 스크롤바 색상 */
   border-radius: 1rem; /* 스크롤바 둥근 테두리 */
 }
 
-.react-pdf__Document::-webkit-scrollbar-track {
+.react-pdf__Document::-webkit-scrollbar-track{
   background: #f6f6fe; /*스크롤바 뒷 배경 색상*/
 
-  background: #d7b863;
+  background: #8b8b8b;
   /* 스크롤바 색상 */
   border-radius: 1rem;
   /* 스크롤바 둥근 테두리 */
 }
 
-.react-pdf__Document::-webkit-scrollbar-track {
+.react-pdf__Document::-webkit-scrollbar-track{
   background: #f6f6fe;
   /*스크롤바 뒷 배경 색상*/
 }
@@ -1622,14 +1617,14 @@ input[type='text'].search-form input:hover {
 }
 
 #finalPdf::-webkit-scrollbar-thumb {
-  background: #d7b863; /* 스크롤바 색상 */
+  background: #8b8b8b; /* 스크롤바 색상 */
   border-radius: 1rem; /* 스크롤바 둥근 테두리 */
 }
 
 #finalPdf::-webkit-scrollbar-track {
   background: #f6f6fe; /*스크롤바 뒷 배경 색상*/
 
-  background: #d7b863;
+  background: #8b8b8b;
   /* 스크롤바 색상 */
   border-radius: 1rem;
   /* 스크롤바 둥근 테두리 */
@@ -1775,9 +1770,6 @@ input[type='text'].search-form input:hover {
   cursor: pointer;
 }
 
-.pdf-container {
-  margin: 20px 0;
-}
 #capturedScreen {
   align-items: center;
   display: flex;
@@ -1958,4 +1950,24 @@ input[type='text'].search-form input:hover {
 .modal-dialog-centered {
   min-height: 40% !important;
   margin-top: 15% !important;
+}
+
+/* 지연 modal */
+.modal-dialog {
+  --bs-modal-width: 50%;
+}
+
+.react-pdf-Page-canvas {
+  width: 800px;
+}
+
+.modal {
+  align-items: auto;
+}
+
+.pdf-container{
+  height: 30rem;
+  overflow-y:scroll;
+  width:100%;
+  margin: 20px 0;
 }

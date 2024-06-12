@@ -27,10 +27,10 @@ const WebRTC = ({ rtcRoomNum }) => {
           Create Offer
         </button>
         <br />
-        <h2>PB</h2>
+        <h2>VIP</h2>
         <video id="localVideo" ref={localVideoRef} autoPlay playsInline />
         <br />
-        <h2>User</h2>
+        <h2>PB</h2>
         <video
           id="remoteVideo"
           ref={remoteVideoRef}
