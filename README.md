@@ -38,6 +38,116 @@
 - RTCDataChannel API를 통해 브라우저 간에 데이터도 주고받을 수 있음. 파일 전송, 게임 데이터 공유, 실시간 채팅 등의 기능 구현 가능
 
 ## 🌱 프로젝트 구조
+```
+meteor-frontend
+└─ Frontend
+   ├─ .env
+   ├─ README.md
+   ├─ package-lock.json
+   ├─ package.json
+   ├─ public
+   │  ├─ assets
+   │  │  ├─ css
+   │  │  │  ├─ style.css
+   │  │  │  └─ video.css
+   │  │  ├─ fonts
+   │  │  │  ├─ Hana2-Medium.otf
+   │  │  │  └─ Hana2-Medium.ttf
+   └─ src
+      ├─ Router.js
+      ├─ SetupProxy.js
+      ├─ auth.js
+      ├─ components
+      │  ├─ RootCard.js
+      │  ├─ common
+      │  │  ├─ FundCheckItem.js
+      │  │  ├─ FundContract.js
+      │  │  ├─ Header.js
+      │  │  ├─ Login.js
+      │  │  ├─ Pdf.js
+      │  │  ├─ SuggestionList.js
+      │  │  ├─ chart
+      │  │  │  ├─ EChart.js
+      │  │  │  ├─ ReportChart.js
+      │  │  │  └─ TrafficChart.js
+      │  │  └─ form
+      │  │     └─ TextEditor.js
+      │  ├─ consult
+      │  │  └─ Header.js
+      │  ├─ etc
+      │  │  ├─ Card.js
+      │  │  └─ Main.js
+      │  ├─ pb
+      │  │  ├─ ConsultRegister.js
+      │  │  ├─ Main.js
+      │  │  ├─ Sidebar.js
+      │  │  ├─ fund
+      │  │  │  ├─ fundDetail.js
+      │  │  │  ├─ fundDetailForAddition.js
+      │  │  │  └─ fundList.js
+      │  │  ├─ portfolio
+      │  │  │  ├─ portfolioGraph.js
+      │  │  │  └─ portfolioTable.js
+      │  │  └─ suggestion
+      │  │     ├─ SuggestionAdd.js
+      │  │     ├─ SuggestionCard.js
+      │  │     └─ SuggestionList.js
+      │  ├─ system_admin
+      │  │  ├─ AdminCard.js
+      │  │  ├─ AdminCardSub.js
+      │  │  ├─ Header.js
+      │  │  ├─ Main.js
+      │  │  └─ VipRegister.js
+      │  └─ user
+      │     ├─ ConsultCard.js
+      │     ├─ ConsultDetail.js
+      │     ├─ ConsultEndCard.js
+      │     └─ Main.js
+      ├─ config
+      │  └─ signaling-server.js
+      ├─ contexts
+      │  ├─ LoginContextProvider.js
+      │  └─ WebRTCContext.js
+      ├─ index.js
+      └─ pages
+         ├─ BankerPage.js
+         ├─ ProfilePage.js
+         ├─ RootPage.js
+         ├─ consult
+         │  ├─ AuthPage.js
+         │  ├─ ConsentPage.js
+         │  ├─ IdVerificationPage.js
+         │  ├─ RebalancingPage.js
+         │  └─ Sign.js
+         ├─ etc
+         │  ├─ FormPage.js
+         │  ├─ MainPage.js
+         │  ├─ VideoPage.js
+         │  └─ useScript.js
+         ├─ pb
+         │  ├─ ConsultEndingPage.js
+         │  ├─ FundAddPage.js
+         │  ├─ FundPage.js
+         │  ├─ LoginPage.js
+         │  ├─ MainPage.js
+         │  ├─ PortfolioPage.js
+         │  ├─ SuggestionAddPage.js
+         │  └─ SuggestionPage.js
+         ├─ system_admin
+         │  ├─ AdminPage.js
+         │  └─ AdminPrivateRoute.js
+         ├─ user
+         │  ├─ ConsultDetailPage.js
+         │  ├─ ConsultEndingPage.js
+         │  ├─ LoginPage.js
+         │  └─ MainPage.js
+         └─ video
+            ├─ PrivateRoute.js
+            ├─ ProgressBarPage.js
+            ├─ SharingPage.js
+            ├─ VideoPage.js
+            └─ WebRTC.js
+```
 
 ## 🌼 역할 분담
 
