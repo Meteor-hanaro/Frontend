@@ -46,13 +46,13 @@ meteor-frontend
    ├─ package-lock.json
    ├─ package.json
    ├─ public
-   │  ├─ assets
-   │  │  ├─ css
-   │  │  │  ├─ style.css
-   │  │  │  └─ video.css
-   │  │  ├─ fonts
-   │  │  │  ├─ Hana2-Medium.otf
-   │  │  │  └─ Hana2-Medium.ttf
+   │  └─ assets
+   │     ├─ css
+   │     │  ├─ style.css
+   │     │  └─ video.css
+   │     └─ fonts
+   │        ├─ Hana2-Medium.otf
+   │        └─ Hana2-Medium.ttf
    └─ src
       ├─ Router.js
       ├─ SetupProxy.js
